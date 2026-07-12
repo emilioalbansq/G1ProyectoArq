@@ -1,0 +1,94 @@
+#+options: H:2
+#+latex_class: beamer
+#+columns: %45ITEM %10BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
+#+beamer_theme: default
+#+beamer_color_theme:
+#+beamer_font_theme:
+#+beamer_inner_theme:
+#+beamer_outer_theme:
+#+beamer_header:
+
+#+title: S11 — Sistemas de Entrada/Salida
+#+date: 
+#+author: Lenin G. Falconí
+#+email: lenin.falconi@epn.edu.ec
+#+language: es
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.3)
+#+cite_export: biblatex
+
+#+bibliography: ./bibliography/bibliography.bib
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[spanish]{babel}
+#+LATEX_HEADER: \usepackage[backend=biber,citestyle=apa, style=apa]{biblatex}
+
+* Indicaciones
+** Indicaciones
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+- Recuerde que si ~options: H:2~, entonces:
+  - ~*~ Declara el nombre de la Sección
+  - ~**~ Declara el nombre de la diapositiva
+- Puede alterar la estructura de la diapositiva si lo considera necesario
+- Reparto del tema por grupos:
+  - *G7:* Sistemas de E/S, Módulos de E/S, E/S Programada, E/S mediante Interrupción, DMA
+  - *G8:* Canales y Procesadores de E/S, Estándares de interconexión externa (USB, FireWire, SCSI, Thunderbolt, SATA, Ethernet, Wi-Fi)
+- Para este tema consulte las siguientes fuentes:
+  - \textcite{stallings2006esp}, 7ma edición, 2006, Español, Capítulo 7.
+  - \textcite{stallings2022computer}, 11ava edición, 2022, English, Capítulo 8.
+- Las tuplas (11, 270) significan: Edición 11, página 270 del PDF.
+- El grupo expone el tema y sube la presentación (~.ORG~ y ~.PDF~ para Beamer, o ~.ORG~ y ~.HTML~ para reveal.js)
+- El grupo sube las ayudas memoria/notas del tema usando la plantilla [[file:FormatoTareas/TemplateNotasClase.org]] (~.ORG~ y ~.PDF~)
+** Diseño de las Diapositivas
+- Para diseñar sus diapositivas puede consultar cualquiera de las
+  presentaciones ~.ORG~ desarrolladas por el profesor así como al
+  archivo [[https://github.com/LeninGF/EPN-Lectures/blob/main/iccd332ArqComp-2024-B/Tutoriales/Beamer-Emacs/tutorialBeamer.org][tutorialBeamer.org]] en el repositorio de la clase.
+- Recuerde que los archivos ~.ORG~ son archivos de texto así que los
+  puede copiar y sustituir por su texto propio.
+** Sobre este Documento
+- Este documento tiene la propuesta de temas a tratar y desarrollar
+  por los estudiantes.
+- Se ha de utilizar como base la bibliografía recomendada, pero puede
+  consultar bibliografía adicional.
+
+* G7 — Sistemas de Entrada/Salida
+** Introducción (11, 270) (7, 229)
+** Dispositivos Externos 
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+** Teclado/Monitor
+** Controlador de Disco (Disk Drive)
+* G7 — Módulos de E/S
+** Módulos de E/S (11, 273) (7, 236)
+** Funciones
+** Estructura de Módulos de E/S
+* G7 — E/S Programada
+** E/S Programada (11, 276) (7, 239)
+** Comandos de E/S
+** Instrucciones de E/S
+* G7 — E/S mediante Interrupción
+** E/S mediante Interrupción (11, 280) (7, 243)
+** Procesamiento de la Interrupción
+** Problemas de diseño
+* G7 — Acceso directo a Memoria DMA
+** Acceso directo a Memoria DMA (11, 290) (7, 251)
+** Funcionalidad de DMA
+
+* G8 — Canales y Procesadores de E/S
+** Canales y Procesadores de E/S
+** Evolución de las funciones E/S
+** Características de los canales E/S
+* G8 — Estándares de interconexión externa
+** USB
+** FireWire
+** SCSI
+** Thunderbolt
+** SATA
+** Ethernet
+** Wi-Fi
+
+#+print_bibliography:

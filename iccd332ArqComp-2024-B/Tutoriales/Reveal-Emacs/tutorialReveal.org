@@ -1,0 +1,308 @@
+#+OPTIONS: num:nil toc:nil timestamp:nil
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+#+REVEAL_THEME: dracula
+#+REVEAL_TRANS: slide
+#+REVEAL_EXTRA_CSS: https://use.fontawesome.com/releases/v5.15.4/css/all.css
+#+REVEAL_INIT_OPTIONS: width:1200, height:900, margin: 0.1, minScale:0.2, maxScale:1.2
+
+#+TITLE: Tutorial: Presentaciones Reveal.js desde Emacs
+#+AUTHOR: Lenin G. Falconí
+#+DATE: Periodo 2026-A
+#+LANGUAGE: es
+
+* Introducción
+** @@html:<i class="fas fa-desktop"></i>@@ ¿Qué es Reveal.js?
+#+ATTR_REVEAL: :frag (appear)
+- Es un framework HTML para crear presentaciones interactivas.
+- Se ejecuta en el navegador: no requiere LaTeX ni compilación a PDF.
+- Desde Emacs + Org-mode, se exporta con un solo comando.
+- El paquete ~ox-reveal~ traduce tu archivo ~.org~ a ~.html~ listo para mostrar.
+
+** @@html:<i class="fas fa-check-circle"></i>@@ Requisitos
+#+ATTR_REVEAL: :frag (appear)
+- El paquete ~ox-reveal~ instalado en Emacs (ya incluido en el ~init.el~ del curso).
+- Conexión a internet (Reveal.js se carga desde CDN — sin instalar nada localmente).
+- Nada más: ni LaTeX, ni Pandoc, ni compiladores extra.
+
+* El Encabezado del Archivo
+** @@html:<i class="fas fa-code"></i>@@ Encabezado mínimo
+Este es el bloque que debe ir al inicio de todo archivo ~.org~ para reveal:
+
+#+begin_example
+#+OPTIONS: num:nil toc:nil timestamp:nil
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+#+REVEAL_THEME: dracula
+#+REVEAL_TRANS: slide
+#+REVEAL_INIT_OPTIONS: width:1200, height:900, margin: 0.1
+
+#+TITLE: Mi Presentación
+#+AUTHOR: Tu Nombre
+#+DATE: 2026
+#+LANGUAGE: es
+#+end_example
+
+** @@html:<i class="fas fa-cogs"></i>@@ Opciones de encabezado
+| Opción                | Descripción                   | Ejemplo                                                                                                         |
+|-----------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------|
+| ~REVEAL_ROOT~         | URL o ruta local de reveal.js | CDN o ~./reveal.js~                                                                                             |
+| ~REVEAL_THEME~        | Tema visual                   | ~black~, ~white~, ~league~, ~sky~, ~beige~, ~simple~, ~serif~, ~blood~, ~night~, ~moon~, ~solarized~, ~dracula~ |
+| ~REVEAL_TRANS~        | Transición entre slides       | ~slide~, ~convex~, ~concave~, ~zoom~, ~none~                                                                    |
+| ~REVEAL_PLUGINS~      | Plugins adicionales (reemplaza defaults: markdown, zoom, notes) | ~(math)~ — pero MathJax ya viene por defecto, no hace falta |
+| ~REVEAL_INIT_OPTIONS~ | Configuración de reveal       | tamaño, márgenes, escala                                                                                        |
+
+** @@html:<i class="fas fa-calculator"></i>@@ Matemáticas con MathJax
+MathJax se carga automáticamente — no necesitás agregar nada al encabezado.
+Las ecuaciones se escriben con notación LaTeX estándar de Org-mode:
+- Inline: ~\(E = mc^2\)~ produce \(E = mc^2\)
+- Display: ~\[ ... \]~ centra la ecuación en su propia línea
+- Más ejemplos en la sección de matemáticas.
+
+* Estructura de Diapositivas
+** @@html:<i class="fas fa-layer-group"></i>@@ Slides y secciones
+#+ATTR_REVEAL: :frag (appear)
+- Un ~*~ (nivel 1) crea una *sección* (slide horizontal).
+- Un ~**~ (nivel 2) crea una *diapositiva* dentro de la sección.
+- Las secciones generan títulos visibles en la presentación.
+- Navegación: flechas ← → entre slides, ↑ ↓ entre secciones.
+
+#+begin_example
+ * Sección 1
+ ** Diapositiva 1
+ Contenido aquí...
+
+ ** Diapositiva 2
+ Más contenido...
+ * Sección 2
+ ** Diapositiva 3
+#+end_example
+
+
+** @@html:<i class="fas fa-list-ul"></i>@@ Listas y viñetas
+Simplemente usá la sintaxis normal de Org-mode:
+
+#+begin_example
+ ** Título de la diapositiva
+ - Elemento 1
+ - Elemento 2
+   - Sub-elemento anidado
+ - Elemento 3
+#+end_example
+
+
+* Fragmentos: Revelar por Partes
+** @@html:<i class="fas fa-puzzle-piece"></i>@@ Fragmentos
+#+ATTR_REVEAL: :frag (appear)
+- Usá =#+ATTR_REVEAL: :frag (appear)= al inicio de una diapositiva.
+- Cada ítem de la lista aparece al presionar →.
+- Este mismo slide usa fragmentos: ¿viste cómo aparecen uno por uno?
+- Muy útil para explicar paso a paso.
+
+** @@html:<i class="fas fa-puzzle-piece"></i>@@ Tipos de fragmentos
+#+ATTR_REVEAL: :frag (fade-in)
+- ~appear~ — aparece súbitamente
+- ~fade-in~ — aparece con desvanecimiento (este es ~fade-in~)
+- ~fade-out~ — se desvanece
+- ~highlight-red~ — resalta en rojo
+- ~grow~ — crece desde el centro
+
+* Imágenes y Columnas
+** @@html:<i class="fas fa-image"></i>@@ Insertar una imagen
+Para una imagen centrada con ancho definido:
+
+#+begin_example
+#+ATTR_HTML: :width 60% :align center
+[[./figuras/mi-imagen.png]]
+#+end_example
+
+- ~:width~ controla el tamaño (porcentaje o píxeles).
+- ~:align~ controla la posición (~center~, ~left~, ~right~).
+- La imagen puede ser local o URL remota.
+
+** @@html:<i class="fas fa-columns"></i>@@ Texto a la izquierda, imagen a la derecha
+Para dos columnas usamos HTML con flexbox (más fiable que float en reveal.js):
+
+#+begin_example
+#+begin_export html
+<div style="display:flex; align-items:center; gap:30px;">
+<div style="flex:1;">
+#+end_export
+- Acá va el texto.
+- Explicación de la imagen.
+- Notas adicionales.
+#+begin_export html
+</div>
+<div style="flex:0 0 45%;">
+#+end_export
+[[./figuras/emacsJoke.jpg]]
+#+begin_export html
+</div>
+</div>
+#+end_export
+#+end_example
+
+** @@html:<i class="fas fa-columns"></i>@@ Ejemplo real: Emacs
+#+begin_export html
+<div style="display:flex; align-items:center; gap:30px;">
+<div style="flex:1;">
+#+end_export
+- *Emacs*: el editor que lo hace todo.
+- Imagen a la izquierda, texto a la derecha.
+- Acá usamos flexbox, no float.
+#+begin_export html
+</div>
+<div style="flex:0 0 45%;">
+#+end_export
+[[../../images/emacsJoke.jpg]]
+#+begin_export html
+</div>
+</div>
+#+end_export
+
+* Código Fuente en Diapositivas
+** @@html:<i class="fas fa-terminal"></i>@@ Bloques de código
+Los bloques ~#+begin_src~ de Org-mode se exportan con resaltado de sintaxis:
+
+#+begin_src python :results output :exports both
+import numpy as np
+
+def greet(name):
+    """Saluda cordialmente."""
+    return f"Hola, {name}!"
+
+print(greet("Arquitectura de Computadores"))
+#+end_src
+
+#+RESULTS:
+: Hola, Arquitectura de Computadores!
+
+*Salida:*
+#+begin_example
+Hola, Arquitectura de Computadores!
+#+end_example
+
+** @@html:<i class="fas fa-terminal"></i>@@ Lenguajes soportados
+#+ATTR_REVEAL: :frag (appear)
+- Python (~python~)
+- C (~c~)
+- Java (~java~)
+- Ensamblador (~asm~)
+- Shell (~shell~)
+- Emacs Lisp (~emacs-lisp~)
+- y muchos más que reconoce ~highlight.js~
+
+* Matemáticas con MathJax
+** @@html:<i class="fas fa-superscript"></i>@@ Ecuaciones inline y display
+MathJax se carga automáticamente — no requiere configuración adicional:
+
+- *Inline*: ~\(a^2 + b^2 = c^2\)~ produce \(a^2 + b^2 = c^2\)
+- *Display*: ~\[ ... \]~ centra la ecuación en su propia línea:
+
+\[
+\sum_{i=0}^{n} x_i = x_0 + x_1 + \cdots + x_n
+\]
+
+** @@html:<i class="fas fa-superscript"></i>@@ Ecuaciones del curso
+Ecuación de rendimiento del computador:
+
+\[
+\text{Tiempo de CPU} = \text{Ciclos de reloj} \times \text{Duración del ciclo}
+\]
+
+Ley de Amdahl:
+
+\[
+S = \frac{1}{(1 - f) + \frac{f}{n}}
+\]
+
+** @@html:<i class="fas fa-superscript"></i>@@ Fracciones, integrales y matrices
+Fracción:
+
+\[
+\frac{n!}{k!(n-k)!}
+\]
+
+Integral:
+
+\[
+\int_{0}^{\infty} e^{-x} \, dx = 1
+\]
+
+Matriz:
+
+
+\begin{pmatrix}
+a_{11} & a_{12} \\
+a_{21} & a_{22}
+\end{pmatrix}
+
+
+* Iconos y Formato Especial
+** @@html:<i class="fas fa-icons"></i>@@ Iconos Font Awesome
+Con el CSS de Font Awesome cargado en el encabezado:
+
+#+begin_example
+#+REVEAL_EXTRA_CSS: https://use.fontawesome.com/releases/v5.15.4/css/all.css
+#+end_example
+
+Insertás iconos así:
+
+| Código | Icono |
+|--------|-------|
+| ~@@html:<i class="fas fa-microchip"></i>@@~ | @@html:<i class="fas fa-microchip"></i>@@ Arquitectura |
+| ~@@html:<i class="fas fa-code"></i>@@~ | @@html:<i class="fas fa-code"></i>@@ Código |
+| ~@@html:<i class="fas fa-calculator"></i>@@~ | @@html:<i class="fas fa-calculator"></i>@@ Matemáticas |
+| ~@@html:<i class="fas fa-terminal"></i>@@~ | @@html:<i class="fas fa-terminal"></i>@@ Terminal |
+
+[Lista completa de iconos](https://fontawesome.com/v5/search?m=free)
+
+** @@html:<i class="fas fa-quote-right"></i>@@ Citas textuales
+Usando el bloque ~quote~ de Org:
+
+#+begin_quote
+Cualquier tecnología suficientemente avanzada es indistinguible de la magia.
+#+end_quote
+— Arthur C. Clarke
+
+* Exportar a HTML
+** @@html:<i class="fas fa-file-export"></i>@@ Cómo exportar
+Para generar el archivo ~.html~ desde Emacs:
+
+1. Abrí tu archivo ~.org~.
+2. Ejecutá: ~C-c C-e R B~
+   - ~C-c C-e~ → menú de exportación.
+   - ~R~ → Reveal.js (R mayúscula).
+   - ~B~ → exportar a archivo y abrir en navegador.
+3. Alternativa por comando: ~M-x org-reveal-export-to-html-and-browse~
+4. El ~.html~ se genera en la misma carpeta.
+
+** @@html:<i class="fas fa-exclamation-triangle"></i>@@ Si el navegador no abre
+#+ATTR_REVEAL: :frag (appear)
+- En *WSL* (Windows): verificá que ~wslview~ esté instalado (~sudo apt install wslu~).
+- Alternativa WSL: usá ~explorer.exe~ como browser:
+  #+begin_example
+  #+begin_src emacs-lisp
+  (setq browse-url-generic-program "explorer.exe")
+  (setq browse-url-browser-function 'browse-url-generic)
+  #+end_src
+  #+end_example
+- En *Linux* nativo: ~xdg-open~ viene por defecto y debería funcionar.
+- Si nada funciona, abrí el ~.html~ manualmente desde el explorador de archivos.
+
+** @@html:<i class="fas fa-keyboard"></i>@@ Atajos de exportación
+| Atajo | Comando equivalente | Acción |
+|-------|---------------------|--------|
+| ~C-c C-e R B~ | ~org-reveal-export-to-html-and-browse~ | Exportar y abrir en navegador |
+| ~C-c C-e R R~ | ~org-reveal-export-to-html~ | Exportar a ~.html~ |
+
+* Referencia
+** @@html:<i class="fas fa-book"></i>@@ Ejemplo completo
+Consultá la presentación de bienvenida del curso como referencia real de todo lo cubierto:
+
+- Archivo: ~welcome-reveal.org~
+- Contiene: fragmentos, imágenes, columnas, íconos, tablas, citas.
+
+** @@html:<i class="fas fa-globe"></i>@@ Recursos adicionales
+- [ox-reveal en GitHub](https://github.com/yjwen/org-reveal)
+- [Documentación de reveal.js](https://revealjs.com/)
+- [Font Awesome — lista de iconos](https://fontawesome.com/v5/search?m=free)
+- [MathJax — sintaxis LaTeX](https://docs.mathjax.org/en/latest/)

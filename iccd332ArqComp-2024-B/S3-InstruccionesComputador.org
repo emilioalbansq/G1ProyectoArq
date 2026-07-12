@@ -1,0 +1,854 @@
+
+#+options: ':nil *:t -:t ::t <:t H:2 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: S3 Operaciones Lógicas
+#+date: 2024-10-26
+#+author: Lenin G. Falconí
+#+email: lenin.falconi@epn.edu.ec
+#+language: es
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.3)
+
+# to enable beamer mode M-x org-beamer-mode
+#+options: H:2
+#+latex_class: beamer
+#+columns: %45ITEM %10BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
+#+beamer_theme: Madrid
+#+beamer_color_theme:
+#+beamer_font_theme:
+#+beamer_inner_theme:
+#+beamer_outer_theme:
+#+beamer_header:
+
+#+LATEX_HEADER: \usepackage{hyperref}
+#+LATEX_HEADER: \hypersetup{colorlinks=true, linkcolor=., urlcolor=blue!70!black, citecolor=blue!70!black}
+#+LATEX_HEADER: \usepackage{xcolor}
+#+LATEX_HEADER: \usepackage{circuitikz}
+#+latex_header: \usepackage{tabularx}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage{amsmath}
+
+* Estructura del Computador
+
+** Máquinas de Estados Finitos
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+- Modelo computacional que describe un fenómeno
+- Es un modelo computacional que describe las transiciones entre
+  diferentes estados posibles.
+- Permite inferir el **algoritmo** o **programa** a construir para
+  resolver un problema.
+#+CAPTION: Máquina de estado Finito para obtener tres tokens Rojos consecutivos
+[[./images/FSM-example.png]]
+  
+** Programa:
+- Secuencia de pasos para resolver un problema
+- Cada paso ejecuta una operación aritmética o lógica
+- Cada operación requiere de un diferente conjunto de señales de
+  control
+- Cada operación tiene un código único e.g. ADD, MOVE
+
+** Estructura del Computador
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+- Sistema integrado de dispositivos electrónicos que interactúa con
+  el entorno a través de dispositivos periféricos o líneas de
+  comunicación y que procesa información.
+
+- La integración de distintos componentes o subsistemas de manera
+  jerárquica. Este conjunto de sistemas busca realizar las siguientes
+  funciones básicas:
+
+  - Procesamiento de Datos
+  - Almacenamiento de Datos
+  - Transferencia de Datos
+  - Control
+
+La /estructura/ estudia cómo están interrelacionados los diferentes
+componentes del computador. Mientras que el /funcionamiento/ estudia
+la operación de cada componente individual como parte de la estructura.
+
+
+** Estructura Superior del Computador
+*** Texto                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :END:
+- El computador interacciona con el medio a través de periféricos o
+  líneas de comunicación.
+- CPU: control del funcionamiento del computador y procesamiento.
+- Memoria Principal: almacena datos
+- I/O: transferencia de datos entre el computador y el entorno externo.
+- Sistemas de Interconexión: son los buses de comunicación
+*** Imagen                                                     :BMCOL:Imagen:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :END:
+
+[[./images/EstructuraComputador.png]]
+
+** CPU
+Se encarga del control del funcionamiento del computador y del
+procesamiento.
+#+CAPTION: CPU
+[[./images/cpu.png]]
+** Unidad de Control
+Conformada por los distintos circuitos digitales, registros,
+decodificadores y memorias necesarios para el funcionamiento del
+computador.
+
+#+CAPTION: Unidad de Control
+[[./images/ControlUnit.png]]
+
+** Componentes del Computador
+#+ATTR_LATEX: :width 0.6\textwidth
+[[./images/componentesComputador.png]]
+
+** Computadores Multi Núcleo
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+- *Computador Multi núcleo:* aquel que tiene múltiples procesadores en
+  un sólo chip
+- *Núcleo:* cada unidad de procesamiento que incluye su unidad de
+  control, ALU, registros, y cache.
+- *Procesador:* dispositivo de silicón que contiene uno o más núcleos.
+- *Memoria Cache:* Memoria más rápida y pequeña que la memoria
+  principal cuyo objetivo principal es *acelerar* el *acceso a la
+  memoria*. Se conforma en varias capas: $L_1$, $L_2$, etc según su
+  cercanía al núcleo.
+- *Motherboard:* placa principal de circuito impreso en una
+  computadora. Las placas más pequeñas que se conectan a las ranuras
+  de la placa principal se llaman *tarjetas de expansión*.
+- *Printed Circuit (PCB):* placa rígida y plana que sostiene e
+  interconecta chips y otros componentes electrónicos. Típicamente de
+  2 a 10 capas
+** Computadores Multi Núcleo
+#+attr_latex: :height 0.8\textheight
+[[./images/ElementosComputadorMultiCore.png]]
+** Componentes del Núcleo
+- *Instruction Logic (IL):* ejecuta tareas relacionadas con la
+  captación y decodificación de instrucciones.
+- *ALU:* realiza las operaciones indicadas por la instrucción.
+- *Load/store logic:* administra la transferencia de datos hacia y
+  desde la memoria principal a través de la *cache*.
+* Electricidad
+** Circuito Eléctrico
+- Un *circuito eléctrico* es una red de componentes eléctricos o
+  electrónicos interconectados que proporciona uno o más caminos
+  cerrados para la circulación de la corriente eléctrica.
+- Todo circuito requiere de:
+  - *Fuente de energía*: suministra la fuerza electromotriz (e.g.,
+    batería, generador)
+  - *Conductores*: cables o pistas que transmiten la corriente
+  - *Carga*: elemento que consume la energía eléctrica (e.g.,
+    resistencia, motor, LED)
+- Los circuitos se analizan mediante *diagramas esquemáticos* que
+  utilizan símbolos normalizados (IEEE/IEC) para cada elemento.
+- Tipos según la conexión de sus elementos:
+  - *Serie*: misma corriente en todos los elementos
+  - *Paralelo*: mismo voltaje en todos los elementos
+  - *Mixto*: combinación de conexiones serie y paralelo
+
+** Electricidad - Generación
+#+caption: Generación Eléctrica y Distribución
+#+attr_latex: scale=0.75
+#+label: fig:label
+[[./images/electricalDistribution.png]]
+** Electricidad - Tensión Trifásica
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+
+#+begin_src python :session :results file
+import numpy as np
+import matplotlib.pyplot as plt
+
+frecuencia  = 60
+t = np.linspace(0,2/frecuencia, 1000)
+omega = 2*np.pi*frecuencia
+Vmax = 230*np.sqrt(2) # Voltaje Pico
+R = Vmax*np.sin(omega*t)
+S = Vmax*np.sin(omega*t-2*np.pi/3)
+T = Vmax*np.sin(omega*t+2*np.pi/3)
+# Plot
+plt.figure(figsize=(10,6))
+plt.plot(t,R,label="Fase R", color="red")
+plt.plot(t,S,label="Fase S", color="green")
+plt.plot(t,T,label="Fase T", color="blue")
+plt.title("Tensión Trifásica")
+plt.ylabel("Voltaje (V)")
+plt.xlabel("Tiempo (s)")
+plt.grid(True, linestyle="--", alpha=0.7)
+plt.legend()
+plt.tight_layout()
+plt.savefig("./images/tensionTrifasica.png")
+# plt.show()
+
+#+end_src
+
+#+RESULTS:
+[[file:None]]
+
+#+caption: Tensión Trifásica
+#+attr_latex: scale=0.8\textheight
+#+label: fig:label
+[[file:images/tensionTrifasica.png]]
+** Electricidad - Conceptos Básicos
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+
+\begin{tabularx}{\textwidth}{lXl}
+\hline
+\textbf{Magnitud} & \textbf{Descripción} & \textbf{Unidad} \\
+\hline
+Voltaje $V$ & Diferencia de potencial eléctrico entre dos puntos & Voltios (V) \\
+
+Corriente $I$ & Flujo de carga eléctrica por unidad de tiempo & Amperios (A) \\
+
+Resistencia $R$ & Oposición al flujo de corriente & Ohmios ($\Omega$) \\
+
+Capacitancia $C$ & Capacidad para almacenar carga eléctrica & Faradios (F) \\
+
+Inductancia $L$ & Oposición a cambios en la corriente & Henrios (H) \\
+\hline
+\end{tabularx}
+
+*** Valor Eficaz
+El Valor Eficaz o Root Mean Square (RMS) de una señal sinusoidal de
+tensión  se define como $V_{\mathrm{RMS}} = \sqrt{\frac{1}{T}\int_0^T V_{\mathrm{max}} \sin^2(\omega t)dt}$
+** Electricidad - Relaciones Básicas
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+
+\centering
+\small
+\begin{tabularx}{0.9\textwidth}{Xccc}
+\hline
+\textbf{Elemento} & \textbf{Voltaje} & \textbf{Corriente} & \textbf{Potencia} \\
+\hline
+\tikz \draw (0,0) to[R=$R$] (1,0);  & $v(t) = R \cdot i(t)$ & $i(t) = \dfrac{v(t)}{R}$ & $p = vi = i^2R$\\
+
+\tikz \draw (0,0) to[L=$L$] (1,0);  & $v(t) = L \dfrac{di(t)}{dt}$ & $i(t) = \dfrac{1}{L} \displaystyle\int v(t) \, dt$ & $p = vi = Li\frac{di}{dt}$ \\
+
+\tikz \draw (0,0) to[pC=$C$] (1,0);  & $v(t) = \dfrac{1}{C} \displaystyle\int i(t) \, dt$ & $i(t) = C \dfrac{dv(t)}{dt}$ & $p=vi=Cv\frac{dv}{dt}$\\
+\hline
+\end{tabularx}
+
+*** Ley de Ohm
+El voltaje $V$, la corriente $I$ y la resistencia $R$ se relacionan
+con la Ley de Ohm $V=IR$
+
+** Leyes de Kirchhoff y Tipos de Conexiones
+*** Serie                                                     :column1:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+begin_export latex
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=.65]{./images/circuitoSerie.png}
+  \caption{Circtuio Serie\label{fig:label} }
+\end{figure}
+#+end_export
+
+\centering
+**LVK:** $v = v_1+v_2+v_3$
+*** paralelo                                                  :column2:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+caption: Circuito Paralelo
+#+attr_latex: scale=0.75
+#+label: fig:label
+[[./images/circuitoParalelo.png]]
+\centering
+**LCK:** $i = i_1+i_2+i_3$
+
+** Aplicación Leyes de Kirchhoff
+*** Circuito                                                 :circuito:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+begin_export latex
+\begin{circuitikz}[american]
+    % Battery
+    \draw
+    (0,0) to[battery1, invert,l=$E$] (0,3)
+    % Switch
+    to[normal open switch] (3,3)
+    % Capacitor
+    to[C,l_=$C$] (3,1.5)
+    % Resistor
+    to[R,l_=$R$] (3,0)
+    -- (0,0);
+\end{circuitikz}
+#+end_export
+*** Problema                                                 :problema:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+*Problema:*
+
+Encuentre expresiones para el voltaje del capacitor y corriente del
+circuito, si el switch se cierra en $t=0$
+
+** Aplicación Leyes de Kirchhoff
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+*** Circuito                                                 :circuito:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+begin_export latex
+\begin{circuitikz}[american]
+    % Battery
+    \draw
+    (0,0) to[battery1, invert,l=$E$] (0,3)
+    % Switch
+    to[normal open switch] (3,3)
+    % Capacitor
+    to[C,l_=$C$] (3,1.5)
+    % Resistor
+    to[R,l_=$R$] (3,0)
+    -- (0,0);
+\end{circuitikz}
+#+end_export
+*** Problema                                                 :problema:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+*Solución:*
+
+LVK: $E = v_C+v_R$
+
+Pero $i = C\frac{dv_C}{dt}$
+
+Ley de Ohm: $v_R=iR$
+
+Dado que el circuito es serie $i$ es la misma, entonces
+
+$E = v_C+RC\frac{dv_C}{dt}$
+
+Para $t=0$, $v_C=0$, entonces
+
+$v_c = E(1-e^{-\frac{t}{RC}})$
+
+Aplicando las propiedades de la capacitancia, tenemos
+
+$i = \frac{E}{R}e^{-\frac{t}{RC}}$
+
+** Aplicación Leyes de Kirchhoff
+*** Circuito                                                 :circuito:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+begin_export latex
+\begin{circuitikz}[american]
+    % Battery
+    \draw
+    (0,0) to[battery1, invert,l=$E$] (0,3)
+    % Switch
+    to[normal open switch] (3,3)
+    % Capacitor
+    to[C,l_=$C$] (3,1.5)
+    % Resistor
+    to[R,l_=$R$] (3,0)
+    -- (0,0);
+\end{circuitikz}
+#+end_export
+*** Problema                                                 :problema:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+*Preguntas:*
+
+1. ¿Qué sucede con el voltaje en el capacitor y la corriente del
+   circuito cuando $t \to +\infty$?
+2. ¿Qué sucede con las expresiones obtenidas para el voltaje del
+   capacitor y la corriente si la fuente de voltaje no es constante y
+   es de la forma $A\sin(\omega t)$
+3. Para $t = RC$, en qué porcentaje se ha cargado el capacitor?
+4. Considere un capacitor de $1\mu \mathrm{F}$, una resistencia de $1
+   \mathrm{M}\Omega$, obtenga la curva de la corriente en el tiempo
+   usando python.
+
+** Aplicaciones Leyes de Kirchhoff
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+
+Para el circuito de carga del capacitor se obtuvo que $v_c =
+E(1-e^{-\frac{t}{RC}})$, considerando $C = 1\mu \mathrm{F}$, $R = 1
+\mathrm{M}\Omega$, y $E = 10V$ el siguiente código permite obtener $v_c$ en
+función del tiempo hasta $t=10s$
+
+#+begin_src python :session :results file
+import numpy as np
+import matplotlib.pyplot as plt
+R = 1e6 # 1 MegaOhm
+C = 1e-6 # 1 microFarad
+V = 10 # 10 Vdc
+t = np.linspace(0,10,1000)
+vc = V*(1-np.exp(-t/(R*C)))
+plt.plot(t,vc)
+plt.title("Carga de un Capacitor en circuito RC")
+plt.grid()
+# plt.show() ## descomentar para ver fig
+# plt.savefig('./images/cargaCapacitor.png') # guardar plot
+#+end_src
+
+#+RESULTS:
+[[file:None]]
+
+** Aplicaciones Leyes de Kirchhoff
+#+caption: Carga del Capacitor
+#+attr_latex: scale=0.75
+#+label: fig:label
+[[file:images/cargaCapacitor.png]]
+
+** Aplicación Leyes de Kirchhoff
+*** Circuito                                                 :circuito:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+begin_export latex
+\begin{circuitikz}[american]
+    % Discharge circuit: switch, capacitor, and resistor in series
+    \draw
+    (0,0) 
+    to[short, o-] (0,3)
+    to[normal open switch] (3,3)
+    to[C, l_=$C$] (3,1.5)
+    to[R, l_=$R$] (3,0)
+    -- (0,0);
+\end{circuitikz}
+#+end_export
+*** Problema                                                 :problema:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+*Problema:*
+
+Encuentre expresiones para el voltaje del capacitor y corriente del
+circuito, si el switch se cierra en $t=0$ y el capacitor inicia
+cargado con un voltaje $V_0$
+
+** Interruptores Electromecánicos: El Contactor
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+
+El *contactor* es un Interruptor electromecánico que conmuta corrientes elevadas ($\ge
+15,\mathtt{A}$) de forma controlada y remota.
+
+- \textbf{Bobina (electroimán):} genera el campo magnético al recibir
+  tensión de control.
+- \textbf{Núcleo fijo:} parte estática del circuito magnético
+- \textbf{Armadura (núcleo móvil):} pieza atraída por el campo.
+- \textbf{Contactos principales:} conducen la corriente del circuito
+  de potencia (e.g. motor).
+- \textbf{Contactos auxiliares:} circuitos de señalización y enclavamiento
+- \textbf{Resorte de retorno:} devuelve la armadura a la posición
+  inicial al desenergizar la bobina
+
+
+#+caption: Partes de un contactor desmontado (Saguzar1, CC0)
+#+attr_latex: :width \linewidth   
+[[./images/despiece_contactor.jpg]]
+# scale=0.75
+** Contactor: Principio de Funcionamiento
+*** Electroimán                                                      :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.34
+:END:
+#+caption: Electroimán con entrehierro y líneas de campo (Chetvorno, PD)
+#+attr_latex: :width \linewidth
+[[./images/electroiman_con_entrehierro.png]]
+
+\medskip
+\small\textbf{Video:} \url{https://youtu.be/YSf_Duvg3hY}
+*** Funcionamiento                                                   :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.64
+:END:
+
+1. \textbf{Energización:} al aplicar tensión a la bobina, la corriente
+   genera un campo magnético $B$ en el núcleo de hierro laminado
+   (Ley de Ampère).
+
+2. \textbf{Atracción:} la fuerza $F = \dfrac{B^2\,A}{2\mu_0}$ atrae
+   la armadura contra el núcleo fijo, venciendo el resorte de retorno.
+
+3. \textbf{Cierre:} el desplazamiento mecánico de la armadura arrastra
+   los contactos móviles, cerrando el circuito de potencia.
+
+4. \textbf{Apertura:} al desenergizar la bobina desaparece $B$; el
+   resorte devuelve la armadura y los contactos se abren.
+
+#+begin_comment
+\medskip
+\textbf{Ventaja:} un circuito de control a baja tensión ($\sim$24\,V)
+gobierna una carga de alta corriente, con aislamiento galvánico total.
+#+end_comment
+
+* Electrónica y Lógica Digital
+** Materiales Semiconductores
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+- Los materiales conductores tienen la característica de producir una
+  corriente eléctrica en presencia de un campo eléctrico.
+- Un semiconductor es un material que exhibe las características tanto
+  de un buen conductor como de un buen aislante. Esta característica
+  se controla por una entrada de control.
+- La conductividad de un semiconductor se controla mediante:
+  temperatura, impurezas (dopaje), y campo eléctrico.
+- **Ejemplos comunes**: Silicio (Si), Germanio (Ge), Arseniuro de
+  Galio (GaAs)
+- Un transistor es un semiconductor que opera como un switch
+  digital. Cambia de alta a baja resistencia dependiendo del estado de
+  una señal de entrada.
+- [[https://youtu.be/ajqrRV9v_JI][Introducción a Diodos y Transistores(Vídeo)]]
+- [[https://youtu.be/fFVU7-kfPe8][¿Qué es un semiconductor?(Vídeo)]]
+
+** Materiales tipo N y tipo P
+*** tipoN                                                             :tipoN:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- **Material Tipo N**: Semiconductor extrínseco dopado con impurezas donadoras
+- **Impurezas comunes**: Fósforo (P), Arsénico (As), Antimonio (Sb) en Silicio
+- **Características**:
+  - Exceso de electrones libres
+  - Portadores mayoritarios: electrones (n$^-$)
+  - Portadores minoritarios: huecos (p$^+$)
+# ⁺
+*** tipoP                                                             :tipoP:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- **Material Tipo P**: Semiconductor extrínseco dopado con impurezas aceptoras
+- **Impurezas comunes**: Boro (B), Aluminio (Al), Galio (Ga) en Silicio
+- **Características**:
+  - Exceso de huecos libres
+  - Portadores mayoritarios: huecos (p$^+$)
+  - Portadores minoritarios: electrones (n$^-$)
+** Materiales tipo N y tipo P
+*** tipoN                                                             :tipoN:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+caption: Tipo N
+#+attr_latex: scale=0.75
+#+label: fig:label
+[[file:images/materialTipoN.png]]
+*** tipoP                                                             :tipoP:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+caption: Tipo P
+#+attr_latex: scale=0.75
+#+label: fig:label
+[[file:images/materialTipoP.png]]
+
+** Diodo
+#+begin_export latex
+\begin{figure}[h]
+\centering
+\begin{circuitikz}[scale=0.8]
+% Unión PN
+\draw[thick] (0,0) -- (2,0);
+\draw[thick, fill=blue!30] (2,0) rectangle (4,1);
+\draw[thick, fill=red!30] (4,0) rectangle (6,1);
+\node at (3,0.5) {P};
+\node at (5,0.5) {N};
+\node at (1,0.5) {Ánodo};
+\node at (7,0.5) {Cátodo};
+
+% Diodo
+\draw (8,0.5) to[diode, o-] (10,0.5);
+\node at (9,-1) {Símbolo del Diodo};
+\end{circuitikz}
+\caption{Unión PN y su representación como diodo}
+\end{figure}
+#+end_export
+** Transistor
+#+begin_export latex
+\begin{figure}[h]
+\centering
+\begin{circuitikz}[scale=0.8]
+% Transistor NPN
+\draw (0,0) node[npn](npn1){};
+\node[left] at (npn1.base) {B};
+\node[above] at (npn1.collector) {C};
+\node[below] at (npn1.emitter) {E};
+\node at (0,-2) {NPN};
+
+% Transistor PNP
+\draw (3,0) node[pnp](pnp1){};
+\node[left] at (pnp1.base) {B};
+\node[below] at (pnp1.collector) {C};
+\node[above] at (pnp1.emitter) {E};
+\node at (3,-2) {PNP};
+\end{circuitikz}
+\caption{Transistores BJT usando materiales tipo N y P}
+\end{figure}
+#+end_export
+
+** Compuertas Lógicas
+*** Texto                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.4
+    :END:
+- Son arreglos de circuitos con transistores que permiten realizar
+  operaciones lógicas
+- Un transistor tiene un voltaje de switching de 0.7V.
+- Con un $V \ge 0.7$, el transistor se activa y la resistencia entre
+  colector y emisor se reduce, colocando la salida a un bajo voltaje.
+- El comportamiento del circuito se puede expresar en una **tabla de
+  verdad**
+*** Imagen                                                     :BMCOL:Imagen:
+    :PROPERTIES:
+    :BEAMER_col: 0.6
+    :END:
+[[./images/notGate.png]]
+[[https://github.com/LeninGF/EPN-Lectures/tree/main/iccd332ArqComp-2024-B/Simulaciones][Not_Gate_Simulation.slx]]
+** Compuertas Lógicas
+*** Texto                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.4
+    :END:
+    \begin{tabular}{ccc}
+    \hline
+    $input_1$ & $input_2$ & salida \\ \hline
+    0 & 0 & 0\\
+    0 & 1 & 0\\
+    1 & 0 & 0\\
+    1 & 1 & 1\\ \hline
+    \end{tabular}
+*** Imagen                                                     :BMCOL:Imagen:
+    :PROPERTIES:
+    :BEAMER_col: 0.6
+    :END:
+[[./images/andGate.png]]
+* Algebra de Boole
+** Álgebra de Boole y Compuertas Lógicas
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+- Utilizada para resolver problemas de diseño de circuitos de
+  conmutación
+- Las variables y las operaciones son **lógicas**
+- 1 equivale a Verdadero
+- 0 equivale a Falso
+- Las operaciones lógicas AND, OR y NOT se denotan como:
+
+  \begin{center}
+	\begin{tabular}{|ccccc|}
+		\hline
+		 AND & $A \land B$ &  $A \cap B$ & $A\cdot B$ & \begin{circuitikz} \draw (0,0) node[and port] {}; \end{circuitikz}\\
+		 OR & $A \lor B$  & $A \cup B$ & $ A+B$  & \begin{circuitikz} \draw (0,0) node[or port] {}; \end{circuitikz}\\
+		 NOT & $\lnot A$ & $A^{\complement}$ & $\bar{A}$ & \begin{circuitikz} \draw (0,0) node[not port] {}; \end{circuitikz}\\ 
+		\hline
+	 \end{tabular}
+  \end{center}
+  
+- Es importante notar que las compuertas NAND y NOR son las
+  respectivas negaciones de las compuertas AND y OR i.e.
+
+$$A \, NAND\, B = \lnot(A \land B) = \overline{A \land B}$$
+
+$$A \, NOR\, B = \lnot(A \lor B) = \overline{A \lor B}$$
+
+- AND, OR y NOT son un conjunto funcionalmente completo. 
+- NAND y NOR pueden implementar cualquier circuito digital ya que las
+  AND, OR y NOT se pueden implementar directamente sólo con compuertas
+  NAND o NOR. Condición favorable para procesos de fabricación.
+** Leyes del Algebra de Boole
+\scriptsize
+|---------------------------------------------+---------------------------------------+-------------------|
+| ${+}$                                       | $\cdot$                               | Ley               |
+|---------------------------------------------+---------------------------------------+-------------------|
+| $A+0=A$                                     | $A\cdot 1=A$                          | Identidad         |
+| $A+1=1$                                     | $A\cdot 0 = 0$                        | Dominio           |
+| $A+A = A$                                   | $A\cdot A = A$                        | Idempotencia      |
+| $A+\overline{A}=1$                          | $A\cdot \bar{A}=0$                    | Complementariedad |
+| $A+A \cdot B = A$                           | $A \cdot(A+B) = A$                    | Absorción         |
+| $A+\bar{A} \cdot B = A+B$                   | $A\cdot(\bar{A}+B) = A\cdot B$        | Reducción         |
+| $(A+B)+C=A+(B+C)$                           | $(AB)C = A(BC)$                       | Asociatividad     |
+| $A+B\cdot C = (A+B)\cdot (A+C)$             | $A\cdot(B+C) = A\cdot B+A\cdot C$     | Distribución      |
+| $\overline{(A + B)} = \bar{A}\cdot \bar{B}$ | $\overline{A\cdot B}=\bar{A}+\bar{B}$ | De Morgan         |
+|---------------------------------------------+---------------------------------------+-------------------|
+Negación de la Negación: $\bar{\bar{A}} = A$
+\normalsize
+* Circuitos Combinacionales
+** Circuitos Combinacionales 
+- Conjunto de compuertas lógicas interconectadas cuya salida, en un
+momento dado, es función únicamente de las entradas en ese instante.
+- La relación puede ser expresada por /funciones booleanas/ o por
+  /tablas de verdad/.
+- La ecuación booleana se puede simplificar con aplicación de las
+  identidades o postulados básicos del álgebra booleana o por Mapas de
+  Karnaugh
+- Se pueden expresar como Suma de Productos (SOP) o productos de sumas
+  (POS)
+- El Teorema de Morgan permite hacer la conmutación de las dos
+  representaciones.
+** Representación de Min-Terms o Sumas de Productos (SOP)
+Sea $F(X_1,X_2, \cdot, X_n )$ la salida de un circuito lógico
+combinacional booleano que recibe como entradas $X_1,X_2, \cdot, X_n$, encontes:
+1. Localizar los casos de la /Tabla de Verdad/ donde la Función $F=1$
+2. Para cada uno de los casos identificados escribir **el producto** de
+   las entradas considerando que si la entrada en la tabla vale 1, se
+   mantiene el símbolo. Si vale 0, se escribe el complemento.
+3. Sume los productos obtenidos
+
+** Representación de Max-Terms o Productos de Sumas (POS)
+Sea $F(X_1,X_2, \cdot, X_n )$ la salida de un circuito lógico
+combinacional booleano que recibe como entradas $X_1,X_2, \cdot, X_n$, encontes:
+1. Localizar los casos de la /Tabla de Verdad/ donde la Función $F=0$
+2. Para cada uno de los casos identificados escribir **la suma** de
+   las entradas considerando que si la entrada en la tabla vale 0, se
+   mantiene el símbolo. Si vale 1, se escribe el complemento.
+3. Sume los productos obtenidos
+** Ejemplo de Representación como SOP
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+Considera la Siguiente Tabla de Verdad:
+*** Tabla                                                       :TABLA:BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.3
+    :END:
+|---+---+---+-------|
+| A | B | C | F     |
+|---+---+---+-------|
+| 0 | 0 | 0 | **1** |
+| 0 | 0 | 1 | 0     |
+| 0 | 1 | 0 | **1** |
+| 0 | 1 | 1 | **1** |
+| 1 | 0 | 0 | 0     |
+| 1 | 0 | 1 | 0     |
+| 1 | 1 | 0 | **1** |
+| 1 | 1 | 1 | 0     |
+|---+---+---+-------|
+
+
+
+*** Representación SOP:                                         :TEXTO:BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :END:
+- Los casos que interesan son: 000, 010, 011, y 110, porque $F=1$.
+- En consecuencia, existen 4 Sumas de Productos. En cada producto, si
+  la variable está con 0 se complementa. Si está con 1 se deja:
+
+$$F = \bar{A}\bar{B}\bar{C}+\bar{A}B\bar{C}+\bar{A}BC+AB\bar{C}$$
+
+- Una vez obtenida se debe reducir por medio de Mapa K. o postulados
+  del álgebra booleana.
+
+** Ejemplo de Representación como POS
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+Considera la Siguiente Tabla de Verdad:
+*** Tabla                                                       :TABLA:BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.3
+    :END:
+|---+---+---+-------|
+| A | B | C | F     |
+|---+---+---+-------|
+| 0 | 0 | 0 | 1     |
+| 0 | 0 | 1 | **0** |
+| 0 | 1 | 0 | 1     |
+| 0 | 1 | 1 | 1     |
+| 1 | 0 | 0 | **0** |
+| 1 | 0 | 1 | **0** |
+| 1 | 1 | 0 | 1     |
+| 1 | 1 | 1 | **0** |
+|---+---+---+-------|
+
+
+
+*** Representación POS:                                         :TEXTO:BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :END:
+- Los casos que interesan son: 001, 100, 101, y 111, porque $F=0$
+- En consecuencia, existen 4 Productos de Sumas. En cada producto, si
+  la variable está con 1 se complementa. Si está con 0 se deja:
+
+$$F =
+(A+B+\bar{C})(\bar{A}+B+C)(\bar{A}+B+\bar{C})(\bar{A}+\bar{B}+\bar{C})$$
+
+- Una vez obtenida se debe reducir por medio de Mapa K. o postulados
+  del álgebra booleana.
+
+* Circuitos Secuenciales
+** Circuitos Secuenciales
+La salida actual de estos circuitos depende de la entrada actual y de
+la historia pasada de las entradas. Estos circuitos usan una
+señal de reloj, generalmente. Ejemplos son:
+
+- Biestables o latch SR
+- Biestable D
+- Registros
+- Contadores 
+* Ejercicios
+** Ejercicios
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+1. A partir de la tabla de verdad de la compuerta OR exclusiva de dos
+   entradas obtenga la función booleana como SOP (min-términos).
+2. Para el ejercicio anterior obtenga la representación en POS
+   (max-términos).
+3. ¿Puede representar el circuito sólo con compuertas NAND?
+4. Simplificar $F = ACD+\bar{A}BCD$. Resp:$CD(A+B)$ 
+5. Simplificar $F=ABC+A\bar{B}\overline{\bar{A}\bar{C}}$ R: $A(\bar{B}+C)$
+6. A partir de la Tabla [[tab-ejercicio]]  de verdad obtener la representación
+   en SOP.
+7. Usando Mapas de Karnaugh obtenga la simplificación del circuito de
+   la Tabla [[tab-ejercicio]]
+
+#+CAPTION: Ejercicio de tres variables
+#+NAME: tab-ejercicio
++--+--+--+-----+
+|A  B  C |F    |
++--+--+--+-----+
+|0   0  0| 0   |
+|0   0  1| 0   |
+|0   1  0| 1   |
+|0   1  1| 1   |
+|1   0  0| 0   |
+|1   0  1| 0   |
+|1   1  0| 1   |
+|1   1  1| 0   |
++--+--+--+-----+
+
+
+** COMMENT Tarea
+*** COMMENT Tarea                                                   :B_definition:Tarea:
+    # :PROPERTIES:
+    # :BEAMER_env: definition
+    # :END:
+
+    # Escribir una función en python que permita dado un número binario de 8
+    # bits obtener su negativo usando el criterio de signo magnitud
+
+

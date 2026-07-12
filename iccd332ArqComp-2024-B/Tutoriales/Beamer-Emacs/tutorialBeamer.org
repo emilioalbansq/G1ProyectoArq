@@ -1,0 +1,872 @@
+#+options: ':nil *:t -:t ::t <:t H:2 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: Presentaciones Latex con Emacs
+#+date: 2024-04-27
+#+author: Lenin G. Falconí
+#+email: lenin.falconi@epn.edu.ec
+#+language: es
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.6.27)
+#+cite_export:
+#+options: H:2
+#+latex_class: beamer
+#+columns: %45ITEM %10BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
+#+beamer_theme: Warsaw
+#+beamer_color_theme:
+#+beamer_font_theme:
+#+beamer_inner_theme:
+#+beamer_outer_theme:
+
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \DeclareUnicodeCharacter{2500}{-}
+#+LaTeX_HEADER: \usepackage{hyperref}
+#+LaTeX_HEADER: \hypersetup{colorlinks=true, linkcolor=magenta, urlcolor=red}
+#+LaTeX_HEADER: \RequirePackage{fancyvrb}
+
+#+LaTeX_HEADER: \setbeamercolor{titlelike}{fg=white}
+#+LaTeX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\scriptsize}
+#+OPTIONS: listings:t
+
+
+* ¿Qué es Emacs?
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+
+** Un entorno de programación extensible y personalizable
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+- No es simplemente un editor de texto.
+- Es un *intérprete de Lisp* diseñado para la computación interactiva.
+- Un entorno de trabajo que evoluciona contigo.
+- "El sistema operativo dentro de tu sistema operativo".
+- Filosofía: Proveer un entorno autocontenido y altamente adaptable
+  para la manipulación de texto y datos estructurados.
+
+** Filosofía: Plataforma vs. Producto
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+- **VS Code:** Un producto con decisiones predefinidas por terceros.
+- **Emacs:** Una plataforma donde tú escribes el comportamiento del software.
+- **Inversión:** Tu configuración evoluciona contigo por décadas; no caduca.
+- **Contexto único:** "Everything in Emacs" para reducir el cambio de
+  aplicaciones.
+
+Es un ecosistema que puede ser personalizado a tu estilo de trabajo,
+con el principio /Everything in Emacs/ que reduce la necesidad de
+cambiar de contexto entre aplicaciones.
+
+** El Corazón: Elisp (Emacs Lisp)
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+- Casi todo lo que ves en Emacs está escrito en Elisp.
+- Puedes evaluar código en tiempo real.
+- No necesitas reiniciar el editor para aplicar cambios profundos.
+- *Ejemplo:* ¿Quieres que el editor se comporte distinto al guardar un archivo? Escribe una función y conéctala a un "hook".
+
+** Conceptos Clave de Operación
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+- **Búferes y Ventanas:** La unidad de trabajo es el búfer (archivo, proceso, ayuda).
+- **Modalidad sin modos estrictos:** Operación directa complementada con "modos menores".
+- **Comandos por teclado:** Uso intensivo de ~M-x~ y ~C-x~ para ejecutar funciones Elisp.
+- **Documentación integrada:** Ayuda instantánea con ~C-h k~ (teclas) y ~C-h f~ (funciones).
+
+** Emacs en el contexto académico y de desarrollo
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+- **Redacción técnica:** Modo *Org* e Integración con \LaTeX y BibTeX (RefTeX).
+- **Software Libre:** Garantiza libertad de uso, estudio y
+  modificación (GNU GPL).
+- **Gestión bibliográfica:** Herramientas como ~org-ref~ para investigadores.
+- Soporte nativo para decenas de lenguajes de programación.
+
+** La Joya de la Corona: Org-mode
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+- Mucho más que "tomar notas": un ecosistema de productividad completo.
+- **Gestión:** Tareas (GTD), agendas y calendarios (~org-agenda~).
+- **Exportación:** Genera PDFs, HTML y diapositivas (como esta) desde un solo origen.
+- **Literate Programming:** Documentos que mezclan texto, ecuaciones y código ejecutable.
+
+** ¿Qué más puede hacer Emacs?
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+    - /Edición de código/: Completado inteligente (company-mode),
+      verificación de sintaxis (flycheck), navegación (lsp-mode).
+    - /Gestión de proyectos/ (projectile, magit).
+    - /Composición de documentos/ (Org mode, AUCTeX).
+    - /Correo y noticias/ (mu4e, gnus).
+    - /Agenda y calendario/ (org-agenda).
+    - /Shell integrada/ (eshell, term, vterm).
+    - /Navegación web/ (eww).
+    - /Personalización total/: Desde atajos de teclado hasta la
+      creación de nuevas aplicaciones dentro de Emacs.
+
+** Conclusión: ¿Qué es Emacs?
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+- Emacs no es solo un editor; 
+- Su curva de aprendizaje es pronunciada, pero su retorno en
+  productividad y control es enorme.
+- **VS Code:** Gratificación instantánea, pero techo de personalización bajo.
+- **Emacs:** Frustración inicial, pero techo de personalización infinito.
+- Se trata de disfrutar el proceso de "construir tu propia herramienta".
+- Si buscas una herramienta que simplemente funcione de salida, quédate en VS Code.
+- Si buscas una herramienta que sea una **extensión de tu
+  pensamiento** y estás dispuesto a aprender, Emacs es el destino
+  final.
+* Objetivos
+** Objetivos con Emacs
+- En este curso, nos enfocaremos en usar Emacs  para la creación de
+  presentaciones y artículos académicos con \LaTeX, aprovechando el modo Org
+  como interfaz unificada. Esto ahorra el uso de la sintaxis de
+  \LaTeX, reservándola para requerimientos especiales.
+- También abordaremos el concepto de /literate programming/ y cómo
+  ~Org~ permite crear documentos que involucran: texto, código y
+  ecuaciones matemáticas.
+
+* Configuración e Instalación en Windows
+** Procedimiento de Configuración en Windows
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:CUSTOM_ID: procedimiento-windows
+:END:
+
+Se requiere realizar los siguientes ajustes para que Emacs opere:
+
+1. Instalar WSL o un distro de Linux: Se pueden seguir los pasos de la
+   [[https://learn.microsoft.com/es-es/windows/wsl/install][Guía de Instalación]]
+2. Instalar Emacs:
+      #+begin_src shell
+        sudo apt-get update
+        sudo apt install emacs
+      #+end_src
+3. Instalar LaTeX (básica o completa):
+      #+begin_src shell
+	sudo apt install texlive-full
+      #+end_src
+   Existen otras opciones para Latex que consumen menos recursos (ver
+   [[https://linuxconfig.org/how-to-install-latex-on-ubuntu-20-04-focal-fossa-linux][enlace]]):
+      #+begin_src shell
+        sudo apt install texlive-latex-extra
+      #+end_src
+4. Instalar Python
+5. Configurar el archivo en ~/.emacs.d/init.el
+* Instalación Python
+:PROPERTIES:
+:CUSTOM_ID: install-python
+:END:
+** Instalación de Python
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+
+Para instalar python se utilizará el entorno de anaconda o
+mamba. Existen recomendaciones en favor de mamba. La dirección del
+repositorio de Github se encuentra en el enlace [[https://github.com/conda-forge/miniforge/][miniforge]]
+
+1. Abra el subsistema  de Linux para Windows: [[https://learn.microsoft.com/es-es/windows/wsl/install][guía de instalación]]
+
+2. Descargue e instale Mamba: [[https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh][Descargar ejecutable desde github]]
+   #+begin_src shell
+     wget colocar/direccion/archivo_sh_Linux_x86_64
+     sudo chmod +x Miniforge3-Linux-x86_64
+     ./Miniforge3-Linux-x86_64
+   #+end_src
+3. Siga los pasos que indica el instalador y reinicie el shell con
+   ~source ~/.bashrc~ o saliendo de wsl con ~exit~ y volviendo a
+   ingresar desde el ~CMD~ de windows con ~wsl -d <Nombre del Distro>~
+4. Cree un entorno con las ~python=3.14~ para instalar las librerías a utilizar
+   #+begin_src shell
+     mamba create --name iccd332 python=3.14
+   #+end_src
+5. Para activar el entorno puede usar ~conda activate iccd332~ o
+   ~mamba activate iccd332~. Sin embargo, 
+** Trouble Shooting Mamba Activate
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+Puede suceder que al ejecutar el comando ~mamba activate~ se presente el siguiente error
+#+begin_src shell
+  'mamba' is running as a subprocess and can't modify the parent shell.
+Thus you must initialize your shell before using activate and deactivate.
+
+To initialize the current bash shell, run:
+    $ eval "$(mamba shell hook --shell bash)"
+and then activate or deactivate with:
+    $ mamba activate
+To automatically initialize all future (bash) shells, run:
+    $ mamba shell init --shell bash --root-prefix=~/.local/share/mamba
+If your shell was already initialized, reinitialize your shell with:
+    $ mamba shell reinit --shell bash
+Otherwise, this may be an issue. In the meantime you can run commands. See:
+    $ mamba run --help
+
+Supported shells are {bash, zsh, csh, posix, xonsh, cmd.exe, powershell, fish, nu}.
+critical libmamba Shell not initialized
+#+end_src
+
+En este caso se sugiere ejecutar el siguiente comando para poder usar
+el comando. Sin embargo, la dirección debe coincidir con la dirección
+en donde está instalado el ~miniforge~. Para saber en donde está
+instalado el miniforge ejecute:
+#+begin_src shell :exports both :results verbatim
+conda env list
+#+end_src
+
+#+RESULTS:
+: 
+: # conda environments:
+: #
+: # * -> active
+: # + -> frozen
+: base                     /home/leningfe/miniforge3
+: tfmlenv              *   /home/leningfe/miniforge3/envs/tfmlenv
+: 
+
+Para mi caso la dirección es ~/home/leningfe/miniforge3~. Que también
+puede escribirse como ~~/miniforge3~. En consecuencia, desde el
+terminal ejecute:
+#+begin_src shell
+  mamba shell init --shell bash --root-prefix=~/miniforge3
+#+end_src
+
+Una vez ejecutado reinicie el shell o ejecute ~source
+~/.bashrc~. Puede reiniciar saliendo de wsl con ~exit~ y luego ~wsl
+--shutdown~, si se abrió sesión de wsl desde un CMD de Windows
+** Paquetes recomendados de Instalación Python
+Instalar los siguientes paquetes para disponer del shell avanzado
+de Ipython y el complemento *rise* para convertir un jupyter-notebook
+en una presentación tipo reveal.js
+
+#+begin_src shell
+mamba install ipython
+mamba install jupyter
+pip install jupyterlab-rise
+#+end_src
+** Librerías para Exportar Jupyter Notebook a PDF
+Para exportar un cuaderno de Jupyter a PDF se requiere que el Sistema
+Operativo de Linux disponga de la librería Pandoc:
+#+begin_src shell
+sudo apt-get install pandoc
+#+end_src
+También, si la instalación de \LaTeX se hizo con librerías mínimas, es
+necesario disponer de ~xelatex~
+#+begin_src shell
+sudo apt-get install texlive-xetex
+#+end_src
+
+Con esto la exportación del cuaderno a PDF se realiza haciendo clic en
+*/File/Save and Export Notebook As/PDF/*
+** Configuración Emacs
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:CUSTOM_ID: configEmacs
+:END:
+
+- El archivo init.el puede generar instalaciones y activaciones para
+  emacs por lo que se sugiere reiniciar emacs para que las
+  configuraciones surtan efecto
+- El comportamiento de Emacs es completamente configurable por el
+  usuario a través del archivo ~/.emacs.d/init.el
+- El directorio ~/.emacs.d/~ se genera la primera vez que abre
+  emacs. Debe crear el archivo ~init.el~ dentro de éste.
+- Para que no exista conflictos en el uso de la configuración revise
+  si existe alternativamente el archivo oculto ~.emacs~ en la raíz del
+  sistema operativo. Para esto use el comando ~ls -lha~ desde la
+  posición de ~home~. Por ejemplo, debe existir únicamente el
+  directorio ~.emacs.d~:
+
+#+begin_src shell
+cd
+pwd
+ls -lha | grep emacs
+#+end_src
+
+#+RESULTS:
+| /home/leningfe |    |          |          |      |     |    |       |                            |
+| drwx------     | 10 | leningfe | leningfe | 4.0K | Feb | 18 | 22:49 | .emacs.d                   |
+| -rw-r--r--     |  1 | leningfe | leningfe | 157M | Apr |  9 |  2025 | emacs-config-backup.tar.gz |
+| drwxr-xr-x     |  2 | leningfe | leningfe | 4.0K | Jul |  4 |  2025 | emacs-init-files           |
+
+- Si existe el archivo ~.emacs~ borrarlo con ~rm .emacs~ desde la
+  posición de  home
+#+begin_comment
+- Abra el archivo init.el en Emacs y escriba la siguiente configuracion
+  #+begin_src emacs-lisp
+    ;; Configure Org Babel to load Python
+(org-babel-do-load-languages
+'org-babel-load-languages
+ '((python . t))) ; This line activates Python
+;;
+(setq python-shell-interpreter "/path/to/anaconda/envs/myenv/bin/python")
+
+  #+end_src
+#+end_comment
+
+** Configuración Emacs Archivo y creación de archivo init.el
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+1. Ubíquese en la raíz de Ubuntu ~cd~
+2. Verifique que se encuentra en la raíz de su sistema con el comando
+   ~pwd~. Por ejemplo:
+   #+begin_src shell 
+   cd
+   pwd
+   #+end_src
+
+   #+RESULTS:
+   : /home/leningfe
+
+3. Abra emacs desde la línea de comandos de Ubuntu(WSL)~emacs &~
+
+4. Verifique la presencia de archivos ocultos con el comando ~ls -la~
+   desde la raíz (i.e. ~/home/leningfe~)
+
+5. Si existe un archivo ~.emacs~ bórrelo usando
+   #+begin_src shell
+     rm .emacs
+   #+end_src
+
+6. Verifique que existe únicamente la carpeta ~.emacs.d/~
+   #+begin_src shell :results verbatim :exports both
+   cd 
+   pwd
+   ls -lha | grep emacs
+   #+end_src
+
+   #+RESULTS:
+   | /home/leningfe |    |          |          |      |     |    |       |                            |
+   | drwx------     | 10 | leningfe | leningfe | 4.0K | Feb | 18 | 22:54 | .emacs.d                   |
+   | -rw-r--r--     |  1 | leningfe | leningfe | 157M | Apr |  9 |  2025 | emacs-config-backup.tar.gz |
+   | drwxr-xr-x     |  2 | leningfe | leningfe | 4.0K | Jul |  4 |  2025 | emacs-init-files           |
+
+7. Abra Emacs con ~emacs &~ desde la raíz
+
+8. Cree el archivo ~init.el~ haciendo ~C-x C-f~
+
+9. Escriba el destino en ~/home/<<User>>/.emacs.d/init.el~. Sustituya
+   con <<User>> con su Usuario
+
+10. Copie el contenido del archivo desde [[https://github.com/LeninGF/EPN-Lectures/blob/main/iccd332ArqComp-2024-B/configEmacs/init.el][Github]]. Use ~C-y~
+    para pegar en el archivo creado. Guarde los cambios con ~C-x C-s~.
+
+11. Personalice el archivo con las características personales suyas y
+    de su máquina.
+
+12. Puede cerrar y reiniciar Emacs para inciar la instalación. Si no
+    desea salir, puede desencadenar la instalación haciendo ~M-x eval-buffer~
+
+* Comandos básicos de Emacs
+** Comandos básicos de Emacs
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+Emacs utiliza las teclas ~CTRL~ y ~ALT~, en combinación con otras para
+desencadenar acciones y comportamientos. Abreviamos ~CTRL~ con ~C~ y
+~ALT~, que se conoce como ~META~, con la letra ~M~.
+
+Se sugiere que revise el Tutorial Integrado en Emacs para
+familiarizarse con el sistema. Este tutorial está disponible en
+español ejecutando el comando ~M-x help-with-tutorial-spec-language~.
+
+Para ejecutar un comando compuesto no es necesario mantener presionada
+la combinación de teclas. Usted notará en la barra inferior que cuando
+ha presionado una combinación, Emacs responde indicando el comando y
+aguardando a que complete si es que el comando requiere de
+adicionales. Caso contrario se ejecuta.
+
+
+#+ATTR_LATEX: :environment tabular :font \scriptsize :placement [H]
+#+NAME: tabla-emacs
+#+CAPTION: Comandos de Emacs
+
++--------------------+--------------------+--------------------+--------------------+
+| Comando            | Acción             | Comando            | Acción             |
++--------------------+--------------------+--------------------+--------------------+
+|  C-x C-s           |  guardar           |  C-x C-c           | Salir Emacs        |
++--------------------+--------------------+--------------------+--------------------+
+|  C-n               |  siguiente renglón |  C-p               | anterior renglón   |
++--------------------+--------------------+--------------------+--------------------+
+|  C-f               | avanza un carácter | C-b                | atrás un carácter  |
++--------------------+--------------------+--------------------+--------------------+
+|  M-f               | avanza una palabra | M-b                | atrás una palabra  |
++--------------------+--------------------+--------------------+--------------------+
+| C-a                | ir a inicio        | C-e                | ir al fin          |
++--------------------+--------------------+--------------------+--------------------+
+|  C-SPC             | selecciona región  | C-g                | cancelar comando   |
++--------------------+--------------------+--------------------+--------------------+
+|C-d                 | Borrar un carácter | M-d                | borrar palabra     |
++--------------------+--------------------+--------------------+--------------------+
+** Referencias Web para Comandos Emacs
+- [[https://quickref.me/emacs.html][Emacs Cheat Sheet English]]
+- [[https://cheatography.com/peraza00/cheat-sheets/emacs-guide/#google_vignette][Emacs Cheat Sheet Español]]
+- [[https://www.gnu.org/software/emacs/tour/][Emacs Tour]]
+- [[https://orgmode.org/manuals.html][Manual de Documentos Org]]
+* Configuración en Linux
+** Configuración en Linux
+- Python :: Se realiza directamente la descarga del Miniforge conforme a lo
+  señalado en [[#install-python][Instalación Python]]
+- Emacs :: Se realiza directamente los comandos en  en el punto 3.
+- \LaTeX :: Se realiza directamente los comandos en
+  [[id:procedimiento-windows][Configuración e Instalación Windows]] en el punto 2.
+
+En Linux **no** es necesario instalar **WSL**
+** Instalación de Corrector Ortográfico
+Para la corrección ortográfica se requiere de la librería ~aspell~. Esta se puede instalar de la siguiente manera en Linux
+#+begin_src shell
+sudo apt install aspell aspell-en aspell-es
+#+end_src
+
+#+RESULTS:
+** Habilitación de Elpy
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+- Elpy es un paquete de Emacs para edición de scripts de
+  Python. Permite completar el código de manera automática, acceder a
+  documentación, etc.
+
+- Su auto configuración inicia si creamos un archivo ~.py~. Al hacerlo
+  pedirá instalar dependencias necesarias. Esta pregunta aparecerá en
+  la parte inferior en la barra de estado de Emacs y debe contestarla
+  afirmativamente con una ~y~.
+
+- Para revisar el estado de la configuración de Elpy ejecute ~M-x
+  elpy-config~. Este comando abrirá un buffer en el que indicará el
+  entorno virtual utilizado, las versiones de python y también si hace
+  falta instalar alguna paquetería adicional.
+
+- En el archivo de configuración ~init.el~ es importante definir el
+  ~path~ a la carpeta de entornos de *Anaconda*. Para ser cuál es la
+  carpeta de los entornos ejecute el comando ~mamba info --envs~:
+
+#+begin_src shell :results verbatim :exports both
+mamba env list
+#+end_src
+
+#+RESULTS:
+:   Name     Active  Path                                  
+: ───────────────────────────────────────────────────────────
+:   base             /home/leningfe/miniforge3             
+:   tfmlenv  *       /home/leningfe/miniforge3/envs/tfmlenv
+
+
+En el archivo ~init.el~ debe personalizar con su dirección respectiva
+agregando por ejemplo
+
+#+begin_src elisp
+(setenv "WORKON_HOME" "/home/leningfe/miniforge3/envs/")
+#+end_src
+
+Reinicie Emacs y luego ejecute ~M-x pyvenv-workon~ y seleccione el
+entorno de *Anaconda* que se usará para trabajar con Python. Si
+ejecuta de nuevo el diagnóstico de Elpy, notará que ya no está con
+~None~ en la declaración de ~Virtualenv~/
+
+Instale la paquetería sugerida en el diagnóstico.
+
+* Integración de IA en Emacs GPTEL
+** Habilitación de Modelos Grandes de Lenguaje o LLM
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+1. Disponer de una cuenta en GitHub. La configuración del archivo
+   ~init.el~ hace uso por defecto de ~CoPilot~
+2. Instalar ~wslview~ a fin de que en el primer uso del Chat se pueda
+   habilitar el uso de ~CoPilot~ en el dispositivo: ~sudo apt install wslu~
+3. Instalar el paquete para modo de MarkDown. Los archivos de chat con
+   las ~LLM~ se guardan por defecto en formato ~MarkDown~. Sin
+   embargo, si existiera problema, se pueden modificar para que se
+   guarden en archivo ~.org~. Para esto puede ejecutar:
+   1. ~M-x package-install RET~
+   2. busca el paquete ~markdown-mode~
+** Utilización de Modelos Grandes de Lenguaje o LLM
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+El paquete que realiza la conexión entre ~Emacs~ y los diferentes
+~LLMs~ es ~GPTEL~. Para iniciar un chat y configurarlo puede ejecutar:
+~M-x gptel-menu~. Se abrirá un menú en donde podrá configurar el
+funcionamiento del sistema, cambiar de ~LLM~ y configurar desde donde
+se envía el prompt y dónde se obtiene la respuesta.
+
+Una sesión de chat se puede grabar ~C-x C-s~ y se puede restablecer
+abriendo el archivo y activando ~M-x gptel-mode~.
+
+* Configuración e Instalación en MacOS
+** Configuración en MacOS (Instalar Brew)
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+1. *Instalar ~brew~:*
+   - Utilizar el comando de la página de HomeBrew
+   - El comando identifica la arquitectura del sistema automáticamente
+   - Seguir las indicaciones en pantalla
+
+#+begin_src shell :exports code
+ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#+end_src
+
+2. Para que ~brew~ sea reconocido por el sistema operativo ejecutar:
+
+#+begin_src shell :exports code
+ echo >> /Users/delta/.zprofile
+ echo 'eval "$(/usr/local/bin/brew shellenv)"' >> /Users/delta/.zprofile
+ eval "$(/usr/local/bin/brew shellenv)"
+#+end_src
+
+3. Verificar que ~brew~ está funcionado en el sistema usando los
+   comandos:
+#+begin_src shell
+  which brew
+#+end_src
+
+#+begin_src shell
+  brew --version
+#+end_src
+** Instalar \LaTeX en MacOS
+Usando ~brew~ proceder a la instalación completa de \LaTeX mediante
+el comando:
+
+#+begin_src shell
+  brew install --cask mactex
+#+end_src
+
+** Instalar Emacs en MacOS
+Utilizar el comando:
+
+#+begin_src shell
+ brew install --cask emacs
+#+end_src
+
+Se debe asegurar que Emacs detecte la instalación de \LaTeX
+** Instalar Python en Mamba en MacOS
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+1. Instalar ~wget~ o usar e comando ~curl~ para descargar el archivo
+#+begin_src shell
+  brew install wget
+#+end_src
+2. Ejecutar el siguiente comando disponible en el GitHub de Miniforge:
+#+begin_src shell
+  wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+#+end_src
+#+begin_src shell
+  curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+#+end_src
+3. Verificar la dirección de descarga del archivo
+4. Usar ~chmod +x~ seguido del nombre del archivo descargado para
+   convertirlo en ejecutable
+5. Realice la ejecución del script de instalación
+6. Siga los pasos en pantalla de igual manera  Windows/Linux
+7. Reinicie el terminal para observar si ~Mamba~ está instalado
+
+** Configuración de Teclado para Emacs
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+Dado que el teclado de MacOs es diferente, es necesario que el archivo
+de configuración ~~/.emacs.d/init.el~ permita el uso adecuado de
+~Command~ como ~Alt~ o ~Meta~ y desactivar el ~Option~ a fin de poder
+obtener los caracteres especiales del teclado.
+
+1. Crear o editar el archivo ~~/.emacs.d/init.el~
+2. Insertar en el archivo la configuración siguiente:
+   #+begin_src elisp
+     (setq mac-command-modifier 'meta)
+     (setq mac-option-modifier 'none)
+   #+end_src
+3. Guardar el archivo ~C-x C-s~
+4. Evaluar el buffer ~M-x eval-buffer~ o reiniciar Emacs
+** Instalar paquetes adicionales
+Puede usar ~brew~ para instalar componentes adicionales como pandoc
+
+#+begin_src shell
+  brew install pandoc
+#+end_src
+
+* Presentaciones con Emacs
+** Hacer una presentación en Emacs
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+
+1. Abrir emacs ejecuntando `emacs` desde la línea de comandos
+2. Genere un archivo de extensión .org
+   - C-x C-f
+   - presentacion.org
+3. Active el modo org para beamer: M-x org-beamer-mode
+4. Coloque el encabezado por defecto y el de beamer
+   - C-c C-e # default
+   - C-c C-e # beamer
+     **Observar:** el encabezado de beamer sólo se
+     activa si el **modo org-beamer** está habilitado
+5. En opciones, cambiar H:1 a H:2 para que los títulos se interpreten
+   como Secciones de la presentación y las Subsecciones como título de
+   la presentación
+5. Utilice el sistema de marcas de Emacs para escribir la presentación
+- * Sección/Título
+- ** Título Presentación/Subtítulo
+- Una palabra encerrada entre ** equivale a `**negrita**`
+- Una palabra encerrada entre / equivale a `/cursiva/` 
+5. En el shell, instale el diccionario de español para la corrección ortográfica
+   #+begin_src shell
+     sudo apt install aspell aspell-es
+   #+end_src
+6. Puede cambiar de diccionario en el buffer usando M-x ispell-change-dictionary
+7. Puede activar un modo de revisión al vuelo: M-x flyspell-mode
+
+** Algunos Hacks
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+- Para insertar propiedades: C-c C-x p
+- Para insertar código: C-c C-,
+- Para insertar código: M-x org-insert-template-structures y escoge la opción s
+- Para insertar un tag: C-c C-c
+- Para insertar un link: M-x org-insert-link
+- Para generar el archivo pdf: org-beamer-export-to-pdf
+
+* Diapositivas de Ejemplo Arq Computadores
+** El Computador
+Un computador es un sistema complejo conformado por varios subsistemas
+electrónicos. Para poder estudiarlo se adopta la perspectiva de
+entender su organización y su arquitectura. En general un computador
+puede hacer las siguientes operaciones:
+
+- procesar información
+- almacenar información
+- comunicarse con periféricos de entrada/salida i.e. E/S
+
+** El CPU
+
+La arquitectura principal usada en los computadores es la Von
+Neumann. El componente principal del sistema es el CPU, o unidad de
+procesamiento central, que es un micro chip. El mismo está formado de:
+
+- Unidad Aritmética Lógica: ALU
+- Unidad de control
+- Registros
+
+** A more complex slide
+This slide illustrates the use of Beamer blocks.  The following text,
+with its own headline, is displayed in a block:
+
+*** Org mode increases productivity                               :B_theorem:
+:PROPERTIES:
+:BEAMER_env: theorem
+:END:
+
+- org mode means not having to remember LaTeX commands.
+- it is based on ascii text which is inherently portable.
+- Emacs!
+- $\int e^{-st}f(t)dt$
+
+  \hfill \(\qed\)
+
+** Two Columns
+
+*** A block                                                           :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+
+- this slide consists of two columns
+- the first (left) column has no heading and consists of text
+- second (right) column has an image and is enclosed in an
+      *example* block
+*** Another block                                           :BMCOL:B_example:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:BEAMER_env: example
+:END:
+
+#+ATTR_LaTeX: :width .6\textwidth
+[[../../images/computer.png]]
+
+** Configurar Org-Babel Python
+
+Consiste en editar el archivo ~/.emacs.d/init.el para que emacs tenga
+el comportamiento deseado. Para instrucciones referirse al slide [[#configEmacs][Configuración Emacs]]
+
+Este slide muestra cómo hacer una referencia a otra sección
+
+** Babel
+:PROPERTIES:
+:BEAMER_envargs: [t]
+:END:
+
+*** Python code                                               :BMCOL:B_block:
+:PROPERTIES:
+:BEAMER_col: 0.45
+:BEAMER_env: block
+:END:
+
+#+name: pythonexample
+#+begin_src python
+import numpy as np
+def greet(name):
+    return f"Hello {name}"
+
+return greet("Alice")
+#+end_src
+
+*** The output                                                :BMCOL:B_block:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:BEAMER_env: block
+:BEAMER_envargs: <2->
+:END:
+#+RESULTS: pythonexample
+Hello Alice
+
+* Funciones avanzadas de WSL
+
+** Funciones avanzadas de WSL
+El uso de espacio de por parte de WSL cambia
+dinámicamente. Especialmente, en proyectos de /machine learning/. Para
+mitigar esta opción hay las siguientes opciones:
+
+1. Mover el distro de WSL a otra unidad de disco
+2. Comprimir el espacio que ocupa el distro en el disco
+3. Eliminar el distro
+
+** Mover el distro de WSL
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+
+Desde un prompt de Windows realice las siguientes operaciones desde un Powershell
+1. Exportar el distro a otra unidad de disco
+   #+begin_src shell
+   wsl --export Ubuntu-22.04 D:\WSL\ubuntu22.tar
+   #+end_src
+2. Desinstalar el distro de la unidad ~C:~ (Windows)
+   #+begin_src shell
+   wsl --unregister Ubuntu-22.04
+   #+end_src
+3. Importar de nuevo desde la nueva unidad ~D:~
+   #+begin_src shell
+   wsl --import Ubuntu-22.04 D:\WSL\Ubuntu22 D:\WSL\ubuntu22.tar --version 2
+   #+end_src
+** Comprimir un distro de WSL
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+Realice las siguientes operaciones desde un Powershell
+1. Terminar WSL completamente
+   #+begin_src shell
+   wsl --shutdown
+   #+end_src
+2. Abrir ~diskpart~ en un Powershell
+   #+begin_src shell
+   diskpart
+   #+end_src
+3. Seleccionar el archivo virtual que contiene el distro. Para esto
+   debe ubicar la ruta al archivo ext4.vhdx del distro
+   #+begin_src shell
+    select vdisk file="C:\Users\<YourUser>\AppData\Local\Packages\CanonicalGroupLimited...Ubuntu22.04...\LocalState\ext4.vhdx"
+    compact vdisk
+   #+end_src
+** Eliminar el Distro
+Para eliminar el distro sólo ejecutamos desde un Powershell:
+#+begin_src shell
+wsl --unregister <Nombre Distro>
+#+end_src
+
+Para esto, el distro debe estar detenido y su nombre localizado. Esto
+último lo puede derivar con el comando ~wsl -l -v~ desde Powershell
+* Funciones avanzadas de Anaconda
+Los entornos de anaconda crecen con la instalación de paquetes y
+librerías. A fin de evitar descargar nuevamente de internet, anaconda
+almacena las descargas en el disco. Esto ocupa demasiado espacio, por
+lo que es recomendable limpiar el cache, los logs y paquetes no
+usados.
+** Comandos de Limpieza para Conda
+Ejecute el siguiente comando para eliminar ~tarballs~, limpiar el
+cache, logs y paquetes no usados.
+*** comando                                                         :comando:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+begin_src shell
+conda clean --all --yes
+#+end_src
+*** imagen                                                           :imagen:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+[[file:/mnt/d/entea/Lectures/iccd332ArqComp-2024-B/images/conda-clean.png]]
+** Eliminar un entorno de Conda
+Para eliminar el entorno es necesario primero salir de él con el
+comando ~conda deactivate~. Una vez que esta desactivado:
+#+begin_src shell
+conda deactivate
+conda remove --name myenv --all
+#+end_src
+Reemplace ~myenv~ con el nombre del entorno. Esto borrará toda la
+información del entorno.
+** Crear un backup del entorno
+Para replicar resultados es importante trabajar con los mismos
+paquetes (incluyendo las versiones específicas de los mismos). Esto se
+puede lograr exportando a un archivo ~YAML~:
+#+begin_src shell
+conda activate myenv
+conda env export > myenv.yml
+#+end_src
+
+Note que las versiones de los paquetes cambian con el sistema
+operativo por lo que si el proyecto trabaja en un S.O. Windows, las
+versiones no serán las mismas que se instalan en un S.O. Linux. Una
+alternativa para evitar este problema y garantizar replicación es
+trabajar con ~Docker~.
+
+Verifique que el archivo contenga tanto los paquetes de ~pip~ como los
+de ~anaconda~. 
+** Crear un entorno desde YAML
+#+begin_src shell
+conda env create -f myenv.yml
+#+end_src
+Para verificar los paquetes instalados o restituidos use
+#+begin_src shell
+conda list
+#+end_src
+** Entorno Anaconda Portable
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+El entorno se puede exportar como archivo portable para moverlo a otro
+sistema operativo (de igual naturaleza) con:
+#+begin_src
+conda pack -n myenv -o myenv.tar.gz
+#+end_src
+Para restituirlo:
+#+begin_src shell
+mkdir -p ~/envs/myenv
+tar -xzf myenv.tar.gz -C ~/envs/myenv
+source ~/envs/myenv/bin/activate
+#+end_src
+**Importante** debe estar instalado en el entorno el paquete ~conda
+  pack~. Se puede instalar de las siguientes maneras:
+  #+begin_src shell
+    conda install -c conda-forge conda-pack
+    mamba install conda-pack
+    pip install conda-pack
+  #+end_src

@@ -1,0 +1,144 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil expand-links:t f:t
+#+options: inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
+#+options: tasks:t tex:t timestamp:t title:t toc:nil todo:t |:t
+#+title: Booteo de Sistema Operativo Linux
+#+date: 2025-XX-XX
+#+author: COLOQUE SU NOMBRE
+#+email: nombre.apellido@epn.edu.ec
+#+language: Español
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.7.5)
+#+cite_export: biblatex
+
+#+latex_class: article
+#+latex_class_options:
+#+latex_header:
+#+latex_header_extra:
+#+description:
+#+keywords:
+#+subtitle:
+#+latex_footnote_command: \footnote{%s%s}
+#+latex_engraved_theme:
+#+latex_compiler: pdflatex
+
+#+latex_header: \usepackage{fancyhdr}
+#+latex_header: \usepackage[top=25mm, left=25mm, right=25mm]{geometry}
+#+latex_header: \usepackage{longtable}
+#+latex_header: \fancyhead[R]{}
+#+latex_header: \setlength\headheight{43.0pt}
+
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[spanish]{babel}
+#+LATEX_HEADER: \usepackage[backend=biber,style=ieee]{biblatex}
+
+
+
+#+begin_export latex
+\fancyhead[C]{\includegraphics[scale=0.05]{../images/logoEPN.jpg}\\
+ESCUELA POLITÉCNICA NACIONAL\\FACULTAD DE INGENIERÍA DE SISTEMAS\\
+ARQUITECTURA DE COMPUTADORES}
+\thispagestyle{fancy}
+#+end_export
+
+
+
+
+* Objetivos
+
+- Aprender a  bootear un sistema operativo Linux
+
+- Aprender sobre la secuencia de arranque de un computador como la
+  BIOS y la UEFI
+
+* Instrucciones
+1. Siga el tutorial para la creación de un booteable de Ubuntu como se
+   indica en la unidad 9 en el archivo Arranque Ubuntu[fn:2].
+
+2. Realice un respaldo del código de /BitLocker/ utilizando un command
+   prompt de Windows con permisos de administrador[fn:1]:
+
+   #+begin_src shell
+    manage-bde-protectors C:-get
+   #+end_src
+   
+3. Utilizando su computador o el del laboratorio, siga los pasos
+   indicados para obtener el booteo desde el USB con el Sistema
+   Operativo de Ubuntu
+
+4. Realice el boot de Ubuntu desde la memoria USB externa y
+   seleccione la opción de /Probar Sistema Operativo/.
+5. Una vez ingresado active un terminal de Ubuntu: ~Ctrl+ALT+T~ y
+   obtenga las características del computador mediante la ejecución de
+   los comandos: ~lscpu~, ~lsb_release -a~ y ~lspci~. Obtenga capturas
+   de la ejecución de los comandos. Luego abra este archivo en WSL y
+   ejecute los comandos desde los bloques shell. Para insertar un
+   bloque puede usar la combinación ~C-c C-,~, escoja la opción ~src~
+   e indique que es del tipo shell.
+
+* Desarrollo Emacs
+Se sugiere utilizar la opción ~:fontsize
+scriptsize~ para dar formato a la ejecución del comando. Por ejemplo,
+considere:
+
+#+begin_src shell
+whoami
+#+end_src
+
+#+RESULTS: :fontsize scriptsize
+: leningfe
+
+** Comando ~lsb_release~
+   #+begin_src shell
+    lsb_release -a
+   #+end_src
+
+   #+RESULTS: :fontsize scriptsize
+   | Distributor ID: | Ubuntu             |
+   | Description:    | Ubuntu 22.04.4 LTS |
+   | Release:        | 22.04              |
+   | Codename:       | jammy              |
+
+
+** Comando ~lspci~
+
+
+
+** Comando ~lscpu~   
+
+* Desarrollo Capturas
+Coloque las capturas de los resultados obtenidos en los
+terminales. Para esto recuerde utilizar dobles corchetes y escribir el
+/path/ hacia la imagen. Pruebe a utilizar YASnipet para generar el
+siguiente código para descripción de la figura. Para esto puede
+escriba ~fig_~ seguido de la combinación de teclas ~C-TAB~, finalmente
+coloque la dirección de la imagen.
+
+#+caption: lscpu
+#+attr_latex: scale=0.75
+#+label: fig:lscpu
+
+#+begin_src elisp
+[[./images/lscpu.png]]
+#+end_src
+
+
+* Consulta
+Describa que hacen y para qué sirven los comandos utilizados en la práctica
+
+- lscpu ::
+- lsb\_release -a ::
+- lspci :: 
+
+
+* Footnotes
+[fn:2]Dependiendo de las características de su computador debe
+verificar si al crear el medio booteable para Ubuntu, su sistema
+reconoce o acepta para el /Target System/
+
+[fn:1]Si no respalda el código, no podrá arrancar el disco luego de
+reiniciar. Más información en: [[https://www.partitionwizard.com/disk-recovery/bitlocker-recovery-key-bypass.html
+ ][https://www.partitionwizard.com/disk-recovery/bitlocker-recovery-key-bypass.html]]
