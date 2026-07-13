@@ -1,0 +1,178 @@
+#+TITLE: Multiplicación IEEE 754
+#+AUTHOR: Karen Suarez y Samuel Churaco
+#+OPTIONS: toc:2 num:nil
+
+* ÍNDICE DE LA PÁGINA
+
+- [[#1-introducción][1. Introducción]]
+  - ¿Qué es el estándar IEEE 754?
+  - ¿Para qué sirve?
+  - ¿Por qué se utiliza?
+- [[#2-representación-ieee-754][2. Representación IEEE 754]]
+  - Bit de signo
+  - Exponente
+  - Mantisa
+  - Ilustración del formato
+- [[#3-multiplicación-ieee-754][3. Multiplicación IEEE 754 (Algoritmo Paso a Paso)]]
+  - Multiplicación de signos
+  - Suma de exponentes
+  - Multiplicación de mantisas
+  - Normalización
+  - Resultado final
+- [[#4-ejemplo-desarrollado][4. Ejemplo Desarrollado]]
+  - Número A y Número B
+  - Conversión, Operación y Resultado
+- [[#5-conclusiones][5. Conclusiones]]
+- [[#6-bibliografía][6. Bibliografía]]
+
+-----
+* 1. INTRODUCCIÓN
+:PROPERTIES:
+:CUSTOM_ID: 1-introducción
+:END:
+
+En esta sección se explica el funcionamiento de la multiplicación de números representados mediante el estándar IEEE 754. Para comprender
+este proceso, primero se presenta una breve revisión sobre este formato, su propósito y la manera en que los computadores representan
+números de punto flotante.
+
+** ¿Qué es el estándar IEEE 754?
+El estándar IEEE 754, desarrollado por el Instituto de Ingenieros Eléctricos y Electrónicos (IEEE), establece una representación uniforme
+para almacenar y procesar números reales dentro de los sistemas computacionales. Su principal objetivo es permitir que diferentes arquitecturas
+de hardware y lenguajes de programación puedan realizar operaciones matemáticas de forma consistente, evitando cualquier tipo de diferencias
+o malentendidos en la interpretación de los valores numéricos.
+
+** ¿Para qué sirve?
+Este formato sirve esencialmente como una regla técnica universal en el mundo de la informática. En el día a día, permite que cálculos
+extremadamente complejos —como el renderizado de los gráficos de un videojuego, la simulación física en un software de ingeniería o el
+procesamiento de datos científicos— se ejecuten de manera predecible y con un margen de error estrictamente controlado, garantizando la
+portabilidad total del software entre distintos sistemas operativos y procesadores.
+
+** ¿Por qué se utiliza?
+La razón fundamental por la que se utiliza este estándar radica en la naturaleza binaria de las computadoras. Como el hardware interno de
+los procesadores solo entiende ceros y unos, representar números con decimales de forma directa mediante métodos tradicionales de punto fijo
+resulta sumamente ineficiente y provoca pérdidas masivas de precisión aritmética. El estándar IEEE 754 soluciona este dilema al implementar
+un sistema equivalente a la notación científica binaria, lo que optimiza al máximo el uso de la memoria física y ofrece un equilibrio perfecto
+entre el rango de los números que se pueden representar y la exactitud de sus decimales.
+
+-----
+
+* 2. REPRESENTACIÓN IEEE 754
+:PROPERTIES:
+:CUSTOM_ID: 2-representación-ieee-754
+:END:
+
+Para comprender cómo se realiza una multiplicación bajo este estándar, primero es indispensable examinar cómo se almacena un número real dentro
+de la memoria física de una computadora. El estándar organiza la información dividiendo los bits disponibles en tres secciones perfectamente
+delimitadas. A continuación, se presenta la estructura física para el formato de precisión simple (32 bits):
+
+** Ilustración del Formato de Memoria (32 bits)
+
+#+BEGIN_SRC text
+   31  30          23 22                                   0
+  +---+--------------+---------------------------------------+
+  | S |  Exponente   |                Mantisa                |
+  +---+--------------+---------------------------------------+
+    |        |                           |
+    |        v                           v
+    |    (8 bits)                    (23 bits)
+    v    Define el tamaño            Guarda los dígitos reales
+  Signo  (mueve el punto).           (Posee un '1.' oculto)
+ (0 o 1)
+#+END_SRC
+
+** Fórmula general de representación IEEE 754
+
+Un número en formato IEEE 754 se interpreta mediante la expresión:
+
+#+BEGIN_CENTER
+(-1)^S × 1.M × 2^(E - Bias)
+#+END_CENTER
+
+Donde:
+
+- S representa el bit de signo.
+- M representa la mantisa.
+- E representa el exponente almacenado.
+- Bias corresponde al sesgo utilizado para representar exponentes negativos.
+
+** Explicación de los Componentes Esenciales
+
+#+BEGIN_QUOTE
+**Bit de Signo (S):**
+Ubicado en la posición más significativa (el bit 31 a la extrema izquierda), este componente determina el sentido del valor. Al ser un único bit,
+solo puede adoptar dos estados: un valor de =0= indica estrictamente que el número es positivo, mientras que un valor de =1= establece que la
+cantidad es negativa. En la multiplicación, este bit se procesa de forma independiente al resto de los datos.
+#+END_QUOTE
+
+#+BEGIN_NOTE
+**Exponente (8 bits):**
+Este bloque se encarga de definir la escala, magnitud o tamaño del número, determinando cuántas posiciones debe desplazarse el punto decimal en
+binario. Debido a que los números reales pueden ser extremadamente grandes o microscópicos, el exponente necesita ser capaz de representar valores
+tanto positivos como negativos. Para lograr esto sin complicar el hardware del procesador, el estándar aplica un **sesgo (bias) de 127**.
+Esto significa que el valor real del exponente matemático se le suma siempre 127 antes de guardarlo en la memoria.
+#+END_NOTE
+
+#+BEGIN_QUOTE
+**Mantisa o Significando (23 bits):**
+Este componente almacena los dígitos significativos o la precisión real de la cantidad numérica. Para optimizar el espacio físico en los chips, el
+estándar utiliza un ingenioso truco matemático: dado que cualquier número binario normalizado siempre empieza con un dígito igual a =1=
+(por ejemplo, $1.01011_2$), **ese "1." inicial se vuelve implícito u oculto**. La computadora no lo escribe en el bloque de 23 bits de la memoria,
+sino que el procesador lo añade de forma automática al realizar las operaciones aritméticas, permitiendo ganar un bit extra de precisión de forma
+completamente gratuita.
+#+END_QUOTE
+
+-----
+
+* 3. MULTIPLICACIÓN IEEE 754 (ALGORITMO PASO A PASO)
+:PROPERTIES:
+:CUSTOM_ID: 3-multiplicación-ieee-754
+:END:
+
+El procedimiento para multiplicar dos números en el estándar IEEE 754 difiere significativamente de la suma aritmética. En este caso,
+el procesador no necesita realizar un alineamiento previo de los puntos decimales ni alterar las escalas de los números. En su lugar, el
+hardware descompone los factores y ejecuta de forma paralela un algoritmo estricto estructurado en cinco etapas fundamentales.
+
+** Paso 1: Multiplicación de Signos
+La determinación del signo del resultado final es la operación más rápida del proceso. El procesador extrae de forma independiente los bits de
+signo (posición 31) de ambos factores y les aplica una función lógica **XOR** (O exclusivo), la cual obedece de manera exacta a la ley de los
+signos tradicional.
+- Si los dos factores poseen signos idénticos (ambos positivos =0= o ambos negativos =1=), la compuerta lógica devuelve un bit =0=, estableciendo
+  que el resultado final será positivo.
+- Si los factores cuentan con signos opuestos (uno positivo y otro negativo), la operación devuelve un bit =1=, decretando que el resultado es
+  negativo.
+
+** Paso 2: Suma de Exponentes y Ajuste del Sesgo
+En esta etapa, el procesador calcula la magnitud del nuevo número sumando los exponentes de ambos factores. Sin embargo, surge un inconveniente
+físico: como explicamos en la sección anterior, cada exponente ya viene almacenado con un sesgo de $+127$ de fábrica. Al sumarlos directamente,
+el sesgo se añadiría dos veces ($127 + 127 = 254$), descalibrando por completo la escala real. 
+Para corregir este exceso, el algoritmo ejecuta una resta aritmética restando el valor del sesgo ($127$) una sola vez al total acumulado. La
+fórmula matemática exacta que ejecuta el chip es:
+$$\text{Exponente Provisional} = \text{Exponente}_1 + \text{Exponente}_2 - 127$$
+
+** Paso 3: Multiplicación de las Mantisas
+Antes de efectuar la operación matemática, la unidad de punto flotante del procesador realiza una reconstrucción obligatoria: toma los 23 bits
+de la mantisa de cada factor y les reinyecta a la izquierda el dígito implícito =1.= que se había ocultado para ahorrar espacio en la memoria. 
+Una vez que se tienen las dos mantisas completas (que ahora lucen de la forma $1.xxxx$), el procesador las multiplica linealmente utilizando el
+algoritmo de multiplicación para números enteros binarios. El resultado de esta multiplicación de fracciones binarias generará una mantisa
+provisional significativamente más larga, la cual contiene la combinación de la precisión de ambos factores.
+
+** Paso 4: Normalización del Resultado
+El estándar exige rigurosamente que el resultado se almacene bajo el formato de notación científica binaria limpia, lo que significa que
+**solo debe existir un único dígito "1" antes del punto decimal** (formato estricto de $1.xxxxx$). Debido a la multiplicación del paso anterior,
+el resultado puede desbordarse hacia la izquierda, devolviendo un valor que inicie por ejemplo con dos dígitos antes del punto
+(como $11.010_2$ o $10.111_2$).
+Si esto ocurre, el procesador desplaza geométricamente el punto decimal una posición hacia la izquierda para forzar el formato correcto ($1.xxxx$).
+Para contrarrestar matemáticamente este movimiento del punto y mantener el valor numérico intacto, el hardware compensa la operación
+**sumando un +1 al Exponente Provisional** que calculamos en el Paso 2. Si el resultado de la multiplicación ya iniciaba con un solo dígito =1.=,
+la normalización no es necesaria y el exponente se mantiene igual.
+
+** Paso 5: Redondeo y Ensamblaje del Resultado Final
+En la fase de cierre, el procesador prepara los datos para inyectarlos de vuelta en la celda de memoria de 32 bits. Primero, se aplica el filtro
+de redondeo: si la mantisa resultante de la multiplicación superó los 23 bits de capacidad física del formato, los bits sobrantes del extremo
+derecho se recortan o se ajustan según el modo de redondeo configurado en el sistema (por ejemplo, aproximando al valor más cercano).
+Finalmente, el rompecabezas se ensambla en el registro físico:
+1. Se coloca el bit de signo determinado en el Paso 1.
+2. Se inyecta el Exponente Final corregido en el Paso 4.
+3. Se toma la mantisa normalizada y redondeada, **se le remueve nuevamente el dígito "1." implícito** para ahorrar espacio, y se rellenan los
+   23 bits restantes de la memoria de la computadora.
+   
