@@ -16,19 +16,22 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgb4d4d28">¿Qué parámetros se utilizaron para el procesamiento de datos?</a></li>
-<li><a href="#org32ee4b7">¿Gráfico?</a></li>
+<li><a href="#org648cbc9">¿Qué parámetros se utilizaron para el procesamiento de datos?</a></li>
+<li><a href="#org8113142">¿Gráfico?</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb4d4d28" class="outline-2">
-<h2 id="orgb4d4d28">¿Qué parámetros se utilizaron para el procesamiento de datos?</h2>
-<div class="outline-text-2" id="text-orgb4d4d28">
+<div id="outline-container-org648cbc9" class="outline-2">
+<h2 id="org648cbc9">¿Qué parámetros se utilizaron para el procesamiento de datos?</h2>
+<div class="outline-text-2" id="text-org648cbc9">
 <p>
 Para el procesamiento de datos se extrajeron los datos de cifras de seguridad del INEC, específicamente la sección de robos de auto-partes desde el año 2014 hasta el 2026.
 Se filtraron los datos en base a las regiones: costa, sierra, amazonía e insular.
 </p>
+
+
+
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="font-weight: bold;">import</span> pandas <span style="font-weight: bold;">as</span> pd
@@ -52,7 +55,6 @@ Se filtraron los datos en base a las regiones: costa, sierra, amazonía e insula
 }
 <span style="font-weight: bold; font-style: italic;">df_robo</span>[<span style="font-style: italic;">'Regi&#243;n'</span>] = df_robo[<span style="font-style: italic;">'Provincia'</span>].<span style="font-weight: bold;">map</span>(regiones)
 
-
 <span style="font-weight: bold; font-style: italic;">df_robo</span> = df_robo.dropna(subset=[<span style="font-style: italic;">'Regi&#243;n'</span>]) 
 
 <span style="font-weight: bold; font-style: italic;">date_cols</span> = df_robo.columns[4:-1]
@@ -74,13 +76,9 @@ Se filtraron los datos en base a las regiones: costa, sierra, amazonía e insula
 plt.figure(figsize=(10, 6))
 
 <span style="font-weight: bold; font-style: italic;">colores</span> = {<span style="font-style: italic;">'Sierra'</span>: <span style="font-style: italic;">'#e74c3c'</span>, <span style="font-style: italic;">'Costa'</span>: <span style="font-style: italic;">'#3498db'</span>, <span style="font-style: italic;">'Amazon&#237;a'</span>: <span style="font-style: italic;">'#2ecc71'</span>, <span style="font-style: italic;">'Insular'</span>: <span style="font-style: italic;">'#f1c40f'</span>}
-.
+
 <span style="font-weight: bold;">for</span> region <span style="font-weight: bold;">in</span> df_grouped[<span style="font-style: italic;">'Regi&#243;n'</span>].unique():
-
-
     <span style="font-weight: bold; font-style: italic;">datos_region</span> = df_grouped[df_grouped[<span style="font-style: italic;">'Regi&#243;n'</span>] == region]
-
-
     plt.plot(datos_region[<span style="font-style: italic;">'Anio'</span>], datos_region[<span style="font-style: italic;">'Robos'</span>], marker=<span style="font-style: italic;">'o'</span>, label=region, color=colores.get(region, <span style="font-style: italic;">'black'</span>))
 
 plt.title(<span style="font-style: italic;">'Evoluci&#243;n de Denuncias por Robo de Autopartes por Regi&#243;n (2014 - 2026)'</span>)
@@ -91,18 +89,19 @@ plt.legend(title=<span style="font-style: italic;">'Regi&#243;n'</span>)
 plt.tight_layout()
 
 plt.savefig(<span style="font-style: italic;">"./weather-site/content/images/robo_autopartes_evolucion.png"</span>)
-<span style="font-weight: bold;">print</span>(<span style="font-style: italic;">"</span><span style="font-weight: bold; text-decoration: underline;">\n</span><span style="font-style: italic;">Gr&#225;fico guardado exitosamente como 'robo_autopartes_evolucion.png'"</span>)
+<span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'Gr&#225;fico guardado exitosamente como robo_autopartes_evolucion.png'</span>)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org32ee4b7" class="outline-2">
-<h2 id="org32ee4b7">¿Gráfico?</h2>
-<div class="outline-text-2" id="text-org32ee4b7">
+
+<div id="outline-container-org8113142" class="outline-2">
+<h2 id="org8113142">¿Gráfico?</h2>
+<div class="outline-text-2" id="text-org8113142">
 <p>
 En el siguiente gráfico se puede observar una comparación de las estadísticas del robo de auto-partes durante el periodo 2014-2026 en las distintas regiones del país .
-<img src=" ./images/robo_autopartes_evolucion.png" alt="robo_autopartes_evolucion.png" />
+<img src="./images/robo_autopartes_evolucion.png" alt="robo_autopartes_evolucion.png" />
 </p>
 </div>
 </div>

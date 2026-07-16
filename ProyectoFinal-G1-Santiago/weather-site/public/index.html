@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
 <head>
-<!-- 2026-07-16 Thu 00:51 -->
+<!-- 2026-07-16 Thu 02:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>G1- Proyecto Final (ICCD332) Arquitectura de Computadores</title>
@@ -50,58 +50,58 @@
 <h2>&Iacute;ndice</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org11f7cd9">1. <b>City Weather APP</b> - Registro Climatológico de Santiago (Chile)</a>
+<li><a href="#org7a520ce">1. <b>City Weather APP</b> - Registro Climatológico de Santiago (Chile)</a>
 <ul>
-<li><a href="#org8c82761">1.1. Descripción del Proyecto</a>
+<li><a href="#orgdb28b30">1.1. Descripción del Proyecto</a>
 <ul>
-<li><a href="#org53a0270">1.1.1. Tecnologías utilizadas</a></li>
+<li><a href="#orgd7c4a7c">1.1.1. Tecnologías utilizadas</a></li>
 </ul>
 </li>
-<li><a href="#orgd6330d5">1.2. Estructura del proyecto</a></li>
-<li><a href="#orgd441f3c">1.3. Formulación del Problema</a></li>
-<li><a href="#orgf9ff137">1.4. Descripción del código</a>
+<li><a href="#org0e141bc">1.2. Estructura del proyecto</a></li>
+<li><a href="#orgeff7b45">1.3. Formulación del Problema</a></li>
+<li><a href="#org23691f8">1.4. Descripción del código</a>
 <ul>
-<li><a href="#org9b71843">1.4.1. Parámetros Iniciales</a></li>
-<li><a href="#org1e2707e">1.4.2. Lectura del API</a></li>
-<li><a href="#org46198be">1.4.3. Procesamiento de los datos</a></li>
-<li><a href="#orgad5c13b">1.4.4. Escritura del archivo CSV</a></li>
-<li><a href="#orgbcc1e19">1.4.5. Main()</a></li>
+<li><a href="#org952d24d">1.4.1. Parámetros Iniciales</a></li>
+<li><a href="#org9d41f97">1.4.2. Lectura del API</a></li>
+<li><a href="#org096a8e3">1.4.3. Procesamiento de los datos</a></li>
+<li><a href="#org5a87bb7">1.4.4. Escritura del archivo CSV</a></li>
+<li><a href="#org1b20297">1.4.5. Main()</a></li>
 </ul>
 </li>
-<li><a href="#org9917b2d">1.5. Script ejecutable sh</a></li>
-<li><a href="#orge2c54d0">1.6. Configuración de Crontab</a></li>
+<li><a href="#orgdd4a0ad">1.5. Script ejecutable sh</a></li>
+<li><a href="#org8c83e7b">1.6. Configuración de Crontab</a></li>
 </ul>
 </li>
-<li><a href="#org8e03245">2. Presentación de resultados</a>
+<li><a href="#org7c024e0">2. Presentación de resultados</a>
 <ul>
-<li><a href="#orgbbe7773">2.1. Resultados</a></li>
-<li><a href="#orga9d1988">2.2. Muestra De datos</a></li>
-<li><a href="#org7de9ff1">2.3. Gráfica Temperatura vs Tiempo</a></li>
-<li><a href="#org73e4016">2.4. Gráfica Humedad vs Tiempo</a></li>
-<li><a href="#org5ef6daa">2.5. Gráfica Presión vs Tiempo</a></li>
-<li><a href="#orgd9ba116">2.6. Gráfica Velocidad del Viento vs Tiempo</a></li>
+<li><a href="#org9fe5cc1">2.1. Resultados</a></li>
+<li><a href="#org0ae8459">2.2. Muestra De datos</a></li>
+<li><a href="#orga927f91">2.3. Gráfica Temperatura vs Tiempo</a></li>
+<li><a href="#org2994747">2.4. Gráfica Humedad vs Tiempo</a></li>
+<li><a href="#org0bc6a6f">2.5. Gráfica Presión vs Tiempo</a></li>
+<li><a href="#orgec40b93">2.6. Gráfica Velocidad del Viento vs Tiempo</a></li>
 </ul>
 </li>
-<li><a href="#orga82735e">3. Instrucciones Java Script</a></li>
-<li><a href="#orgf8b50cc">4. Referencias</a>
+<li><a href="#org1449c89">3. Instrucciones Java Script</a></li>
+<li><a href="#orgb539b24">4. Referencias</a>
 <ul>
-<li><a href="#org6ff9d85">4.1. OpenWeatherMap</a></li>
-<li><a href="#org16e8f8d">4.2. Python</a></li>
-<li><a href="#org6641ff7">4.3. Pandas</a></li>
-<li><a href="#org7b93286">4.4. Matplotlib</a></li>
-<li><a href="#org42c72c0">4.5. Emacs</a></li>
-<li><a href="#org23acd75">4.6. HTTPD</a></li>
+<li><a href="#org51fab08">4.1. OpenWeatherMap</a></li>
+<li><a href="#orgc38e165">4.2. Python</a></li>
+<li><a href="#org1f00718">4.3. Pandas</a></li>
+<li><a href="#org3a60340">4.4. Matplotlib</a></li>
+<li><a href="#org0afbdfa">4.5. Emacs</a></li>
+<li><a href="#org536b904">4.6. HTTPD</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org11f7cd9" class="outline-2">
-<h2 id="org11f7cd9"><span class="section-number-2">1.</span> <b>City Weather APP</b> - Registro Climatológico de Santiago (Chile)</h2>
+<div id="outline-container-org7a520ce" class="outline-2">
+<h2 id="org7a520ce"><span class="section-number-2">1.</span> <b>City Weather APP</b> - Registro Climatológico de Santiago (Chile)</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org8c82761" class="outline-3">
-<h3 id="org8c82761"><span class="section-number-3">1.1.</span> Descripción del Proyecto</h3>
+<div id="outline-container-orgdb28b30" class="outline-3">
+<h3 id="orgdb28b30"><span class="section-number-3">1.1.</span> Descripción del Proyecto</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 El objetivo del proyecto consiste en desarrollar un sistema capaz de
@@ -119,8 +119,8 @@ Org Mode.
 </p>
 </div>
 
-<div id="outline-container-org53a0270" class="outline-4">
-<h4 id="org53a0270"><span class="section-number-4">1.1.1.</span> Tecnologías utilizadas</h4>
+<div id="outline-container-orgd7c4a7c" class="outline-4">
+<h4 id="orgd7c4a7c"><span class="section-number-4">1.1.1.</span> Tecnologías utilizadas</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <ul class="org-ul">
 <li>Python 3</li>
@@ -135,8 +135,8 @@ Org Mode.
 </div>
 </div>
 
-<div id="outline-container-orgd6330d5" class="outline-3">
-<h3 id="orgd6330d5"><span class="section-number-3">1.2.</span> Estructura del proyecto</h3>
+<div id="outline-container-org0e141bc" class="outline-3">
+<h3 id="org0e141bc"><span class="section-number-3">1.2.</span> Estructura del proyecto</h3>
 <div class="outline-text-3" id="text-1-2">
 <div class="org-src-container">
 <pre class="src src-shell"><span style="font-weight: bold;">cd</span> ..
@@ -150,7 +150,7 @@ Org Mode.
 </pre>
 
 
-<pre class="example" id="org6c34e1d">
+<pre class="example" id="org4a88b72">
 .
 ├── CityTemperatureAnalysis.ipynb
 ├── clima-santiago-hoy.csv
@@ -190,8 +190,8 @@ Org Mode.
 </div>
 </div>
 
-<div id="outline-container-orgd441f3c" class="outline-3">
-<h3 id="orgd441f3c"><span class="section-number-3">1.3.</span> Formulación del Problema</h3>
+<div id="outline-container-orgeff7b45" class="outline-3">
+<h3 id="orgeff7b45"><span class="section-number-3">1.3.</span> Formulación del Problema</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 Se realizó un registro climatológico de una ciudad
@@ -213,8 +213,8 @@ WSL.
 </div>
 </div>
 
-<div id="outline-container-orgf9ff137" class="outline-3">
-<h3 id="orgf9ff137"><span class="section-number-3">1.4.</span> Descripción del código</h3>
+<div id="outline-container-org23691f8" class="outline-3">
+<h3 id="org23691f8"><span class="section-number-3">1.4.</span> Descripción del código</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 El programa principal fue desarrollado en Python, donde
@@ -226,8 +226,8 @@ información existente.
 </p>
 </div>
 
-<div id="outline-container-org9b71843" class="outline-4">
-<h4 id="org9b71843"><span class="section-number-4">1.4.1.</span> Parámetros Iniciales</h4>
+<div id="outline-container-org952d24d" class="outline-4">
+<h4 id="org952d24d"><span class="section-number-4">1.4.1.</span> Parámetros Iniciales</h4>
 <div class="outline-text-4" id="text-1-4-1">
 <p>
 El programa inicia importando las librerías necesarias para realizar
@@ -255,8 +255,8 @@ durante toda la ejecución del programa.
 </div>
 
 
-<div id="outline-container-org1e2707e" class="outline-4">
-<h4 id="org1e2707e"><span class="section-number-4">1.4.2.</span> Lectura del API</h4>
+<div id="outline-container-org9d41f97" class="outline-4">
+<h4 id="org9d41f97"><span class="section-number-4">1.4.2.</span> Lectura del API</h4>
 <div class="outline-text-4" id="text-1-4-2">
 <p>
 Esta función realiza la conexión con el servicio web de OpenWeatherMap
@@ -293,8 +293,8 @@ para su posterior procesamiento.
 </div>
 </div>
 
-<div id="outline-container-org46198be" class="outline-4">
-<h4 id="org46198be"><span class="section-number-4">1.4.3.</span> Procesamiento de los datos</h4>
+<div id="outline-container-org096a8e3" class="outline-4">
+<h4 id="org096a8e3"><span class="section-number-4">1.4.3.</span> Procesamiento de los datos</h4>
 <div class="outline-text-4" id="text-1-4-3">
 <p>
 La información recibida desde el API es transformada en un diccionario
@@ -355,8 +355,8 @@ disponibles en la respuesta del servicio.
 </div>
 </div>
 
-<div id="outline-container-orgad5c13b" class="outline-4">
-<h4 id="orgad5c13b"><span class="section-number-4">1.4.4.</span> Escritura del archivo CSV</h4>
+<div id="outline-container-org5a87bb7" class="outline-4">
+<h4 id="org5a87bb7"><span class="section-number-4">1.4.4.</span> Escritura del archivo CSV</h4>
 <div class="outline-text-4" id="text-1-4-4">
 <p>
 Los datos normalizados se almacenan en un archivo CSV utilizando la
@@ -390,8 +390,8 @@ API.
 </div>
 </div>
 
-<div id="outline-container-orgbcc1e19" class="outline-4">
-<h4 id="orgbcc1e19"><span class="section-number-4">1.4.5.</span> Main()</h4>
+<div id="outline-container-org1b20297" class="outline-4">
+<h4 id="org1b20297"><span class="section-number-4">1.4.5.</span> Main()</h4>
 <div class="outline-text-4" id="text-1-4-5">
 <p>
 Se coordina el flujo completo de ejecución: primero se consulta el API
@@ -427,8 +427,8 @@ la API KEY es inválida.
 </div>
 </div>
 
-<div id="outline-container-org9917b2d" class="outline-3">
-<h3 id="org9917b2d"><span class="section-number-3">1.5.</span> Script ejecutable sh</h3>
+<div id="outline-container-orgdd4a0ad" class="outline-3">
+<h3 id="orgdd4a0ad"><span class="section-number-3">1.5.</span> Script ejecutable sh</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 se desarrolló un script denominado \(get-weather.sh\). Este archivo activa
@@ -454,8 +454,8 @@ python3 main.py &gt;&gt; output.log 2&gt;&amp;1
 </div>
 
 
-<div id="outline-container-orge2c54d0" class="outline-3">
-<h3 id="orge2c54d0"><span class="section-number-3">1.6.</span> Configuración de Crontab</h3>
+<div id="outline-container-org8c83e7b" class="outline-3">
+<h3 id="org8c83e7b"><span class="section-number-3">1.6.</span> Configuración de Crontab</h3>
 <div class="outline-text-3" id="text-1-6">
 <p>
 Para automatizar la adquisición de datos climatológicos se utilizó el
@@ -474,8 +474,8 @@ almacenado en el archivo CSV.
 </div>
 </div>
 
-<div id="outline-container-org8e03245" class="outline-2">
-<h2 id="org8e03245"><span class="section-number-2">2.</span> Presentación de resultados</h2>
+<div id="outline-container-org7c024e0" class="outline-2">
+<h2 id="org7c024e0"><span class="section-number-2">2.</span> Presentación de resultados</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Para la presentación de resultados se utilizan las librerías de Python:
@@ -486,8 +486,8 @@ Para la presentación de resultados se utilizan las librerías de Python:
 </ul>
 </div>
 
-<div id="outline-container-orgbbe7773" class="outline-3">
-<h3 id="orgbbe7773"><span class="section-number-3">2.1.</span> Resultados</h3>
+<div id="outline-container-org9fe5cc1" class="outline-3">
+<h3 id="org9fe5cc1"><span class="section-number-3">2.1.</span> Resultados</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 En esta sección se presentan los resultados obtenidos durante la
@@ -500,8 +500,8 @@ ciudad de Santiago.
 </div>
 </div>
 
-<div id="outline-container-orga9d1988" class="outline-3">
-<h3 id="orga9d1988"><span class="section-number-3">2.2.</span> Muestra De datos</h3>
+<div id="outline-container-org0ae8459" class="outline-3">
+<h3 id="org0ae8459"><span class="section-number-3">2.2.</span> Muestra De datos</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Se presenta una muestra de los registros almacenados en el archivo
@@ -512,6 +512,8 @@ del viento y demás variables obtenidas durante la consulta.
 ó
 Presentar una muestra de 10 valores aleatorios de los datos obtenidos.
 </p>
+
+
 
 <div class="org-src-container">
 <label class="org-src-name"><span class="listing-number">Listado de programa 1 </span>Lectura de archivo csv</label><pre class="src src-python"><span style="font-weight: bold;">import</span> pandas <span style="font-weight: bold;">as</span> pd
@@ -535,8 +537,10 @@ Resultado del número de filas y columnas leídos del archivo csv
 </pre>
 
 
+
+
 <div class="org-src-container">
-<label class="org-src-name"><span class="listing-number">Listado de programa 2 </span>Despliegue de datos aleatorios</label><pre class="src src-python"><span style="font-weight: bold; font-style: italic;">table1</span> = df.sample(10)
+<label class="org-src-name"><span class="listing-number">Listado de programa 2 </span>Despliegue de datos aleatorios Despliegue de datos aleatorios</label><pre class="src src-python"><span style="font-weight: bold; font-style: italic;">table1</span> = df_long.sample(10)
 <span style="font-weight: bold; font-style: italic;">table</span> = [<span style="font-weight: bold;">list</span>(table1)]+[<span style="font-weight: bold; text-decoration: underline;">None</span>]+table1.values.tolist()
 </pre>
 </div>
@@ -553,18 +557,6 @@ Resultado del número de filas y columnas leídos del archivo csv
 
 <col  class="org-right" />
 
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-
 <col  class="org-right" />
 
 <col  class="org-right" />
@@ -593,9 +585,21 @@ Resultado del número de filas y columnas leídos del archivo csv
 
 <col  class="org-left" />
 
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
 <col  class="org-left" />
 
 <col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
 
 <col  class="org-right" />
 
@@ -607,14 +611,9 @@ Resultado del número de filas y columnas leídos del archivo csv
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left">dt</th>
+<th scope="col" class="org-left">fecha<sub>hora</sub></th>
 <th scope="col" class="org-right">coord<sub>lon</sub></th>
 <th scope="col" class="org-right">coord<sub>lat</sub></th>
-<th scope="col" class="org-right">weather<sub>0</sub><sub>id</sub></th>
-<th scope="col" class="org-left">weather<sub>0</sub><sub>main</sub></th>
-<th scope="col" class="org-left">weather<sub>0</sub><sub>description</sub></th>
-<th scope="col" class="org-left">weather<sub>0</sub><sub>icon</sub></th>
-<th scope="col" class="org-left">base</th>
 <th scope="col" class="org-right">main<sub>temp</sub></th>
 <th scope="col" class="org-right">main<sub>feels</sub><sub>like</sub></th>
 <th scope="col" class="org-right">main<sub>temp</sub><sub>min</sub></th>
@@ -623,7 +622,6 @@ Resultado del número de filas y columnas leídos del archivo csv
 <th scope="col" class="org-right">main<sub>humidity</sub></th>
 <th scope="col" class="org-right">main<sub>sea</sub><sub>level</sub></th>
 <th scope="col" class="org-right">main<sub>grnd</sub><sub>level</sub></th>
-<th scope="col" class="org-right">visibility</th>
 <th scope="col" class="org-right">wind<sub>speed</sub></th>
 <th scope="col" class="org-right">wind<sub>deg</sub></th>
 <th scope="col" class="org-right">wind<sub>gust</sub></th>
@@ -631,8 +629,14 @@ Resultado del número de filas y columnas leídos del archivo csv
 <th scope="col" class="org-right">sys<sub>type</sub></th>
 <th scope="col" class="org-right">sys<sub>id</sub></th>
 <th scope="col" class="org-left">sys<sub>country</sub></th>
-<th scope="col" class="org-left">sys<sub>sunrise</sub></th>
-<th scope="col" class="org-left">sys<sub>sunset</sub></th>
+<th scope="col" class="org-right">sys<sub>sunrise</sub></th>
+<th scope="col" class="org-right">sys<sub>sunset</sub></th>
+<th scope="col" class="org-right">weather<sub>id</sub></th>
+<th scope="col" class="org-left">weather<sub>main</sub></th>
+<th scope="col" class="org-left">weather<sub>description</sub></th>
+<th scope="col" class="org-right">weather<sub>icon</sub></th>
+<th scope="col" class="org-left">base</th>
+<th scope="col" class="org-right">visibility</th>
 <th scope="col" class="org-right">timezone</th>
 <th scope="col" class="org-right">id</th>
 <th scope="col" class="org-left">name</th>
@@ -641,332 +645,332 @@ Resultado del número de filas y columnas leídos del archivo csv
 </thead>
 <tbody>
 <tr>
-<td class="org-left">2024-08-03 21:57:57</td>
-<td class="org-right">-78.5249</td>
-<td class="org-right">-0.2299</td>
-<td class="org-right">804</td>
-<td class="org-left">Clouds</td>
-<td class="org-left">overcast clouds</td>
-<td class="org-left">04n</td>
-<td class="org-left">stations</td>
-<td class="org-right">8.53</td>
-<td class="org-right">8.53</td>
-<td class="org-right">8.53</td>
-<td class="org-right">8.53</td>
-<td class="org-right">1019</td>
-<td class="org-right">90</td>
-<td class="org-right">1019</td>
-<td class="org-right">724</td>
-<td class="org-right">10000</td>
-<td class="org-right">0.78</td>
-<td class="org-right">75</td>
-<td class="org-right">1.58</td>
-<td class="org-right">97</td>
-<td class="org-right">1</td>
-<td class="org-right">8555</td>
-<td class="org-left">EC</td>
-<td class="org-left">2024-08-03 06:17:01</td>
-<td class="org-left">2024-08-03 18:23:24</td>
-<td class="org-right">-18000</td>
-<td class="org-right">3652462</td>
-<td class="org-left">Quito</td>
-<td class="org-right">200</td>
-</tr>
-
-<tr>
-<td class="org-left">2024-08-04 10:26:16</td>
-<td class="org-right">-78.525</td>
-<td class="org-right">-0.2299</td>
-<td class="org-right">804</td>
-<td class="org-left">Clouds</td>
-<td class="org-left">overcast clouds</td>
-<td class="org-left">04d</td>
-<td class="org-left">stations</td>
-<td class="org-right">16.53</td>
-<td class="org-right">15.57</td>
-<td class="org-right">16.53</td>
-<td class="org-right">16.53</td>
+<td class="org-left">2026-07-13 12:39:56</td>
+<td class="org-right">-70.6483</td>
+<td class="org-right">-33.4569</td>
+<td class="org-right">15.79</td>
+<td class="org-right">14.76</td>
+<td class="org-right">15.79</td>
+<td class="org-right">16.17</td>
 <td class="org-right">1016</td>
 <td class="org-right">51</td>
 <td class="org-right">1016</td>
-<td class="org-right">728</td>
+<td class="org-right">930</td>
+<td class="org-right">0.83</td>
+<td class="org-right">160</td>
+<td class="org-right">0.51</td>
+<td class="org-right">39</td>
+<td class="org-right">2</td>
+<td class="org-right">2094385</td>
+<td class="org-left">CL</td>
+<td class="org-right">1783943102</td>
+<td class="org-right">1783979474</td>
+<td class="org-right">802</td>
+<td class="org-left">Clouds</td>
+<td class="org-left">nubes dispersas</td>
+<td class="org-right">03d</td>
+<td class="org-left">stations</td>
 <td class="org-right">10000</td>
-<td class="org-right">1.11</td>
-<td class="org-right">6</td>
-<td class="org-right">2.1</td>
-<td class="org-right">90</td>
-<td class="org-right">1</td>
-<td class="org-right">8555</td>
-<td class="org-left">EC</td>
-<td class="org-left">2024-08-04 06:16:56</td>
-<td class="org-left">2024-08-04 18:23:19</td>
-<td class="org-right">-18000</td>
-<td class="org-right">3652462</td>
-<td class="org-left">Quito</td>
+<td class="org-right">-14400</td>
+<td class="org-right">3871336</td>
+<td class="org-left">Santiago</td>
 <td class="org-right">200</td>
 </tr>
 
 <tr>
-<td class="org-left">2024-08-04 09:15:02</td>
-<td class="org-right">-78.5249</td>
-<td class="org-right">-0.2299</td>
+<td class="org-left">2026-07-13 20:41:54</td>
+<td class="org-right">-70.6483</td>
+<td class="org-right">-33.4569</td>
+<td class="org-right">21.83</td>
+<td class="org-right">20.9</td>
+<td class="org-right">20.08</td>
+<td class="org-right">22.25</td>
+<td class="org-right">1013</td>
+<td class="org-right">32</td>
+<td class="org-right">1013</td>
+<td class="org-right">928</td>
+<td class="org-right">0.89</td>
+<td class="org-right">158</td>
+<td class="org-right">3.58</td>
+<td class="org-right">100</td>
+<td class="org-right">2</td>
+<td class="org-right">2095708</td>
+<td class="org-left">CL</td>
+<td class="org-right">1783943102</td>
+<td class="org-right">1783979474</td>
 <td class="org-right">804</td>
 <td class="org-left">Clouds</td>
-<td class="org-left">overcast clouds</td>
-<td class="org-left">04d</td>
+<td class="org-left">nubes</td>
+<td class="org-right">04d</td>
 <td class="org-left">stations</td>
-<td class="org-right">14.53</td>
-<td class="org-right">13.61</td>
-<td class="org-right">14.53</td>
-<td class="org-right">14.53</td>
-<td class="org-right">1018</td>
-<td class="org-right">60</td>
-<td class="org-right">1018</td>
-<td class="org-right">726</td>
 <td class="org-right">10000</td>
-<td class="org-right">0.73</td>
-<td class="org-right">90</td>
-<td class="org-right">1.81</td>
-<td class="org-right">86</td>
-<td class="org-right">1</td>
-<td class="org-right">8555</td>
-<td class="org-left">EC</td>
-<td class="org-left">2024-08-04 06:16:56</td>
-<td class="org-left">2024-08-04 18:23:19</td>
-<td class="org-right">-18000</td>
-<td class="org-right">3652462</td>
-<td class="org-left">Quito</td>
+<td class="org-right">-14400</td>
+<td class="org-right">3871336</td>
+<td class="org-left">Santiago</td>
 <td class="org-right">200</td>
 </tr>
 
 <tr>
-<td class="org-left">2024-08-06 10:05:50</td>
-<td class="org-right">-78.5211</td>
-<td class="org-right">-0.2309</td>
-<td class="org-right">801</td>
+<td class="org-left">2026-07-13 08:43:01</td>
+<td class="org-right">-70.65</td>
+<td class="org-right">-33.46</td>
+<td class="org-right">16.22</td>
+<td class="org-right">15.18</td>
+<td class="org-right">13.96</td>
+<td class="org-right">16.9</td>
+<td class="org-right">1015</td>
+<td class="org-right">49</td>
+<td class="org-right">1015</td>
+<td class="org-right">929</td>
+<td class="org-right">1.02</td>
+<td class="org-right">215</td>
+<td class="org-right">1.12</td>
+<td class="org-right">100</td>
+<td class="org-right">2</td>
+<td class="org-right">2094385</td>
+<td class="org-left">CL</td>
+<td class="org-right">1783943103</td>
+<td class="org-right">1783979474</td>
+<td class="org-right">804</td>
 <td class="org-left">Clouds</td>
-<td class="org-left">few clouds</td>
-<td class="org-left">02d</td>
+<td class="org-left">nubes</td>
+<td class="org-right">04n</td>
 <td class="org-left">stations</td>
-<td class="org-right">14.66</td>
-<td class="org-right">13.59</td>
-<td class="org-right">14.66</td>
-<td class="org-right">14.66</td>
-<td class="org-right">1017</td>
-<td class="org-right">54</td>
-<td class="org-right">1017</td>
-<td class="org-right">730</td>
 <td class="org-right">10000</td>
+<td class="org-right">-14400</td>
+<td class="org-right">3871336</td>
+<td class="org-left">Santiago</td>
+<td class="org-right">200</td>
+</tr>
+
+<tr>
+<td class="org-left">2026-07-14 11:55:22</td>
+<td class="org-right">-70.6483</td>
+<td class="org-right">-33.4569</td>
+<td class="org-right">14.51</td>
+<td class="org-right">13.66</td>
+<td class="org-right">13.81</td>
+<td class="org-right">15.53</td>
+<td class="org-right">1013</td>
+<td class="org-right">63</td>
+<td class="org-right">1013</td>
+<td class="org-right">927</td>
+<td class="org-right">1.37</td>
+<td class="org-right">228</td>
+<td class="org-right">1.36</td>
+<td class="org-right">100</td>
+<td class="org-right">2</td>
+<td class="org-right">2094385</td>
+<td class="org-left">CL</td>
+<td class="org-right">1784029481</td>
+<td class="org-right">1784065909</td>
+<td class="org-right">804</td>
+<td class="org-left">Clouds</td>
+<td class="org-left">nubes</td>
+<td class="org-right">04d</td>
+<td class="org-left">stations</td>
+<td class="org-right">10000</td>
+<td class="org-right">-14400</td>
+<td class="org-right">3871336</td>
+<td class="org-left">Santiago</td>
+<td class="org-right">200</td>
+</tr>
+
+<tr>
+<td class="org-left">2026-07-14 02:34:34</td>
+<td class="org-right">-70.6483</td>
+<td class="org-right">-33.4569</td>
+<td class="org-right">17.46</td>
+<td class="org-right">16.62</td>
+<td class="org-right">16.03</td>
+<td class="org-right">18.01</td>
+<td class="org-right">1013</td>
+<td class="org-right">52</td>
+<td class="org-right">1013</td>
+<td class="org-right">927</td>
+<td class="org-right">0.91</td>
+<td class="org-right">253</td>
+<td class="org-right">0.53</td>
+<td class="org-right">100</td>
+<td class="org-right">2</td>
+<td class="org-right">2094385</td>
+<td class="org-left">CL</td>
+<td class="org-right">1783943102</td>
+<td class="org-right">1783979474</td>
+<td class="org-right">804</td>
+<td class="org-left">Clouds</td>
+<td class="org-left">nubes</td>
+<td class="org-right">04n</td>
+<td class="org-left">stations</td>
+<td class="org-right">10000</td>
+<td class="org-right">-14400</td>
+<td class="org-right">3871336</td>
+<td class="org-left">Santiago</td>
+<td class="org-right">200</td>
+</tr>
+
+<tr>
+<td class="org-left">2026-07-14 10:55:55</td>
+<td class="org-right">-70.6483</td>
+<td class="org-right">-33.4569</td>
+<td class="org-right">15.29</td>
+<td class="org-right">14.49</td>
+<td class="org-right">13.81</td>
+<td class="org-right">16.08</td>
+<td class="org-right">1012</td>
+<td class="org-right">62</td>
+<td class="org-right">1012</td>
+<td class="org-right">926</td>
 <td class="org-right">1.01</td>
-<td class="org-right">25</td>
-<td class="org-right">1.74</td>
-<td class="org-right">15</td>
-<td class="org-right">1</td>
-<td class="org-right">8555</td>
-<td class="org-left">EC</td>
-<td class="org-left">2024-08-06 06:16:44</td>
-<td class="org-left">2024-08-06 18:23:07</td>
-<td class="org-right">-18000</td>
-<td class="org-right">3652462</td>
-<td class="org-left">Quito</td>
-<td class="org-right">200</td>
-</tr>
-
-<tr>
-<td class="org-left">2024-08-03 02:43:26</td>
-<td class="org-right">-78.5249</td>
-<td class="org-right">-0.2299</td>
-<td class="org-right">802</td>
+<td class="org-right">222</td>
+<td class="org-right">0.71</td>
+<td class="org-right">100</td>
+<td class="org-right">2</td>
+<td class="org-right">2094385</td>
+<td class="org-left">CL</td>
+<td class="org-right">1784029481</td>
+<td class="org-right">1784065909</td>
+<td class="org-right">804</td>
 <td class="org-left">Clouds</td>
-<td class="org-left">scattered clouds</td>
-<td class="org-left">03n</td>
+<td class="org-left">nubes</td>
+<td class="org-right">04n</td>
 <td class="org-left">stations</td>
-<td class="org-right">7.53</td>
-<td class="org-right">6.77</td>
-<td class="org-right">7.53</td>
-<td class="org-right">7.53</td>
-<td class="org-right">1019</td>
-<td class="org-right">81</td>
-<td class="org-right">1019</td>
-<td class="org-right">722</td>
 <td class="org-right">10000</td>
-<td class="org-right">1.55</td>
-<td class="org-right">171</td>
-<td class="org-right">1.97</td>
-<td class="org-right">44</td>
-<td class="org-right">1</td>
-<td class="org-right">8555</td>
-<td class="org-left">EC</td>
-<td class="org-left">2024-08-03 06:17:01</td>
-<td class="org-left">2024-08-03 18:23:24</td>
-<td class="org-right">-18000</td>
-<td class="org-right">3652462</td>
-<td class="org-left">Quito</td>
+<td class="org-right">-14400</td>
+<td class="org-right">3871336</td>
+<td class="org-left">Santiago</td>
 <td class="org-right">200</td>
 </tr>
 
 <tr>
-<td class="org-left">2024-08-04 22:50:26</td>
-<td class="org-right">-78.5249</td>
-<td class="org-right">-0.2299</td>
-<td class="org-right">802</td>
-<td class="org-left">Clouds</td>
-<td class="org-left">scattered clouds</td>
-<td class="org-left">03n</td>
-<td class="org-left">stations</td>
-<td class="org-right">9.53</td>
-<td class="org-right">9.53</td>
-<td class="org-right">9.53</td>
-<td class="org-right">9.53</td>
-<td class="org-right">1020</td>
-<td class="org-right">93</td>
-<td class="org-right">1020</td>
-<td class="org-right">724</td>
-<td class="org-right">10000</td>
-<td class="org-right">1.18</td>
-<td class="org-right">117</td>
-<td class="org-right">1.4</td>
-<td class="org-right">38</td>
-<td class="org-right">1</td>
-<td class="org-right">8555</td>
-<td class="org-left">EC</td>
-<td class="org-left">2024-08-04 06:16:56</td>
-<td class="org-left">2024-08-04 18:23:19</td>
-<td class="org-right">-18000</td>
-<td class="org-right">3652462</td>
-<td class="org-left">Quito</td>
-<td class="org-right">200</td>
-</tr>
-
-<tr>
-<td class="org-left">2024-08-03 12:52:29</td>
-<td class="org-right">-78.5211</td>
-<td class="org-right">-0.2309</td>
-<td class="org-right">801</td>
-<td class="org-left">Clouds</td>
-<td class="org-left">few clouds</td>
-<td class="org-left">02d</td>
-<td class="org-left">stations</td>
-<td class="org-right">20.66</td>
-<td class="org-right">19.72</td>
-<td class="org-right">20.66</td>
-<td class="org-right">20.66</td>
-<td class="org-right">1012</td>
-<td class="org-right">36</td>
-<td class="org-right">1012</td>
-<td class="org-right">729</td>
-<td class="org-right">10000</td>
-<td class="org-right">4.05</td>
-<td class="org-right">341</td>
-<td class="org-right">5.7</td>
-<td class="org-right">17</td>
-<td class="org-right">1</td>
-<td class="org-right">8555</td>
-<td class="org-left">EC</td>
-<td class="org-left">2024-08-03 06:17:00</td>
-<td class="org-left">2024-08-03 18:23:23</td>
-<td class="org-right">-18000</td>
-<td class="org-right">3652462</td>
-<td class="org-left">Quito</td>
-<td class="org-right">200</td>
-</tr>
-
-<tr>
-<td class="org-left">2024-08-03 10:54:26</td>
-<td class="org-right">-78.5211</td>
-<td class="org-right">-0.2309</td>
-<td class="org-right">800</td>
-<td class="org-left">Clear</td>
-<td class="org-left">clear sky</td>
-<td class="org-left">01d</td>
-<td class="org-left">stations</td>
-<td class="org-right">15.66</td>
-<td class="org-right">14.12</td>
-<td class="org-right">15.66</td>
-<td class="org-right">15.66</td>
-<td class="org-right">1015</td>
-<td class="org-right">32</td>
-<td class="org-right">1015</td>
-<td class="org-right">730</td>
-<td class="org-right">10000</td>
-<td class="org-right">2.42</td>
-<td class="org-right">354</td>
-<td class="org-right">3.3</td>
-<td class="org-right">10</td>
-<td class="org-right">1</td>
-<td class="org-right">8555</td>
-<td class="org-left">EC</td>
-<td class="org-left">2024-08-03 06:17:00</td>
-<td class="org-left">2024-08-03 18:23:23</td>
-<td class="org-right">-18000</td>
-<td class="org-right">3652462</td>
-<td class="org-left">Quito</td>
-<td class="org-right">200</td>
-</tr>
-
-<tr>
-<td class="org-left">2024-08-02 23:51:42</td>
-<td class="org-right">-78.5211</td>
-<td class="org-right">-0.2309</td>
+<td class="org-left">2026-07-13 13:46:01</td>
+<td class="org-right">-70.6483</td>
+<td class="org-right">-33.4569</td>
+<td class="org-right">15.62</td>
+<td class="org-right">14.54</td>
+<td class="org-right">13.92</td>
+<td class="org-right">16.9</td>
+<td class="org-right">1016</td>
+<td class="org-right">50</td>
+<td class="org-right">1016</td>
+<td class="org-right">931</td>
+<td class="org-right">0.41</td>
+<td class="org-right">205</td>
+<td class="org-right">0.32</td>
+<td class="org-right">70</td>
+<td class="org-right">2</td>
+<td class="org-right">2094385</td>
+<td class="org-left">CL</td>
+<td class="org-right">1783943102</td>
+<td class="org-right">1783979474</td>
 <td class="org-right">803</td>
 <td class="org-left">Clouds</td>
-<td class="org-left">broken clouds</td>
-<td class="org-left">04n</td>
+<td class="org-left">muy nuboso</td>
+<td class="org-right">04d</td>
 <td class="org-left">stations</td>
-<td class="org-right">8.66</td>
-<td class="org-right">8.66</td>
-<td class="org-right">8.66</td>
-<td class="org-right">8.66</td>
-<td class="org-right">1020</td>
-<td class="org-right">88</td>
-<td class="org-right">1020</td>
-<td class="org-right">726</td>
-<td class="org-right">8882</td>
-<td class="org-right">1.17</td>
-<td class="org-right">146</td>
-<td class="org-right">1.32</td>
-<td class="org-right">68</td>
-<td class="org-right">1</td>
-<td class="org-right">8555</td>
-<td class="org-left">EC</td>
-<td class="org-left">2024-08-02 06:17:04</td>
-<td class="org-left">2024-08-02 18:23:27</td>
-<td class="org-right">-18000</td>
-<td class="org-right">3652462</td>
-<td class="org-left">Quito</td>
+<td class="org-right">10000</td>
+<td class="org-right">-14400</td>
+<td class="org-right">3871336</td>
+<td class="org-left">Santiago</td>
 <td class="org-right">200</td>
 </tr>
 
 <tr>
-<td class="org-left">2024-08-03 02:13:58</td>
-<td class="org-right">-78.5249</td>
-<td class="org-right">-0.2299</td>
-<td class="org-right">802</td>
+<td class="org-left">2026-07-13 14:25:09</td>
+<td class="org-right">-70.6483</td>
+<td class="org-right">-33.4569</td>
+<td class="org-right">17.93</td>
+<td class="org-right">16.95</td>
+<td class="org-right">17.81</td>
+<td class="org-right">18.81</td>
+<td class="org-right">1016</td>
+<td class="org-right">45</td>
+<td class="org-right">1016</td>
+<td class="org-right">931</td>
+<td class="org-right">0.41</td>
+<td class="org-right">205</td>
+<td class="org-right">0.32</td>
+<td class="org-right">70</td>
+<td class="org-right">2</td>
+<td class="org-right">2094385</td>
+<td class="org-left">CL</td>
+<td class="org-right">1783943102</td>
+<td class="org-right">1783979474</td>
+<td class="org-right">803</td>
 <td class="org-left">Clouds</td>
-<td class="org-left">scattered clouds</td>
-<td class="org-left">03n</td>
+<td class="org-left">muy nuboso</td>
+<td class="org-right">04d</td>
 <td class="org-left">stations</td>
-<td class="org-right">7.53</td>
-<td class="org-right">6.77</td>
-<td class="org-right">7.53</td>
-<td class="org-right">7.53</td>
-<td class="org-right">1019</td>
-<td class="org-right">85</td>
-<td class="org-right">1019</td>
-<td class="org-right">722</td>
 <td class="org-right">10000</td>
-<td class="org-right">1.55</td>
-<td class="org-right">160</td>
-<td class="org-right">1.87</td>
-<td class="org-right">26</td>
-<td class="org-right">1</td>
-<td class="org-right">8555</td>
-<td class="org-left">EC</td>
-<td class="org-left">2024-08-03 06:17:01</td>
-<td class="org-left">2024-08-03 18:23:24</td>
-<td class="org-right">-18000</td>
-<td class="org-right">3652462</td>
-<td class="org-left">Quito</td>
+<td class="org-right">-14400</td>
+<td class="org-right">3871336</td>
+<td class="org-left">Santiago</td>
+<td class="org-right">200</td>
+</tr>
+
+<tr>
+<td class="org-left">2026-07-14 09:25:11</td>
+<td class="org-right">-70.65</td>
+<td class="org-right">-33.46</td>
+<td class="org-right">15.39</td>
+<td class="org-right">14.66</td>
+<td class="org-right">14.36</td>
+<td class="org-right">15.79</td>
+<td class="org-right">1012</td>
+<td class="org-right">64</td>
+<td class="org-right">1012</td>
+<td class="org-right">927</td>
+<td class="org-right">0.43</td>
+<td class="org-right">114</td>
+<td class="org-right">0.31</td>
+<td class="org-right">100</td>
+<td class="org-right">2</td>
+<td class="org-right">2094385</td>
+<td class="org-left">CL</td>
+<td class="org-right">1784029481</td>
+<td class="org-right">1784065909</td>
+<td class="org-right">804</td>
+<td class="org-left">Clouds</td>
+<td class="org-left">nubes</td>
+<td class="org-right">04n</td>
+<td class="org-left">stations</td>
+<td class="org-right">10000</td>
+<td class="org-right">-14400</td>
+<td class="org-right">3871336</td>
+<td class="org-left">Santiago</td>
+<td class="org-right">200</td>
+</tr>
+
+<tr>
+<td class="org-left">2026-07-13 18:54:52</td>
+<td class="org-right">-70.6483</td>
+<td class="org-right">-33.4569</td>
+<td class="org-right">22.52</td>
+<td class="org-right">21.64</td>
+<td class="org-right">20.24</td>
+<td class="org-right">23.56</td>
+<td class="org-right">1013</td>
+<td class="org-right">31</td>
+<td class="org-right">1013</td>
+<td class="org-right">928</td>
+<td class="org-right">1.34</td>
+<td class="org-right">270</td>
+<td class="org-right">1.79</td>
+<td class="org-right">100</td>
+<td class="org-right">2</td>
+<td class="org-right">2094385</td>
+<td class="org-left">CL</td>
+<td class="org-right">1783943102</td>
+<td class="org-right">1783979474</td>
+<td class="org-right">804</td>
+<td class="org-left">Clouds</td>
+<td class="org-left">nubes</td>
+<td class="org-right">04d</td>
+<td class="org-left">stations</td>
+<td class="org-right">10000</td>
+<td class="org-right">-14400</td>
+<td class="org-right">3871336</td>
+<td class="org-left">Santiago</td>
 <td class="org-right">200</td>
 </tr>
 </tbody>
@@ -974,8 +978,8 @@ Resultado del número de filas y columnas leídos del archivo csv
 </div>
 </div>
 
-<div id="outline-container-org7de9ff1" class="outline-3">
-<h3 id="org7de9ff1"><span class="section-number-3">2.3.</span> Gráfica Temperatura vs Tiempo</h3>
+<div id="outline-container-orga927f91" class="outline-3">
+<h3 id="orga927f91"><span class="section-number-3">2.3.</span> Gráfica Temperatura vs Tiempo</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 La siguiente gráfica muestra la evolución de la temperatura registrada
@@ -1013,7 +1017,7 @@ plt.savefig(fname)
 </div>
 
 
-<div id="org7b54732" class="figure">
+<div id="org7182a5d" class="figure">
 <p><img src="./images/temperatura.png" alt="temperatura.png" />
 </p>
 <p><span class="figure-number">Figura 1: </span>Gráfica Temperatura vs Tiempo</p>
@@ -1022,8 +1026,8 @@ plt.savefig(fname)
 </div>
 
 
-<div id="outline-container-org73e4016" class="outline-3">
-<h3 id="org73e4016"><span class="section-number-3">2.4.</span> Gráfica Humedad vs Tiempo</h3>
+<div id="outline-container-org2994747" class="outline-3">
+<h3 id="org2994747"><span class="section-number-3">2.4.</span> Gráfica Humedad vs Tiempo</h3>
 <div class="outline-text-3" id="text-2-4">
 <div class="org-src-container">
 <pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">HUMEDAD VS TIEMPO
@@ -1034,7 +1038,7 @@ plt.title(f<span style="font-style: italic;">"Humedad vs Tiempo en </span>{<span
 </div>
 
 
-<div id="org97a265b" class="figure">
+<div id="orgf9db30f" class="figure">
 <p><img src="./images/humedad.png" alt="humedad.png" />
 </p>
 <p><span class="figure-number">Figura 2: </span>Gráfica Humedad vs Tiempo</p>
@@ -1043,8 +1047,8 @@ plt.title(f<span style="font-style: italic;">"Humedad vs Tiempo en </span>{<span
 </div>
 
 
-<div id="outline-container-org5ef6daa" class="outline-3">
-<h3 id="org5ef6daa"><span class="section-number-3">2.5.</span> Gráfica Presión vs Tiempo</h3>
+<div id="outline-container-org0bc6a6f" class="outline-3">
+<h3 id="org0bc6a6f"><span class="section-number-3">2.5.</span> Gráfica Presión vs Tiempo</h3>
 <div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
 <pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">PRESION VS TIEMPO
@@ -1055,7 +1059,7 @@ plt.title(f<span style="font-style: italic;">"Presi&#243;n vs Tiempo en </span>{
 </div>
 
 
-<div id="org16112f5" class="figure">
+<div id="orgd5067d9" class="figure">
 <p><img src="./images/presion.png" alt="presion.png" />
 </p>
 <p><span class="figure-number">Figura 3: </span>Gráfica Presión vs Tiempo</p>
@@ -1064,8 +1068,8 @@ plt.title(f<span style="font-style: italic;">"Presi&#243;n vs Tiempo en </span>{
 </div>
 
 
-<div id="outline-container-orgd9ba116" class="outline-3">
-<h3 id="orgd9ba116"><span class="section-number-3">2.6.</span> Gráfica Velocidad del Viento vs Tiempo</h3>
+<div id="outline-container-orgec40b93" class="outline-3">
+<h3 id="orgec40b93"><span class="section-number-3">2.6.</span> Gráfica Velocidad del Viento vs Tiempo</h3>
 <div class="outline-text-3" id="text-2-6">
 <div class="org-src-container">
 <pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">VELOCIDAD DEL VIENTO VS TIEMPO
@@ -1076,7 +1080,7 @@ plt.title(f<span style="font-style: italic;">"Velocidad del viento vs Tiempo en 
 </div>
 
 
-<div id="org2583382" class="figure">
+<div id="org1a5ce79" class="figure">
 <p><img src="./images/viento.png" alt="viento.png" />
 </p>
 <p><span class="figure-number">Figura 4: </span>Gráfica Velocidad del viento vs Tiempo</p>
@@ -1098,8 +1102,8 @@ equivalente en <code>/public/images</code>
 </div>
 </div>
 
-<div id="outline-container-orga82735e" class="outline-2">
-<h2 id="orga82735e"><span class="section-number-2">3.</span> Instrucciones Java Script</h2>
+<div id="outline-container-org1449c89" class="outline-2">
+<h2 id="org1449c89"><span class="section-number-2">3.</span> Instrucciones Java Script</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 En la siguiente página se indica cómo integrar <code>javascript</code> como un
@@ -1110,12 +1114,12 @@ JavaScript</a>
 </div>
 </div>
 
-<div id="outline-container-orgf8b50cc" class="outline-2">
-<h2 id="orgf8b50cc"><span class="section-number-2">4.</span> Referencias</h2>
+<div id="outline-container-orgb539b24" class="outline-2">
+<h2 id="orgb539b24"><span class="section-number-2">4.</span> Referencias</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org6ff9d85" class="outline-3">
-<h3 id="org6ff9d85"><span class="section-number-3">4.1.</span> OpenWeatherMap</h3>
+<div id="outline-container-org51fab08" class="outline-3">
+<h3 id="org51fab08"><span class="section-number-3">4.1.</span> OpenWeatherMap</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li><a href="https://openweathermap.org/api">Obtención del API</a></li>
@@ -1124,8 +1128,8 @@ JavaScript</a>
 </ul>
 </div>
 </div>
-<div id="outline-container-org16e8f8d" class="outline-3">
-<h3 id="org16e8f8d"><span class="section-number-3">4.2.</span> Python</h3>
+<div id="outline-container-orgc38e165" class="outline-3">
+<h3 id="orgc38e165"><span class="section-number-3">4.2.</span> Python</h3>
 <div class="outline-text-3" id="text-4-2">
 <ul class="org-ul">
 <li><a href="https://requests.readthedocs.io/en/latest/">Requests</a></li>
@@ -1135,16 +1139,16 @@ JavaScript</a>
 </ul>
 </div>
 </div>
-<div id="outline-container-org6641ff7" class="outline-3">
-<h3 id="org6641ff7"><span class="section-number-3">4.3.</span> Pandas</h3>
+<div id="outline-container-org1f00718" class="outline-3">
+<h3 id="org1f00718"><span class="section-number-3">4.3.</span> Pandas</h3>
 <div class="outline-text-3" id="text-4-3">
 <ul class="org-ul">
 <li><a href="https://pandas.pydata.org/docs/">Pandas</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org7b93286" class="outline-3">
-<h3 id="org7b93286"><span class="section-number-3">4.4.</span> Matplotlib</h3>
+<div id="outline-container-org3a60340" class="outline-3">
+<h3 id="org3a60340"><span class="section-number-3">4.4.</span> Matplotlib</h3>
 <div class="outline-text-3" id="text-4-4">
 <ul class="org-ul">
 <li><a href="https://matplotlib.org/stable/">Matplot lib documentation</a></li>
@@ -1152,16 +1156,16 @@ JavaScript</a>
 </ul>
 </div>
 </div>
-<div id="outline-container-org42c72c0" class="outline-3">
-<h3 id="org42c72c0"><span class="section-number-3">4.5.</span> Emacs</h3>
+<div id="outline-container-org0afbdfa" class="outline-3">
+<h3 id="org0afbdfa"><span class="section-number-3">4.5.</span> Emacs</h3>
 <div class="outline-text-3" id="text-4-5">
 <ul class="org-ul">
 <li><a href="https://orgmode.org/">Emacs Org Mode</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org23acd75" class="outline-3">
-<h3 id="org23acd75"><span class="section-number-3">4.6.</span> HTTPD</h3>
+<div id="outline-container-org536b904" class="outline-3">
+<h3 id="org536b904"><span class="section-number-3">4.6.</span> HTTPD</h3>
 <div class="outline-text-3" id="text-4-6">
 <ul class="org-ul">
 <li><a href="https://github.com/skeeto/emacs-web-server">Simple-Httpd</a></li>
@@ -1174,7 +1178,7 @@ JavaScript</a>
 <div id="postamble" class="status">
 <p class="date">Fecha: 2026-07-13</p>
 <p class="author">Autor: Emilio Albán, Ariel Montufar, Karen Suarez, Samuel Churaco</p>
-<p class="date">Created: 2026-07-16 Thu 00:51</p>
+<p class="date">Created: 2026-07-16 Thu 02:58</p>
 </div>
 </body>
 </html>

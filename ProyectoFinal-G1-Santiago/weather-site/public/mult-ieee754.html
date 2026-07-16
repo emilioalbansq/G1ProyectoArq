@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-07-16 Thu 00:51 -->
+<!-- 2026-07-16 Thu 02:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Multiplicación - IEEE754</title>
@@ -50,45 +50,51 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org09b80aa">1. ÍNDICE DE LA PÁGINA</a></li>
+<li><a href="#org3cd6031">1. ÍNDICE DE LA PÁGINA</a></li>
 <li><a href="#1-introducción">2. 1. INTRODUCCIÓN</a>
 <ul>
-<li><a href="#org2cfb224">2.1. ¿Qué es el estándar IEEE 754?</a></li>
-<li><a href="#org8cec307">2.2. ¿Para qué sirve?</a></li>
-<li><a href="#org193c8f3">2.3. ¿Por qué se utiliza?</a></li>
+<li><a href="#org5c217cb">2.1. ¿Qué es el estándar IEEE 754?</a></li>
+<li><a href="#orgcc8cbdd">2.2. ¿Para qué sirve?</a></li>
+<li><a href="#org6119905">2.3. ¿Por qué se utiliza?</a></li>
 </ul>
 </li>
 <li><a href="#2-representación-ieee-754">3. 2. REPRESENTACIÓN IEEE 754</a>
 <ul>
-<li><a href="#org5c6769b">3.1. Ilustración del Formato de Memoria (32 bits)</a></li>
-<li><a href="#org9a4549d">3.2. Fórmula general de representación IEEE 754</a></li>
-<li><a href="#orga5681aa">3.3. Explicación de los Componentes Esenciales</a></li>
+<li><a href="#org16b6080">3.1. Ilustración del Formato de Memoria (32 bits)</a></li>
+<li><a href="#org5166ed0">3.2. Fórmula general de representación IEEE 754</a></li>
+<li><a href="#orge726881">3.3. Explicación de los Componentes Esenciales</a></li>
 </ul>
 </li>
 <li><a href="#3-multiplicación-ieee-754">4. 3. MULTIPLICACIÓN IEEE 754 (ALGORITMO PASO A PASO)</a>
 <ul>
-<li><a href="#org760080d">4.1. Paso 1: Multiplicación de Signos</a></li>
-<li><a href="#org5b985ae">4.2. Paso 2: Suma de Exponentes y Ajuste del Sesgo</a></li>
-<li><a href="#org3657373">4.3. Paso 3: Multiplicación de las Mantisas</a></li>
-<li><a href="#org5907f4d">4.4. Paso 4: Normalización del Resultado</a></li>
-<li><a href="#org0332c4d">4.5. Paso 5: Redondeo y Ensamblaje del Resultado Final</a></li>
+<li><a href="#org6fdbeb1">4.1. Paso 1: Multiplicación de Signos</a></li>
+<li><a href="#orgcf9dc1f">4.2. Paso 2: Suma de Exponentes y Ajuste del Sesgo</a></li>
+<li><a href="#org0b16305">4.3. Paso 3: Multiplicación de las Mantisas</a></li>
+<li><a href="#org08db6ea">4.4. Paso 4: Normalización del Resultado</a></li>
+<li><a href="#org55674e6">4.5. Paso 5: Redondeo y Ensamblaje del Resultado Final</a></li>
 </ul>
 </li>
 <li><a href="#4-ejemplo-desarrollado">5. 4. EJEMPLO DESARROLLADO</a>
 <ul>
-<li><a href="#org28d837f">5.1. Paso 1: Conversión a IEEE 754</a></li>
-<li><a href="#org34852d1">5.2. Paso 2: Operación del algoritmo</a></li>
-<li><a href="#org38685ab">5.3. Paso 3: Resultado final</a></li>
+<li><a href="#orgfb3773a">5.1. Paso 1: Conversión a IEEE 754</a></li>
+<li><a href="#orgdb0296a">5.2. Paso 2: Operación del algoritmo</a></li>
+<li><a href="#org0ee3b1c">5.3. Paso 3: Resultado final</a></li>
+<li><a href="#orgf3d5adb">5.4. CALCULADORA DE MULTIPLICACIÓN IEEE 754</a></li>
+<li><a href="#orga604891">5.5. Ejemplo de uso</a></li>
 </ul>
 </li>
-<li><a href="#5-conclusiones">6. 5. CONCLUSIONES</a></li>
-<li><a href="#6-referencias">7. 6. REFERENCIAS</a></li>
+<li><a href="#org7d98762">6. Número A, correspondiente a -5.25:</a></li>
+<li><a href="#org520091d">7. Número B, correspondiente a 3.75:</a></li>
+<li><a href="#org5063a90">8. Resultado decimal:</a></li>
+<li><a href="#orge945de9">9. Resultado IEEE 754:</a></li>
+<li><a href="#5-conclusiones">10. 5. CONCLUSIONES</a></li>
+<li><a href="#6-referencias">11. 6. REFERENCIAS</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org09b80aa" class="outline-2">
-<h2 id="org09b80aa"><span class="section-number-2">1.</span> ÍNDICE DE LA PÁGINA</h2>
+<div id="outline-container-org3cd6031" class="outline-2">
+<h2 id="org3cd6031"><span class="section-number-2">1.</span> ÍNDICE DE LA PÁGINA</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="#1-introducción">1. Introducción</a>
@@ -134,8 +140,8 @@ números de punto flotante.
 </p>
 </div>
 
-<div id="outline-container-org2cfb224" class="outline-3">
-<h3 id="org2cfb224"><span class="section-number-3">2.1.</span> ¿Qué es el estándar IEEE 754?</h3>
+<div id="outline-container-org5c217cb" class="outline-3">
+<h3 id="org5c217cb"><span class="section-number-3">2.1.</span> ¿Qué es el estándar IEEE 754?</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 El estándar IEEE 754, desarrollado por el Instituto de Ingenieros Eléctricos y Electrónicos (IEEE), establece una representación uniforme
@@ -146,8 +152,8 @@ o malentendidos en la interpretación de los valores numéricos.
 </div>
 </div>
 
-<div id="outline-container-org8cec307" class="outline-3">
-<h3 id="org8cec307"><span class="section-number-3">2.2.</span> ¿Para qué sirve?</h3>
+<div id="outline-container-orgcc8cbdd" class="outline-3">
+<h3 id="orgcc8cbdd"><span class="section-number-3">2.2.</span> ¿Para qué sirve?</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Este formato sirve esencialmente como una regla técnica universal en el mundo de la informática. En el día a día, permite que cálculos
@@ -158,8 +164,8 @@ portabilidad total del software entre distintos sistemas operativos y procesador
 </div>
 </div>
 
-<div id="outline-container-org193c8f3" class="outline-3">
-<h3 id="org193c8f3"><span class="section-number-3">2.3.</span> ¿Por qué se utiliza?</h3>
+<div id="outline-container-org6119905" class="outline-3">
+<h3 id="org6119905"><span class="section-number-3">2.3.</span> ¿Por qué se utiliza?</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 La razón fundamental por la que se utiliza este estándar radica en la naturaleza binaria de las computadoras. Como el hardware interno de
@@ -185,8 +191,8 @@ delimitadas. A continuación, se presenta la estructura física para el formato 
 </p>
 </div>
 
-<div id="outline-container-org5c6769b" class="outline-3">
-<h3 id="org5c6769b"><span class="section-number-3">3.1.</span> Ilustración del Formato de Memoria (32 bits)</h3>
+<div id="outline-container-org16b6080" class="outline-3">
+<h3 id="org16b6080"><span class="section-number-3">3.1.</span> Ilustración del Formato de Memoria (32 bits)</h3>
 <div class="outline-text-3" id="text-3-1">
 <div class="org-src-container">
 <pre class="src src-text">  31  30          23 22                                   0
@@ -204,8 +210,8 @@ delimitadas. A continuación, se presenta la estructura física para el formato 
 </div>
 </div>
 
-<div id="outline-container-org9a4549d" class="outline-3">
-<h3 id="org9a4549d"><span class="section-number-3">3.2.</span> Fórmula general de representación IEEE 754</h3>
+<div id="outline-container-org5166ed0" class="outline-3">
+<h3 id="org5166ed0"><span class="section-number-3">3.2.</span> Fórmula general de representación IEEE 754</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Un número en formato IEEE 754 se interpreta mediante la expresión:
@@ -230,8 +236,8 @@ Donde:
 </div>
 </div>
 
-<div id="outline-container-orga5681aa" class="outline-3">
-<h3 id="orga5681aa"><span class="section-number-3">3.3.</span> Explicación de los Componentes Esenciales</h3>
+<div id="outline-container-orge726881" class="outline-3">
+<h3 id="orge726881"><span class="section-number-3">3.3.</span> Explicación de los Componentes Esenciales</h3>
 <div class="outline-text-3" id="text-3-3">
 <blockquote>
 <p>
@@ -242,7 +248,7 @@ cantidad es negativa. En la multiplicación, este bit se procesa de forma indepe
 </p>
 </blockquote>
 
-<div class="NOTE" id="org9d96a07">
+<div class="NOTE" id="org8000521">
 <p>
 <b><b>Exponente (8 bits):</b></b>
 Este bloque se encarga de definir la escala, magnitud o tamaño del número, determinando cuántas posiciones debe desplazarse el punto decimal en
@@ -279,8 +285,8 @@ hardware descompone los factores y ejecuta de forma paralela un algoritmo estric
 </p>
 </div>
 
-<div id="outline-container-org760080d" class="outline-3">
-<h3 id="org760080d"><span class="section-number-3">4.1.</span> Paso 1: Multiplicación de Signos</h3>
+<div id="outline-container-org6fdbeb1" class="outline-3">
+<h3 id="org6fdbeb1"><span class="section-number-3">4.1.</span> Paso 1: Multiplicación de Signos</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 La determinación del signo del resultado final es la operación más rápida del proceso. El procesador extrae de forma independiente los bits de
@@ -296,8 +302,8 @@ negativo.</li>
 </div>
 </div>
 
-<div id="outline-container-org5b985ae" class="outline-3">
-<h3 id="org5b985ae"><span class="section-number-3">4.2.</span> Paso 2: Suma de Exponentes y Ajuste del Sesgo</h3>
+<div id="outline-container-orgcf9dc1f" class="outline-3">
+<h3 id="orgcf9dc1f"><span class="section-number-3">4.2.</span> Paso 2: Suma de Exponentes y Ajuste del Sesgo</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 En esta etapa, el procesador calcula la magnitud del nuevo número sumando los exponentes de ambos factores. Sin embargo, surge un inconveniente
@@ -310,8 +316,8 @@ fórmula matemática exacta que ejecuta el chip es:
 </div>
 </div>
 
-<div id="outline-container-org3657373" class="outline-3">
-<h3 id="org3657373"><span class="section-number-3">4.3.</span> Paso 3: Multiplicación de las Mantisas</h3>
+<div id="outline-container-org0b16305" class="outline-3">
+<h3 id="org0b16305"><span class="section-number-3">4.3.</span> Paso 3: Multiplicación de las Mantisas</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 Antes de efectuar la operación matemática, la unidad de punto flotante del procesador realiza una reconstrucción obligatoria: toma los 23 bits
@@ -323,8 +329,8 @@ provisional significativamente más larga, la cual contiene la combinación de l
 </div>
 </div>
 
-<div id="outline-container-org5907f4d" class="outline-3">
-<h3 id="org5907f4d"><span class="section-number-3">4.4.</span> Paso 4: Normalización del Resultado</h3>
+<div id="outline-container-org08db6ea" class="outline-3">
+<h3 id="org08db6ea"><span class="section-number-3">4.4.</span> Paso 4: Normalización del Resultado</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 El estándar exige rigurosamente que el resultado se almacene bajo el formato de notación científica binaria limpia, lo que significa que
@@ -339,8 +345,8 @@ la normalización no es necesaria y el exponente se mantiene igual.
 </div>
 </div>
 
-<div id="outline-container-org0332c4d" class="outline-3">
-<h3 id="org0332c4d"><span class="section-number-3">4.5.</span> Paso 5: Redondeo y Ensamblaje del Resultado Final</h3>
+<div id="outline-container-org55674e6" class="outline-3">
+<h3 id="org55674e6"><span class="section-number-3">4.5.</span> Paso 5: Redondeo y Ensamblaje del Resultado Final</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 En la fase de cierre, el procesador prepara los datos para inyectarlos de vuelta en la celda de memoria de 32 bits. Primero, se aplica el filtro
@@ -370,8 +376,8 @@ Vamos a multiplicar <b>A = -5.25</b> por <b>B = 3.75</b>.
 </p>
 </div>
 
-<div id="outline-container-org28d837f" class="outline-3">
-<h3 id="org28d837f"><span class="section-number-3">5.1.</span> Paso 1: Conversión a IEEE 754</h3>
+<div id="outline-container-orgfb3773a" class="outline-3">
+<h3 id="orgfb3773a"><span class="section-number-3">5.1.</span> Paso 1: Conversión a IEEE 754</h3>
 <div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
 <li><b>Número A (-5.25):</b>
@@ -395,8 +401,8 @@ Vamos a multiplicar <b>A = -5.25</b> por <b>B = 3.75</b>.
 </div>
 </div>
 
-<div id="outline-container-org34852d1" class="outline-3">
-<h3 id="org34852d1"><span class="section-number-3">5.2.</span> Paso 2: Operación del algoritmo</h3>
+<div id="outline-container-orgdb0296a" class="outline-3">
+<h3 id="orgdb0296a"><span class="section-number-3">5.2.</span> Paso 2: Operación del algoritmo</h3>
 <div class="outline-text-3" id="text-5-2">
 <ol class="org-ol">
 <li><b>Multiplicación de signos:</b> \(1 \oplus 0 = 1\) (El resultado será negativo).</li>
@@ -405,7 +411,7 @@ Vamos a multiplicar <b>A = -5.25</b> por <b>B = 3.75</b>.
 <b>Multiplicación de mantisas:</b> Tomamos las mantisas con su "1." implícito: \(1.0101_2 \times 1.111_2\). 
 Para multiplicar, ignoramos la coma temporalmente y multiplicamos \(10101 \times 1111\):
 </p>
-<pre class="example" id="org7b341ad">
+<pre class="example" id="orgdfd41ee">
     10101
   x  1111
   -------
@@ -429,8 +435,8 @@ El primer número tiene 4 decimales y el segundo tiene 3. En total son 7 posicio
 </div>
 </div>
 
-<div id="outline-container-org38685ab" class="outline-3">
-<h3 id="org38685ab"><span class="section-number-3">5.3.</span> Paso 3: Resultado final</h3>
+<div id="outline-container-org0ee3b1c" class="outline-3">
+<h3 id="org0ee3b1c"><span class="section-number-3">5.3.</span> Paso 3: Resultado final</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 Concatenamos las partes calculadas:
@@ -452,13 +458,290 @@ Si reconstruimos el número: Signo negativo, Exponente \(131 - 127 = 4\). Mantis
 Valor: \(-1.00111011_2 \times 2^4 = -10011.1011_2\).
 La parte entera \(10011_2 = 19_{10}\). La parte fraccionaria \(0.1011_2 = 0.5 + 0.125 + 0.0625 = 0.6875_{10}\). 
 Total: \(-19.6875\). (Lo cual es exactamente \(-5.25 \times 3.75\)).
-&#x2014;
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf3d5adb" class="outline-3">
+<h3 id="orgf3d5adb"><span class="section-number-3">5.4.</span> CALCULADORA DE MULTIPLICACIÓN IEEE 754</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+La siguiente calculadora permite ingresar dos números representados mediante
+IEEE 754 de precisión simple, es decir, mediante cadenas de 32 bits.
+</p>
+
+<p>
+La aplicación convierte ambos valores IEEE 754 a números decimales, realiza
+la multiplicación y presenta el resultado en formato decimal y nuevamente
+en formato IEEE 754.
+</p>
+
+
+<div class="calculadora-ieee">
+
+  <h3>Calculadora IEEE 754</h3>
+
+  <p>
+    Ingrese dos números IEEE 754 de 32 bits, sin espacios.
+  </p>
+
+<label for="numeroA">Primer número IEEE 754:</label><br>
+<input
+type="text"
+id="numeroA"
+maxlength="32"
+placeholder="11000000101010000000000000000000"
+style="width: 350px;"
+
+>
+
+<br><br>
+
+<label for="numeroB">Segundo número IEEE 754:</label><br>
+<input
+type="text"
+id="numeroB"
+maxlength="32"
+placeholder="01000000011100000000000000000000"
+style="width: 350px;"
+
+>
+
+<br><br>
+
+  <button onclick="multiplicarIEEE754()">
+    Multiplicar
+  </button>
+
+  <button onclick="limpiarCalculadora()">
+    Limpiar
+  </button>
+
+  <h4>Resultado</h4>
+
+  <p id="resultadoDecimal">
+    Resultado decimal:
+  </p>
+
+  <p id="resultadoIEEE">
+    Resultado IEEE 754:
+  </p>
+
+  <p id="mensajeError" style="font-weight: bold;"></p>
+
+</div>
+
+<script>
+
+/*
+ Convierte una cadena IEEE 754 de 32 bits
+ en un número decimal.
+*/
+function ieeeADecimal(bits) {
+
+    // Creamos un espacio de memoria de 4 bytes.
+    const memoria = new ArrayBuffer(4);
+
+    /*
+     Uint32Array permite guardar los 32 bits
+     como un número entero sin signo.
+    */
+    const entero = new Uint32Array(memoria);
+
+    /*
+     Float32Array interpreta los mismos bits
+     como un número IEEE 754.
+    */
+    const flotante = new Float32Array(memoria);
+
+    // Convertimos la cadena binaria a un entero.
+    entero[0] = parseInt(bits, 2);
+
+    // Retornamos el valor interpretado como float.
+    return flotante[0];
+}
+
+
+/*
+ Convierte un número decimal a una cadena
+ IEEE 754 de 32 bits.
+*/
+function decimalAIEEE(numero) {
+
+    // Creamos un espacio de memoria de 4 bytes.
+    const memoria = new ArrayBuffer(4);
+
+    // Interpretación decimal IEEE 754.
+    const flotante = new Float32Array(memoria);
+
+    // Interpretación entera de los mismos bits.
+    const entero = new Uint32Array(memoria);
+
+    // Guardamos el resultado como float de 32 bits.
+    flotante[0] = numero;
+
+    /*
+     Convertimos los bits a binario y rellenamos
+     con ceros hasta completar los 32 bits.
+    */
+    return entero[0].toString(2).padStart(32, "0");
+}
+
+
+/*
+ Verifica que el dato tenga exactamente
+ 32 caracteres y contenga solamente 0 y 1.
+*/
+function esIEEEValido(bits) {
+    return /^[01]{32}$/.test(bits);
+}
+
+
+/*
+ Función principal de la calculadora.
+*/
+function multiplicarIEEE754() {
+
+    // Obtenemos los valores escritos por el usuario.
+    const bitsA = document.getElementById("numeroA").value.trim();
+    const bitsB = document.getElementById("numeroB").value.trim();
+
+    const mensajeError = document.getElementById("mensajeError");
+
+    // Limpiamos mensajes anteriores.
+    mensajeError.textContent = "";
+
+    /*
+     Comprobamos que ambos números estén formados
+     por exactamente 32 bits.
+    */
+    if (!esIEEEValido(bitsA) || !esIEEEValido(bitsB)) {
+
+        mensajeError.textContent =
+            "Error: cada número debe contener exactamente 32 bits.";
+
+        document.getElementById("resultadoDecimal").textContent =
+            "Resultado decimal:";
+
+        document.getElementById("resultadoIEEE").textContent =
+            "Resultado IEEE 754:";
+
+        return;
+    }
+
+    // Convertimos los dos números IEEE 754 a decimal.
+    const numeroA = ieeeADecimal(bitsA);
+    const numeroB = ieeeADecimal(bitsB);
+
+    /*
+     Math.fround obliga a almacenar el resultado
+     con precisión simple de 32 bits.
+    */
+    const resultado = Math.fround(numeroA * numeroB);
+
+    // Convertimos el resultado decimal nuevamente a IEEE 754.
+    const resultadoBits = decimalAIEEE(resultado);
+
+    // Separamos signo, exponente y mantisa.
+    const signo = resultadoBits.substring(0, 1);
+    const exponente = resultadoBits.substring(1, 9);
+    const mantisa = resultadoBits.substring(9);
+
+    // Mostramos la operación decimal.
+    document.getElementById("resultadoDecimal").textContent =
+        "Resultado decimal: " +
+        numeroA + " × " + numeroB + " = " + resultado;
+
+    // Mostramos el resultado IEEE 754 separado por campos.
+    document.getElementById("resultadoIEEE").textContent =
+        "Resultado IEEE 754: " +
+        signo + " " + exponente + " " + mantisa;
+}
+
+
+/*
+ Borra los campos y los resultados.
+*/
+function limpiarCalculadora() {
+
+    document.getElementById("numeroA").value = "";
+    document.getElementById("numeroB").value = "";
+
+    document.getElementById("resultadoDecimal").textContent =
+        "Resultado decimal:";
+
+    document.getElementById("resultadoIEEE").textContent =
+        "Resultado IEEE 754:";
+
+    document.getElementById("mensajeError").textContent = "";
+}
+
+</script>
+</div>
+</div>
+
+<div id="outline-container-orga604891" class="outline-3">
+<h3 id="orga604891"><span class="section-number-3">5.5.</span> Ejemplo de uso</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+Para comprobar el funcionamiento de la calculadora se pueden utilizar los
+números del ejemplo desarrollado anteriormente.
 </p>
 </div>
 </div>
 </div>
+
+<div id="outline-container-org7d98762" class="outline-2">
+<h2 id="org7d98762"><span class="section-number-2">6.</span> Número A, correspondiente a -5.25:</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<code>11000000101010000000000000000000</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org520091d" class="outline-2">
+<h2 id="org520091d"><span class="section-number-2">7.</span> Número B, correspondiente a 3.75:</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+<code>01000000011100000000000000000000</code>
+</p>
+
+<p>
+Después de presionar el botón <b>Multiplicar</b>, la calculadora presenta:
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5063a90" class="outline-2">
+<h2 id="org5063a90"><span class="section-number-2">8.</span> Resultado decimal:</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+<code>-5.25 × 3.75 = -19.6875</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge945de9" class="outline-2">
+<h2 id="orge945de9"><span class="section-number-2">9.</span> Resultado IEEE 754:</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+<code>1 10000011 00111011000000000000000</code>
+</p>
+
+<p>
+La calculadora utiliza números de precisión simple de 32 bits, por lo que
+el resultado obtenido sigue la misma distribución estudiada: un bit de
+signo, ocho bits de exponente y veintitrés bits de mantisa.
+</p>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
 <div id="outline-container-5-conclusiones" class="outline-2">
-<h2 id="5-conclusiones"><span class="section-number-2">6.</span> 5. CONCLUSIONES</h2>
+<h2 id="5-conclusiones"><span class="section-number-2">10.</span> 5. CONCLUSIONES</h2>
 <div class="outline-text-2" id="text-5-conclusiones">
 <ol class="org-ol">
 <li>La separación de signo, exponente y mantisa permite que la multiplicación de números de punto flotante se resuelva
@@ -476,7 +759,7 @@ precisión posible en los 23 bits de la mantisa en cada operación.</li>
 </div>
 </div>
 <div id="outline-container-6-referencias" class="outline-2">
-<h2 id="6-referencias"><span class="section-number-2">7.</span> 6. REFERENCIAS</h2>
+<h2 id="6-referencias"><span class="section-number-2">11.</span> 6. REFERENCIAS</h2>
 <div class="outline-text-2" id="text-6-referencias">
 <ul class="org-ul">
 <li>Stallings, W. (2006). <i>Organización y Arquitectura de Computadores: Diseño para optimizar prestaciones</i> (7ma ed., p. 328). Pearson Prentice Hall.</li>
@@ -488,7 +771,7 @@ precisión posible en los 23 bits de la mantisa en cada operación.</li>
 <div id="postamble" class="status">
 <p class="date">Date: 2026-07-14</p>
 <p class="author">Author: Emilio Albán, Ariel Montufar, Karen Suarez, Samuel Churaco</p>
-<p class="date">Created: 2026-07-16 Thu 00:51</p>
+<p class="date">Created: 2026-07-16 Thu 02:58</p>
 </div>
 </body>
 </html>

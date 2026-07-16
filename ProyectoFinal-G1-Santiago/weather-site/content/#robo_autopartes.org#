@@ -91,6 +91,12 @@ Anio
 
 
 ** ¿Gráfico?
+#+begin_src shell
+cp -rfv ./images/robo_autopartes_evolucion.png ./ARQUIIIII/G1ProyectoArq/ProyectoFinal-G1-Santiago/weather-site/public/images
+#+end_src
+
+#+RESULTS:
+
 En el siguiente gráfico se puede observar una comparación de las estadísticas del robo de auto-partes durante el periodo 2014-2026 en las distintas regiones del país .
 [[./images/robo_autopartes_evolucion.png]]
 
