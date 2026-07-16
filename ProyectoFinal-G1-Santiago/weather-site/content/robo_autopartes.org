@@ -66,36 +66,15 @@ plt.grid(True, linestyle='--', alpha=0.7)
 plt.legend(title='Región')
 plt.tight_layout()
 
-plt.savefig('robo_autopartes_evolucion.png')
+plt.savefig("./weather-site/content/images/robo_autopartes_evolucion.png")
 print("\nGráfico guardado exitosamente como 'robo_autopartes_evolucion.png'")
 #+end_src
 
 #+RESULTS:
-#+begin_example
-
---- Tabla de Robos de Autopartes por Año y Región ---
-Región  Amazonía  Costa  Insular  Sierra  Total Nacional
-Anio                                                    
-2014         249   4527        0    9808           14584
-2015         240   5398        0    9081           14719
-2016         187   4345        0    7288           11820
-2017         169   4537        0    6561           11267
-2018         127   3734        0    5444            9305
-2019         133   3893        1    5659            9686
-2020          76   2384        0    3754            6214
-2021         116   3107        0    4777            8000
-2022         124   3484        0    4746            8354
-2023         154   4294        1    3337            7786
-2024         154   3394        4    3396            6948
-2025         188   2836        1    3656            6681
-2026          28    400        0     408             836
-
-Gráfico guardado como 'robo_autopartes_evolucion.png'
-#+end_example
 
 ** ¿Gráfico?
 En el siguiente gráfico se puede observar una comparación de las estadísticas del robo de auto-partes durante el periodo 2014-2026 en las distintas regiones del país .
-[[file:robo_autopartes_evolucion.png]]
+[[file: ./images/robo_autopartes_evolucion.png]]
 
 
 

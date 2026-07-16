@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cifras de Seguridad: Robo de Autopartes</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Cifras de Seguridad: Robo de Autopartes</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org1118f3d">¿Qué parámetros se utilizaron para el procesamiento de datos?</a></li>
+<li><a href="#orgd31d606">¿Gráfico?</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1118f3d" class="outline-2">
+<h2 id="org1118f3d">¿Qué parámetros se utilizaron para el procesamiento de datos?</h2>
+<div class="outline-text-2" id="text-org1118f3d">
+<p>
+Para el procesamiento de datos se extrajeron los datos de cifras de seguridad del INEC, específicamente la sección de robos de auto-partes desde el año 2014 hasta el 2026.
+Se filtraron los datos en base a las regiones: costa, sierra, amazonía e insular.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> pandas <span style="font-weight: bold;">as</span> pd
+<span style="font-weight: bold;">import</span> matplotlib.pyplot <span style="font-weight: bold;">as</span> plt
+
+<span style="font-weight: bold; font-style: italic;">df_robo</span> = pd.read_excel(<span style="font-style: italic;">'022026_Tabulados Seguridad.xlsx'</span>, sheet_name=<span style="font-style: italic;">'7.robo_autopartes'</span>, header=3)
+<span style="font-weight: bold; font-style: italic;">df_robo</span> = df_robo.rename(columns={<span style="font-style: italic;">'Provincia de ocurrencia'</span>: <span style="font-style: italic;">'Provincia'</span>})
+<span style="font-weight: bold; font-style: italic;">df_robo</span> = df_robo.dropna(subset=[<span style="font-style: italic;">'Provincia'</span>])
+
+<span style="font-weight: bold; font-style: italic;">df_robo</span>[<span style="font-style: italic;">'Provincia'</span>] = df_robo[<span style="font-style: italic;">'Provincia'</span>].<span style="font-weight: bold;">str</span>.strip().<span style="font-weight: bold;">str</span>.title()
+
+<span style="font-weight: bold; font-style: italic;">regiones</span> = {
+    <span style="font-style: italic;">'Azuay'</span>: <span style="font-style: italic;">'Sierra'</span>, <span style="font-style: italic;">'Bol&#237;var'</span>: <span style="font-style: italic;">'Sierra'</span>, <span style="font-style: italic;">'Ca&#241;ar'</span>: <span style="font-style: italic;">'Sierra'</span>, <span style="font-style: italic;">'Carchi'</span>: <span style="font-style: italic;">'Sierra'</span>,
+    <span style="font-style: italic;">'Cotopaxi'</span>: <span style="font-style: italic;">'Sierra'</span>, <span style="font-style: italic;">'Chimborazo'</span>: <span style="font-style: italic;">'Sierra'</span>, <span style="font-style: italic;">'Imbabura'</span>: <span style="font-style: italic;">'Sierra'</span>, <span style="font-style: italic;">'Loja'</span>: <span style="font-style: italic;">'Sierra'</span>,
+    <span style="font-style: italic;">'Pichincha'</span>: <span style="font-style: italic;">'Sierra'</span>, <span style="font-style: italic;">'Tungurahua'</span>: <span style="font-style: italic;">'Sierra'</span>,
+    <span style="font-style: italic;">'El Oro'</span>: <span style="font-style: italic;">'Costa'</span>, <span style="font-style: italic;">'Esmeraldas'</span>: <span style="font-style: italic;">'Costa'</span>, <span style="font-style: italic;">'Guayas'</span>: <span style="font-style: italic;">'Costa'</span>, <span style="font-style: italic;">'Los R&#237;os'</span>: <span style="font-style: italic;">'Costa'</span>,
+    <span style="font-style: italic;">'Manab&#237;'</span>: <span style="font-style: italic;">'Costa'</span>, <span style="font-style: italic;">'Santo Domingo De Los Ts&#225;chilas'</span>: <span style="font-style: italic;">'Costa'</span>, <span style="font-style: italic;">'Santa Elena'</span>: <span style="font-style: italic;">'Costa'</span>,
+    <span style="font-style: italic;">'Morona Santiago'</span>: <span style="font-style: italic;">'Amazon&#237;a'</span>, <span style="font-style: italic;">'Napo'</span>: <span style="font-style: italic;">'Amazon&#237;a'</span>, <span style="font-style: italic;">'Pastaza'</span>: <span style="font-style: italic;">'Amazon&#237;a'</span>,
+    <span style="font-style: italic;">'Zamora Chinchipe'</span>: <span style="font-style: italic;">'Amazon&#237;a'</span>, <span style="font-style: italic;">'Sucumb&#237;os'</span>: <span style="font-style: italic;">'Amazon&#237;a'</span>, <span style="font-style: italic;">'Orellana'</span>: <span style="font-style: italic;">'Amazon&#237;a'</span>,
+    <span style="font-style: italic;">'Gal&#225;pagos'</span>: <span style="font-style: italic;">'Insular'</span>
+}
+<span style="font-weight: bold; font-style: italic;">df_robo</span>[<span style="font-style: italic;">'Regi&#243;n'</span>] = df_robo[<span style="font-style: italic;">'Provincia'</span>].<span style="font-weight: bold;">map</span>(regiones)
+
+
+<span style="font-weight: bold; font-style: italic;">df_robo</span> = df_robo.dropna(subset=[<span style="font-style: italic;">'Regi&#243;n'</span>]) 
+
+<span style="font-weight: bold; font-style: italic;">date_cols</span> = df_robo.columns[4:-1]
+
+<span style="font-weight: bold; font-style: italic;">df_long</span> = df_robo[[<span style="font-style: italic;">'Provincia'</span>, <span style="font-style: italic;">'Regi&#243;n'</span>] + <span style="font-weight: bold;">list</span>(date_cols)].melt(id_vars=[<span style="font-style: italic;">'Provincia'</span>, <span style="font-style: italic;">'Regi&#243;n'</span>], var_name=<span style="font-style: italic;">'Fecha'</span>, value_name=<span style="font-style: italic;">'Robos'</span>)
+
+<span style="font-weight: bold; font-style: italic;">df_long</span>[<span style="font-style: italic;">'Robos'</span>] = pd.to_numeric(df_long[<span style="font-style: italic;">'Robos'</span>], errors=<span style="font-style: italic;">'coerce'</span>).fillna(0)
+<span style="font-weight: bold; font-style: italic;">df_long</span>[<span style="font-style: italic;">'Anio'</span>] = pd.to_datetime(df_long[<span style="font-style: italic;">'Fecha'</span>]).dt.year
+
+<span style="font-weight: bold; font-style: italic;">df_grouped</span> = df_long.groupby([<span style="font-style: italic;">'Regi&#243;n'</span>, <span style="font-style: italic;">'Anio'</span>])[<span style="font-style: italic;">'Robos'</span>].<span style="font-weight: bold;">sum</span>().reset_index()
+
+<span style="font-weight: bold; font-style: italic;">df_pivot</span> = df_grouped.pivot(index=<span style="font-style: italic;">'Anio'</span>, columns=<span style="font-style: italic;">'Regi&#243;n'</span>, values=<span style="font-style: italic;">'Robos'</span>).fillna(0).astype(<span style="font-weight: bold;">int</span>)
+
+<span style="font-weight: bold; font-style: italic;">df_pivot</span>[<span style="font-style: italic;">'Total Nacional'</span>] = df_pivot.<span style="font-weight: bold;">sum</span>(axis=1)
+
+<span style="font-weight: bold;">print</span>(<span style="font-style: italic;">"</span><span style="font-weight: bold; text-decoration: underline;">\n</span><span style="font-style: italic;">--- Tabla de Robos de Autopartes por A&#241;o y Regi&#243;n ---"</span>)
+<span style="font-weight: bold;">print</span>(df_pivot.to_string())
+
+plt.figure(figsize=(10, 6))
+
+<span style="font-weight: bold; font-style: italic;">colores</span> = {<span style="font-style: italic;">'Sierra'</span>: <span style="font-style: italic;">'#e74c3c'</span>, <span style="font-style: italic;">'Costa'</span>: <span style="font-style: italic;">'#3498db'</span>, <span style="font-style: italic;">'Amazon&#237;a'</span>: <span style="font-style: italic;">'#2ecc71'</span>, <span style="font-style: italic;">'Insular'</span>: <span style="font-style: italic;">'#f1c40f'</span>}
+.
+<span style="font-weight: bold;">for</span> region <span style="font-weight: bold;">in</span> df_grouped[<span style="font-style: italic;">'Regi&#243;n'</span>].unique():
+
+
+    <span style="font-weight: bold; font-style: italic;">datos_region</span> = df_grouped[df_grouped[<span style="font-style: italic;">'Regi&#243;n'</span>] == region]
+
+
+    plt.plot(datos_region[<span style="font-style: italic;">'Anio'</span>], datos_region[<span style="font-style: italic;">'Robos'</span>], marker=<span style="font-style: italic;">'o'</span>, label=region, color=colores.get(region, <span style="font-style: italic;">'black'</span>))
+
+plt.title(<span style="font-style: italic;">'Evoluci&#243;n de Denuncias por Robo de Autopartes por Regi&#243;n (2014 - 2026)'</span>)
+plt.xlabel(<span style="font-style: italic;">'A&#241;o'</span>)
+plt.ylabel(<span style="font-style: italic;">'Total de Robos (Frecuencia)'</span>)
+plt.grid(<span style="font-weight: bold; text-decoration: underline;">True</span>, linestyle=<span style="font-style: italic;">'--'</span>, alpha=0.7)
+plt.legend(title=<span style="font-style: italic;">'Regi&#243;n'</span>)
+plt.tight_layout()
+
+plt.savefig(<span style="font-style: italic;">"./weather-site/content/images/robo_autopartes_evolucion.png"</span>)
+<span style="font-weight: bold;">print</span>(<span style="font-style: italic;">"</span><span style="font-weight: bold; text-decoration: underline;">\n</span><span style="font-style: italic;">Gr&#225;fico guardado exitosamente como 'robo_autopartes_evolucion.png'"</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd31d606" class="outline-2">
+<h2 id="orgd31d606">¿Gráfico?</h2>
+<div class="outline-text-2" id="text-orgd31d606">
+<p>
+En el siguiente gráfico se puede observar una comparación de las estadísticas del robo de auto-partes durante el periodo 2014-2026 en las distintas regiones del país .
+<img src=" ./images/robo_autopartes_evolucion.png" alt="robo_autopartes_evolucion.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</p>
+</div>
+</body>
+</html>

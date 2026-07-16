@@ -1,0 +1,50 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
+# Leer el archivo CSV
+df = pd.read_csv("clima-santiago-hoy.csv")
+
+# Convertir la columna de fecha a datetime
+df["fecha_hora"] = pd.to_datetime(df["fecha_hora"])
+
+# Crear la figura
+fig = plt.figure(figsize=(8,6))
+
+# TEMPERATURA VS TIEMPO
+plt.plot(df["fecha_hora"], df["main_temp"])
+
+# Ajuste de las fechas
+plt.gca().xaxis.set_major_locator(mdates.AutoDateLocator())
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d/%m %H:%M"))
+
+# Cuadrícula
+plt.grid()
+
+# Título
+plt.title(f"Temperatura vs Tiempo en {next(iter(set(df['name'])))}")
+
+# Rotar etiquetas
+plt.xticks(rotation=40)
+
+# Ajustar márgenes
+fig.tight_layout()
+
+# Guardar imagen
+fname = "./weather-site/content/images/temperatura.png"
+plt.savefig(fname)
+
+# HUMEDAD VS TIEMPO
+plt.plot(df["fecha_hora"], df["main_humidity"])
+plt.title(f"Humedad vs Tiempo en {next(iter(set(df['name'])))}")
+fname = "./weather-site/content/images/humedad.png"
+
+# PRESION VS TIEMPO
+plt.plot(df["fecha_hora"], df["main_pressure"])
+plt.title(f"Presión vs Tiempo en {next(iter(set(df['name'])))}")
+fname = "./weather-site/content/images/presion.png"
+
+# VELOCIDAD DEL VIENTO VS TIEMPO
+plt.plot(df["fecha_hora"], df["wind_speed"])
+plt.title(f"Velocidad del viento vs Tiempo en {next(iter(set(df['name'])))}")
+fname = "./weather-site/content/images/viento.png"

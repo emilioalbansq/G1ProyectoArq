@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-07-16 Thu 00:36 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Multiplicación - IEEE754</title>
+<meta name="author" content="Emilio Albán, Ariel Montufar, Karen Suarez, Samuel Churaco" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Multiplicación - IEEE754</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgc259440">1. ÍNDICE DE LA PÁGINA</a></li>
+<li><a href="#1-introducción">2. 1. INTRODUCCIÓN</a>
+<ul>
+<li><a href="#orgeda3581">2.1. ¿Qué es el estándar IEEE 754?</a></li>
+<li><a href="#org5083a8e">2.2. ¿Para qué sirve?</a></li>
+<li><a href="#org0ed02fd">2.3. ¿Por qué se utiliza?</a></li>
+</ul>
+</li>
+<li><a href="#2-representación-ieee-754">3. 2. REPRESENTACIÓN IEEE 754</a>
+<ul>
+<li><a href="#org2c915c8">3.1. Ilustración del Formato de Memoria (32 bits)</a></li>
+<li><a href="#orgf4b1672">3.2. Fórmula general de representación IEEE 754</a></li>
+<li><a href="#orgfa68a3c">3.3. Explicación de los Componentes Esenciales</a></li>
+</ul>
+</li>
+<li><a href="#3-multiplicación-ieee-754">4. 3. MULTIPLICACIÓN IEEE 754 (ALGORITMO PASO A PASO)</a>
+<ul>
+<li><a href="#org3251285">4.1. Paso 1: Multiplicación de Signos</a></li>
+<li><a href="#org761df8e">4.2. Paso 2: Suma de Exponentes y Ajuste del Sesgo</a></li>
+<li><a href="#orgcc8074f">4.3. Paso 3: Multiplicación de las Mantisas</a></li>
+<li><a href="#org6a0c8b8">4.4. Paso 4: Normalización del Resultado</a></li>
+<li><a href="#orgd8c4dd7">4.5. Paso 5: Redondeo y Ensamblaje del Resultado Final</a></li>
+</ul>
+</li>
+<li><a href="#4-ejemplo-desarrollado">5. 4. EJEMPLO DESARROLLADO</a>
+<ul>
+<li><a href="#org237755a">5.1. Paso 1: Conversión a IEEE 754</a></li>
+<li><a href="#org8cf74cc">5.2. Paso 2: Operación del algoritmo</a></li>
+<li><a href="#orgfe3dbea">5.3. Paso 3: Resultado final</a></li>
+</ul>
+</li>
+<li><a href="#5-conclusiones">6. 5. CONCLUSIONES</a></li>
+<li><a href="#6-referencias">7. 6. REFERENCIAS</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc259440" class="outline-2">
+<h2 id="orgc259440"><span class="section-number-2">1.</span> ÍNDICE DE LA PÁGINA</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><a href="#1-introducción">1. Introducción</a>
+<ul class="org-ul">
+<li>¿Qué es el estándar IEEE 754?</li>
+<li>¿Para qué sirve?</li>
+<li>¿Por qué se utiliza?</li>
+</ul></li>
+<li><a href="#2-representación-ieee-754">2. Representación IEEE 754</a>
+<ul class="org-ul">
+<li>Bit de signo</li>
+<li>Exponente</li>
+<li>Mantisa</li>
+<li>Ilustración del formato</li>
+</ul></li>
+<li><a href="#3-multiplicación-ieee-754">3. Multiplicación IEEE 754 (Algoritmo Paso a Paso)</a>
+<ul class="org-ul">
+<li>Multiplicación de signos</li>
+<li>Suma de exponentes</li>
+<li>Multiplicación de mantisas</li>
+<li>Normalización</li>
+<li>Resultado final</li>
+</ul></li>
+<li><a href="#4-ejemplo-desarrollado">4. Ejemplo Desarrollado</a>
+<ul class="org-ul">
+<li>Número A y Número B</li>
+<li>Conversión, Operación y Resultado</li>
+</ul></li>
+<li><a href="#5-conclusiones">5. Conclusiones</a></li>
+<li><a href="#6-referencias">6. Bibliografía</a></li>
+</ul>
+
+<hr />
+</div>
+</div>
+<div id="outline-container-1-introducción" class="outline-2">
+<h2 id="1-introducción"><span class="section-number-2">2.</span> 1. INTRODUCCIÓN</h2>
+<div class="outline-text-2" id="text-1-introducción">
+<p>
+En esta sección se explica el funcionamiento de la multiplicación de números representados mediante el estándar IEEE 754. Para comprender
+este proceso, primero se presenta una breve revisión sobre este formato, su propósito y la manera en que los computadores representan
+números de punto flotante.
+</p>
+</div>
+
+<div id="outline-container-orgeda3581" class="outline-3">
+<h3 id="orgeda3581"><span class="section-number-3">2.1.</span> ¿Qué es el estándar IEEE 754?</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+El estándar IEEE 754, desarrollado por el Instituto de Ingenieros Eléctricos y Electrónicos (IEEE), establece una representación uniforme
+para almacenar y procesar números reales dentro de los sistemas computacionales. Su principal objetivo es permitir que diferentes arquitecturas
+de hardware y lenguajes de programación puedan realizar operaciones matemáticas de forma consistente, evitando cualquier tipo de diferencias
+o malentendidos en la interpretación de los valores numéricos.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5083a8e" class="outline-3">
+<h3 id="org5083a8e"><span class="section-number-3">2.2.</span> ¿Para qué sirve?</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Este formato sirve esencialmente como una regla técnica universal en el mundo de la informática. En el día a día, permite que cálculos
+extremadamente complejos —como el renderizado de los gráficos de un videojuego, la simulación física en un software de ingeniería o el
+procesamiento de datos científicos— se ejecuten de manera predecible y con un margen de error estrictamente controlado, garantizando la
+portabilidad total del software entre distintos sistemas operativos y procesadores.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0ed02fd" class="outline-3">
+<h3 id="org0ed02fd"><span class="section-number-3">2.3.</span> ¿Por qué se utiliza?</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+La razón fundamental por la que se utiliza este estándar radica en la naturaleza binaria de las computadoras. Como el hardware interno de
+los procesadores solo entiende ceros y unos, representar números con decimales de forma directa mediante métodos tradicionales de punto fijo
+resulta sumamente ineficiente y provoca pérdidas masivas de precisión aritmética. El estándar IEEE 754 soluciona este dilema al implementar
+un sistema equivalente a la notación científica binaria, lo que optimiza al máximo el uso de la memoria física y ofrece un equilibrio perfecto
+entre el rango de los números que se pueden representar y la exactitud de sus decimales.
+</p>
+
+<hr />
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-2-representación-ieee-754" class="outline-2">
+<h2 id="2-representación-ieee-754"><span class="section-number-2">3.</span> 2. REPRESENTACIÓN IEEE 754</h2>
+<div class="outline-text-2" id="text-2-representación-ieee-754">
+<p>
+Para comprender cómo se realiza una multiplicación bajo este estándar, primero es indispensable examinar cómo se almacena un número real dentro
+de la memoria física de una computadora. El estándar organiza la información dividiendo los bits disponibles en tres secciones perfectamente
+delimitadas. A continuación, se presenta la estructura física para el formato de precisión simple (32 bits):
+</p>
+</div>
+
+<div id="outline-container-org2c915c8" class="outline-3">
+<h3 id="org2c915c8"><span class="section-number-3">3.1.</span> Ilustración del Formato de Memoria (32 bits)</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-text">  31  30          23 22                                   0
+ +---+--------------+---------------------------------------+
+ | S |  Exponente   |                Mantisa                |
+ +---+--------------+---------------------------------------+
+   |        |                           |
+   |        v                           v
+   |    (8 bits)                    (23 bits)
+   v    Define el tama&#241;o            Guarda los d&#237;gitos reales
+ Signo  (mueve el punto).           (Posee un '1.' oculto)
+(0 o 1)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf4b1672" class="outline-3">
+<h3 id="orgf4b1672"><span class="section-number-3">3.2.</span> Fórmula general de representación IEEE 754</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Un número en formato IEEE 754 se interpreta mediante la expresión:
+</p>
+
+<div class="org-center">
+<p>
+(-1)<sup>S</sup> × 1.M × 2<sup>(E - Bias)</sup>
+</p>
+</div>
+
+<p>
+Donde:
+</p>
+
+<ul class="org-ul">
+<li>S representa el bit de signo.</li>
+<li>M representa la mantisa.</li>
+<li>E representa el exponente almacenado.</li>
+<li>Bias corresponde al sesgo utilizado para representar exponentes negativos.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfa68a3c" class="outline-3">
+<h3 id="orgfa68a3c"><span class="section-number-3">3.3.</span> Explicación de los Componentes Esenciales</h3>
+<div class="outline-text-3" id="text-3-3">
+<blockquote>
+<p>
+<b><b>Bit de Signo (S):</b></b>
+Ubicado en la posición más significativa (el bit 31 a la extrema izquierda), este componente determina el sentido del valor. Al ser un único bit,
+solo puede adoptar dos estados: un valor de <code>0</code> indica estrictamente que el número es positivo, mientras que un valor de <code>1</code> establece que la
+cantidad es negativa. En la multiplicación, este bit se procesa de forma independiente al resto de los datos.
+</p>
+</blockquote>
+
+<div class="NOTE" id="orgb5743a8">
+<p>
+<b><b>Exponente (8 bits):</b></b>
+Este bloque se encarga de definir la escala, magnitud o tamaño del número, determinando cuántas posiciones debe desplazarse el punto decimal en
+binario. Debido a que los números reales pueden ser extremadamente grandes o microscópicos, el exponente necesita ser capaz de representar valores
+tanto positivos como negativos. Para lograr esto sin complicar el hardware del procesador, el estándar aplica un <b><b>sesgo (bias) de 127</b></b>.
+Esto significa que el valor real del exponente matemático se le suma siempre 127 antes de guardarlo en la memoria.
+</p>
+
+</div>
+
+<blockquote>
+<p>
+<b><b>Mantisa o Significando (23 bits):</b></b>
+Este componente almacena los dígitos significativos o la precisión real de la cantidad numérica. Para optimizar el espacio físico en los chips, el
+estándar utiliza un ingenioso truco matemático: dado que cualquier número binario normalizado siempre empieza con un dígito igual a <code>1</code>
+(por ejemplo, \(1.01011_2\)), <b><b>ese "1." inicial se vuelve implícito u oculto</b></b>. La computadora no lo escribe en el bloque de 23 bits de la memoria,
+sino que el procesador lo añade de forma automática al realizar las operaciones aritméticas, permitiendo ganar un bit extra de precisión de forma
+completamente gratuita.
+</p>
+</blockquote>
+
+<hr />
+</div>
+</div>
+</div>
+
+<div id="outline-container-3-multiplicación-ieee-754" class="outline-2">
+<h2 id="3-multiplicación-ieee-754"><span class="section-number-2">4.</span> 3. MULTIPLICACIÓN IEEE 754 (ALGORITMO PASO A PASO)</h2>
+<div class="outline-text-2" id="text-3-multiplicación-ieee-754">
+<p>
+El procedimiento para multiplicar dos números en el estándar IEEE 754 difiere significativamente de la suma aritmética. En este caso,
+el procesador no necesita realizar un alineamiento previo de los puntos decimales ni alterar las escalas de los números. En su lugar, el
+hardware descompone los factores y ejecuta de forma paralela un algoritmo estricto estructurado en cinco etapas fundamentales.
+</p>
+</div>
+
+<div id="outline-container-org3251285" class="outline-3">
+<h3 id="org3251285"><span class="section-number-3">4.1.</span> Paso 1: Multiplicación de Signos</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+La determinación del signo del resultado final es la operación más rápida del proceso. El procesador extrae de forma independiente los bits de
+signo (posición 31) de ambos factores y les aplica una función lógica <b><b>XOR</b></b> (O exclusivo), la cual obedece de manera exacta a la ley de los
+signos tradicional.
+</p>
+<ul class="org-ul">
+<li>Si los dos factores poseen signos idénticos (ambos positivos <code>0</code> o ambos negativos <code>1</code>), la compuerta lógica devuelve un bit <code>0</code>, estableciendo
+que el resultado final será positivo.</li>
+<li>Si los factores cuentan con signos opuestos (uno positivo y otro negativo), la operación devuelve un bit <code>1</code>, decretando que el resultado es
+negativo.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org761df8e" class="outline-3">
+<h3 id="org761df8e"><span class="section-number-3">4.2.</span> Paso 2: Suma de Exponentes y Ajuste del Sesgo</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+En esta etapa, el procesador calcula la magnitud del nuevo número sumando los exponentes de ambos factores. Sin embargo, surge un inconveniente
+físico: como explicamos en la sección anterior, cada exponente ya viene almacenado con un sesgo de \(+127\) de fábrica. Al sumarlos directamente,
+el sesgo se añadiría dos veces (\(127 + 127 = 254\)), descalibrando por completo la escala real. 
+Para corregir este exceso, el algoritmo ejecuta una resta aritmética restando el valor del sesgo (\(127\)) una sola vez al total acumulado. La
+fórmula matemática exacta que ejecuta el chip es:
+\[\text{Exponente Provisional} = \text{Exponente}_1 + \text{Exponente}_2 - 127\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcc8074f" class="outline-3">
+<h3 id="orgcc8074f"><span class="section-number-3">4.3.</span> Paso 3: Multiplicación de las Mantisas</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Antes de efectuar la operación matemática, la unidad de punto flotante del procesador realiza una reconstrucción obligatoria: toma los 23 bits
+de la mantisa de cada factor y les reinyecta a la izquierda el dígito implícito <code>1.</code> que se había ocultado para ahorrar espacio en la memoria. 
+Una vez que se tienen las dos mantisas completas (que ahora lucen de la forma \(1.xxxx\)), el procesador las multiplica linealmente utilizando el
+algoritmo de multiplicación para números enteros binarios. El resultado de esta multiplicación de fracciones binarias generará una mantisa
+provisional significativamente más larga, la cual contiene la combinación de la precisión de ambos factores.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6a0c8b8" class="outline-3">
+<h3 id="org6a0c8b8"><span class="section-number-3">4.4.</span> Paso 4: Normalización del Resultado</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+El estándar exige rigurosamente que el resultado se almacene bajo el formato de notación científica binaria limpia, lo que significa que
+<b><b>solo debe existir un único dígito "1" antes del punto decimal</b></b> (formato estricto de \(1.xxxxx\)). Debido a la multiplicación del paso anterior,
+el resultado puede desbordarse hacia la izquierda, devolviendo un valor que inicie por ejemplo con dos dígitos antes del punto
+(como \(11.010_2\) o \(10.111_2\)).
+Si esto ocurre, el procesador desplaza geométricamente el punto decimal una posición hacia la izquierda para forzar el formato correcto (\(1.xxxx\)).
+Para contrarrestar matemáticamente este movimiento del punto y mantener el valor numérico intacto, el hardware compensa la operación
+<b><b>sumando un +1 al Exponente Provisional</b></b> que calculamos en el Paso 2. Si el resultado de la multiplicación ya iniciaba con un solo dígito <code>1.</code>,
+la normalización no es necesaria y el exponente se mantiene igual.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd8c4dd7" class="outline-3">
+<h3 id="orgd8c4dd7"><span class="section-number-3">4.5.</span> Paso 5: Redondeo y Ensamblaje del Resultado Final</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+En la fase de cierre, el procesador prepara los datos para inyectarlos de vuelta en la celda de memoria de 32 bits. Primero, se aplica el filtro
+de redondeo: si la mantisa resultante de la multiplicación superó los 23 bits de capacidad física del formato, los bits sobrantes del extremo
+derecho se recortan o se ajustan según el modo de redondeo configurado en el sistema (por ejemplo, aproximando al valor más cercano).
+Finalmente, el rompecabezas se ensambla en el registro físico:
+</p>
+<ol class="org-ol">
+<li>Se coloca el bit de signo determinado en el Paso 1.</li>
+<li>Se inyecta el Exponente Final corregido en el Paso 4.</li>
+<li>Se toma la mantisa normalizada y redondeada, <b><b>se le remueve nuevamente el dígito "1." implícito</b></b> para ahorrar espacio, y se rellenan los
+23 bits restantes de la memoria de la computadora.</li>
+</ol>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-4-ejemplo-desarrollado" class="outline-2">
+<h2 id="4-ejemplo-desarrollado"><span class="section-number-2">5.</span> 4. EJEMPLO DESARROLLADO</h2>
+<div class="outline-text-2" id="text-4-ejemplo-desarrollado">
+<p>
+Vamos a multiplicar <b>A = -5.25</b> por <b>B = 3.75</b>.
+</p>
+</div>
+
+<div id="outline-container-org237755a" class="outline-3">
+<h3 id="org237755a"><span class="section-number-3">5.1.</span> Paso 1: Conversión a IEEE 754</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li><b>Número A (-5.25):</b>
+<ul class="org-ul">
+<li>Binario: La parte entera 5 es \(101_2\) y la fraccionaria 0.25 es \(0.01_2\). Total: \(-101.01_2\).</li>
+<li>Normalización: \(-1.0101_2 \times 2^2\)</li>
+<li>Signo: <code>1</code> (Negativo)</li>
+<li>Exponente: El exponente real es 2. Le sumamos el sesgo (127): \(2 + 127 = 129 = 10000001_2\)</li>
+<li>Mantisa (quitando el "1."): <code>01010000000000000000000</code></li>
+</ul></li>
+
+<li><b>Número B (3.75):</b>
+<ul class="org-ul">
+<li>Binario: La parte entera 3 es \(11_2\) y la fraccionaria 0.75 es \(0.11_2\). Total: \(11.11_2\).</li>
+<li>Normalización: \(1.111_2 \times 2^1\)</li>
+<li>Signo: <code>0</code> (Positivo)</li>
+<li>Exponente: El exponente real es 1. Le sumamos el sesgo (127): \(1 + 127 = 128 = 10000000_2\)</li>
+<li>Mantisa (quitando el "1."): <code>11100000000000000000000</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8cf74cc" class="outline-3">
+<h3 id="org8cf74cc"><span class="section-number-3">5.2.</span> Paso 2: Operación del algoritmo</h3>
+<div class="outline-text-3" id="text-5-2">
+<ol class="org-ol">
+<li><b>Multiplicación de signos:</b> \(1 \oplus 0 = 1\) (El resultado será negativo).</li>
+<li><b>Suma de exponentes:</b> \(129 + 128 - 127 = 130\) (<code>10000010</code> en binario).</li>
+<li><p>
+<b>Multiplicación de mantisas:</b> Tomamos las mantisas con su "1." implícito: \(1.0101_2 \times 1.111_2\). 
+Para multiplicar, ignoramos la coma temporalmente y multiplicamos \(10101 \times 1111\):
+</p>
+<pre class="example" id="org9a7de9b">
+    10101
+  x  1111
+  -------
+    10101
+   101010
+  1010100
+ 10101000
+ --------
+100111011
+</pre>
+<p>
+El primer número tiene 4 decimales y el segundo tiene 3. En total son 7 posiciones decimales. Colocamos la coma: \(10.0111011_2\).
+</p></li>
+<li><b>Normalización:</b> El resultado de la mantisa es \(10.0111011_2\). Como hay dos dígitos antes del punto (es mayor a 2.0), no está normalizado. 
+<ul class="org-ul">
+<li>Movemos la coma una posición a la izquierda: \(1.00111011_2\).</li>
+<li>Como movimos la coma a la izquierda, <b>debemos sumar 1 al exponente</b> calculado en el paso 2: \(130 + 1 = 131\).</li>
+<li>El nuevo exponente en binario es: <code>10000011</code>.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgfe3dbea" class="outline-3">
+<h3 id="orgfe3dbea"><span class="section-number-3">5.3.</span> Paso 3: Resultado final</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Concatenamos las partes calculadas:
+</p>
+<ul class="org-ul">
+<li>Signo: <code>1</code></li>
+<li>Exponente: <code>10000011</code></li>
+<li>Mantisa (quitando el "1." inicial y rellenando con ceros hasta 23 bits): <code>00111011000000000000000</code></li>
+</ul>
+
+<p>
+<b>Resultado final en binario IEEE 754:</b>
+<code>1 10000011 00111011000000000000000</code>
+</p>
+
+<p>
+<b>Comprobación matemática:</b>
+Si reconstruimos el número: Signo negativo, Exponente \(131 - 127 = 4\). Mantisa \(1.00111011_2\).
+Valor: \(-1.00111011_2 \times 2^4 = -10011.1011_2\).
+La parte entera \(10011_2 = 19_{10}\). La parte fraccionaria \(0.1011_2 = 0.5 + 0.125 + 0.0625 = 0.6875_{10}\). 
+Total: \(-19.6875\). (Lo cual es exactamente \(-5.25 \times 3.75\)).
+&#x2014;
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-5-conclusiones" class="outline-2">
+<h2 id="5-conclusiones"><span class="section-number-2">6.</span> 5. CONCLUSIONES</h2>
+<div class="outline-text-2" id="text-5-conclusiones">
+<ol class="org-ol">
+<li>La separación de signo, exponente y mantisa permite que la multiplicación de números de punto flotante se resuelva
+utilizando sumadores y multiplicadores enteros en el hardware, lo que hace el proceso extremadamente rápido.</li>
+
+<li>El uso de un exponente sesgado (bias) simplifica la circuitería, ya que evita tener que
+diseñar comparadores o sumadores especiales para exponentes con signo.</li>
+
+<li>La normalización es un paso crítico, ya que garantiza que el estándar mantenga la máxima
+precisión posible en los 23 bits de la mantisa en cada operación.</li>
+</ol>
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-6-referencias" class="outline-2">
+<h2 id="6-referencias"><span class="section-number-2">7.</span> 6. REFERENCIAS</h2>
+<div class="outline-text-2" id="text-6-referencias">
+<ul class="org-ul">
+<li>Stallings, W. (2006). <i>Organización y Arquitectura de Computadores: Diseño para optimizar prestaciones</i> (7ma ed., p. 328). Pearson Prentice Hall.</li>
+<li>Numeral Systems. (s.f.). <i>IEEE-754 floating-point multiplication</i>. Recuperado de: <a href="https://numeral-systems.com/ieee-754-multiply/">https://numeral-systems.com/ieee-754-multiply/</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2026-07-14</p>
+<p class="author">Author: Emilio Albán, Ariel Montufar, Karen Suarez, Samuel Churaco</p>
+<p class="date">Created: 2026-07-16 Thu 00:36</p>
+</div>
+</body>
+</html>

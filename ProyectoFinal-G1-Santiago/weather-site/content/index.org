@@ -3,40 +3,48 @@
 #+options: d:(not "LOGBOOK") date:t e:t email:nil expand-links:t f:t
 #+options: inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
 #+options: tasks:t tex:t timestamp:t title:t toc:t todo:t |:t
-#+title: Proyecto ICCD332 Arquitectura de Computadores
-#+date: 2024-08-07
-#+author: Profesor: Lenin G. Falconí M.Sc.
-#+email: lenin.falconi@epn.edu.ec
+#+title: G1- Proyecto Final (ICCD332) Arquitectura de Computadores
+#+date: 2026-07-13
+#+author: Emilio Albán, Ariel Montufar, Karen Suarez, Samuel Churaco
+#+email: emilio.alban@epn.edu.ec
 #+language: es
 #+select_tags: export
 #+exclude_tags: noexport
 #+creator: Emacs 27.1 (Org mode 9.7.5)
 #+cite_export:
-* City Weather APP
-Este es el proyecto de fin de semestre en donde se pretende demostrar
-las destrezas obtenidas durante el transcurso de la asignatura de
-**Arquitectura de Computadores**.
+* *City Weather APP* - Registro Climatológico de Santiago (Chile)
 
-1. Conocimientos de sistema operativo Linux
-2. Conocimientos de Emacs/Jupyter
-3. Configuración de Entorno para Data Science con Mamba/Anaconda
-4. Literate Programming
- 
+** Descripción del Proyecto
+
+El objetivo del proyecto consiste en desarrollar un sistema capaz de
+consultar periódicamente el API de OpenWeatherMap para obtener
+información climatológica de la ciudad de Santiago.
+
+Los datos obtenidos son almacenados automáticamente en un archivo CSV
+mediante un programa desarrollado en Python. La adquisición de
+información se realiza cada 15 minutos utilizando Cron en Linux y
+posteriormente los datos son representados mediante gráficas generadas
+automáticamente y publicados mediante un sitio web generado con Emacs
+Org Mode.
+
+*** Tecnologías utilizadas
+- Python 3
+- OpenWeatherMap API
+- Linux / WSL
+- Cron
+- Emacs Org Mode
+- Pandas
+- Matplotlib
+
 ** Estructura del proyecto
-Se recomienda que el proyecto se cree en el /home/ del sistema
-operativo i.e. /home/<user>/. Allí se creará la carpeta /CityWeather/
 #+begin_src shell :results output :exports both
-#cd ..
-#cd ..
+cd ..
+cd ..
 pwd
 #+end_src
 
 #+RESULTS:
-: /home/QuitoWeather
-
-El proyecto ha de tener los siguientes archivos y
-subdirectorios. Adaptar los nombres de los archivos según las ciudades
-específicas del grupo.
+: ~/G1ProyectoArq/ProyectoFinal-G1-Santiago
 
 #+begin_src shell :results output :exports results
 cd ..
@@ -48,8 +56,10 @@ tree
 #+begin_example
 .
 ├── CityTemperatureAnalysis.ipynb
-├── clima-quito-hoy.csv
+├── clima-santiago-hoy.csv
+├── generar_graficos.py
 ├── get-weather.sh
+├── gptelIA.md
 ├── main.py
 ├── output.log
 └── weather-site
@@ -57,196 +67,281 @@ tree
     ├── build.sh
     ├── content
     │   ├── images
-    │   │   ├── plot.png
-    │   │   └── temperature.png
     │   ├── index.org
-    │   └── index.org_archive
+    │   ├── mult-ieee754.org
+    │   └── robo_autopartes.org
     └── public
         ├── images
-        │   ├── plot.png
-        │   └── temperature.png
-        ├── index.html
-        
+        └── index.html
 
-5 directories, 18 files
+6 directories, 15 files
 #+end_example
 
-Puede usar Emacs para la creación de la estructura de su proyecto
-usando comandos desde el bloque de shell. Recuerde ejecutar el bloque
-con ~C-c C-c~. Para insertar un bloque nuevo utilice ~C-c C-,~ o ~M-x
-org-insert-structure-template~. Seleccione la opción /s/ para src y
-adapte el bloque según su código tenga un comandos de shell, código de
-Python o de Java. En este documento ~.org~ dispone de varios ejemplos
-funcionales para escribir y presentar el código.
+*SOLUCIÓN:*
 
-#+begin_src shell :results output :exports both
-echo 'Aquí va sus comandos'
-#+end_src
-
-#+RESULTS:
-: Aquí va sus comandos
+1. Consulta al API de OpenWeatherMap.
+2. Procesamiento de la respuesta JSON.
+3. Escritura de los datos en el archivo CSV.
+4. Ejecución automática mediante get-weather.sh.
+5. Programación periódica utilizando Cron.
+6. Generación automática de gráficas.
+7. Publicación del sitio web mediante Emacs.
 
 ** Formulación del Problema
-Se desea realizar un registro climatológico de una ciudad
-$\mathcal{C}$. Para esto, escriba un script de Python/Java que permita
+Se realizó un registro climatológico de una ciudad
+$Santiago, Chile$. Para esto, escriba un script de Python/Java que permita
 obtener datos climatológicos desde el API de [[https://openweathermap.org/current#one][openweathermap]]. El API
-hace uso de los valores de latitud $x$ y longitud $y$ de la ciudad
-$\mathcal{C}$ para devolver los valores actuales a un tiempo $t$.
+hace uso de los valores de latitud $-33.45694$ y longitud $-70.64827$ de la ciudad
+$Santiago$ para devolver los valores actuales cada 15 minutos.
 
 Los resultados obtenidos de la consulta al API se escriben en un
-archivo /clima-<ciudad>-hoy.csv/. Cada ejecución del script debe
-almacenar nuevos datos en el archivo. Utilice *crontab* y sus
-conocimientos de Linux y Programación para obtener datos del API de
+archivo /clima-santiago-hoy.csv/. Cada ejecución del script se
+almacena nuevos datos en el archivo. Se utilizó *crontab* para obtener datos del API de
 /openweathermap/ con una periodicidad de 15 minutos mediante la
 ejecución de un archivo ejecutable denominado
-/get-weather.sh/. Obtenga al menos 50 datos. Verifique los
-resultados. Todas las operaciones se realizan en Linux o en el
-WSL. Las etapas del problema se subdividen en:
+/get-weather.sh/. Todas las operaciones se realizaron en el
+WSL.
 
-    1. Conformar los grupos de 2 estudiantes y definir la ciudad
-       objeto de estudio.
-    2.  Crear su API gratuito en [[https://openweathermap.org/current#one][openweathermap]]
-    3. Escribir un script en Python/Java que realice la consulta al
-       API y escriba los resultados en /clima-<ciudad>-hoy.csv/. El
-       archivo ha de contener toda la información que se obtiene del
-       API en columnas. Se debe observar que los datos sobre lluvia
-       (rain) y nieve (snow) se dan a veces si existe el fenómeno.
-    3. Desarrollar un ejecutable /get-weather.sh/ para ejecutar el
-       programa Python/Java.[fn:1]
-       #+begin_src shell :exports both
-         
-       #+end_src
-    4. Configurar Crontab para la adquisición de datos. Escriba el
-       comando configurado. Respalde la ejecución de crontab en un
-       archivo output.log
-    5. Realizar la presentación del Trabajo utilizando la generación
-       del sitio web por medio de Emacs. Para esto es necesario crear
-       la carpeta **weather-site** dentro del proyecto. Puede ajustar el
-       /look and feel/ según sus preferencias. El servidor a usar es
-       el **simple-httpd** integrado en Emacs que debe ser instalado:
-       - Usando comandos Emacs: ~M-x package-install~ presionamos
-         enter (i.e. RET) y escribimos el nombre del paquete:
-         simple-httpd
-       - Configurando el archivo init.el
-
-       #+begin_src elisp
-         (use-package simple-httpd
-            :ensure t)
-       #+end_src
-
-       Instrucciones de sobre la creación del sitio web se tiene en el
-       vídeo de instrucciones y en el archivo [[https://github.com/LeninGF/EPN-Lectures/blob/main/iccd332ArqComp-2024-A/Tutoriales/Org-Website/Org-Website.org][Org-Website.org]] en el
-       GitHub del curso
-
-    6. Su código debe estar respaldado en GitHub/BitBucket, la
-       dirección será remitida en la contestación de la tarea
 ** Descripción del código
-En esta sección se debe detallar segmentos importantes del código
-desarrollado así como la **estrategia de solución** adoptada por el
-grupo para resolver el problema. Divida su código en unidades
-funcionales para facilitar su presentación y exposición.
 
-Lectura del API
+El programa principal fue desarrollado en Python, donde
+consulta el API de OpenWeatherMap para obtener información
+climatológica de la ciudad de Santiago. Posteriormente, la respuesta
+en formato JSON es procesada, normalizada y almacenada en un archivo
+CSV, donde cada ejecución agrega un nuevo registro sin sobrescribir la
+información existente.
+
+*** Parámetros Iniciales
+El programa inicia importando las librerías necesarias para realizar
+la consulta al API, procesar la información obtenida y almacenarla en
+un archivo CSV. Además, se definen constantes que serán utilizadas
+durante toda la ejecución del programa.
+
 #+begin_src python :session :results output exports both
-def adder(a,b):
-    return a+b
-print(adder(5,3))
+import requests
+import os
+import csv
+from datetime import datetime, UTC
+
+# Variables de entorno.
+# Fuente:
+# https://docs.python.org/3/library/os.html
+SANTIAGO_LAT = -33.45694
+SANTIAGO_LONGITUDE = -70.64827
+API_KEY = os.getenv("OPENWEATHER_API_KEY")
+FILE_NAME = "clima-santiago-hoy.csv"
 #+end_src
 
-Puede tener que borrar los dos puntos para que el resultado aparezca
-en el HTML. En mi caso no fue necesario. Pruebe.
-#+RESULTS:
-: 8
 
-Convertir /Json/ a /Diccionario/ de Python
+*** Lectura del API
+Esta función realiza la conexión con el servicio web de OpenWeatherMap
+mediante una petición HTTP GET. Para ello utiliza la latitud y
+longitud de la ciudad de Santiago junto con la API KEY proporcionada
+por el usuario. La respuesta del servidor es devuelta en formato JSON
+para su posterior procesamiento.
+
 #+begin_src python :session :results output exports both
-print(adder(8,8))
+def get_weather(lat, lon, api):
+    # URL base del API
+    url = "https://api.openweathermap.org/data/2.5/weather"
+
+    # Parámetros enviados al API
+    parametros = {
+        "lat": lat,
+        "lon": lon,
+        "appid": api,
+        "units": "metric",
+        "lang": "es"
+    }
+
+    # Realiza la petición al servidor
+    # Consulta HTTP utilizando Requests.
+    # Fuente:
+    # https://requests.readthedocs.io/en/latest/
+    respuesta = requests.get(url, params=parametros)
+
+    # Convierte la respuesta JSON en un diccionario de Python
+    return respuesta.json()
 #+end_src
 
-#+RESULTS:
-: 16
+*** Procesamiento de los datos
+La información recibida desde el API es transformada en un diccionario
+plano para facilitar su almacenamiento en el archivo CSV. Durante este
+proceso se extraen las coordenadas, variables meteorológicas,
+información del viento, nubosidad, datos del sistema y demás campos
+disponibles en la respuesta del servicio.
 
-
-Guardar el archivo csv
 #+begin_src python :session :results output exports both
-print(adder(8,-18))
+def process(json):
+    normalized_dict = {} # Diccionario donde se almacenarán todos los datos en formato plano
+    # Fecha y hora de la medición
+    # Conversión del timestamp UNIX.
+    # Fuente:
+    # https://docs.python.org/3/library/datetime.html
+    normalized_dict["fecha_hora"] = datetime.fromtimestamp(
+        json["dt"], UTC
+    ).strftime("%Y-%m-%d %H:%M:%S")
+    # COORDENADAS
+    for clave, valor in json["coord"].items():
+        normalized_dict["coord_" + clave] = valor
+    # INFORMACIÓN PRINCIPAL DEL CLIMA
+    for clave, valor in json["main"].items():
+        normalized_dict["main_" + clave] = valor
+    # VIENTO
+    for clave, valor in json["wind"].items():
+        normalized_dict["wind_" + clave] = valor
+    # NUBES
+    for clave, valor in json["clouds"].items():
+        normalized_dict["clouds_" + clave] = valor
+    # INFORMACIÓN DEL SISTEMA
+    for clave, valor in json["sys"].items():
+        normalized_dict["sys_" + clave] = valor
+    # WEATHER ES UNA LISTA
+    if len(json["weather"]) > 0:
+        for clave, valor in json["weather"][0].items():
+            normalized_dict["weather_" + clave] = valor
+    # LLUVIA (puede no existir)
+    if "rain" in json:
+        for clave, valor in json["rain"].items():
+            normalized_dict["rain_" + clave] = valor
+    # NIEVE (puede no existir)
+    if "snow" in json:
+        for clave, valor in json["snow"].items():
+            normalized_dict["snow_" + clave] = valor
+    # CAMPOS SIMPLES DEL JSON
+    normalized_dict["base"] = json["base"]
+    normalized_dict["visibility"] = json["visibility"]
+    normalized_dict["timezone"] = json["timezone"]
+    normalized_dict["id"] = json["id"]
+    normalized_dict["name"] = json["name"]
+    normalized_dict["cod"] = json["cod"]
+    # Retorna el diccionario listo para escribirlo en el CSV
+    return normalized_dict
 #+end_src
 
-#+RESULTS:
-: -10
+*** Escritura del archivo CSV
+Los datos normalizados se almacenan en un archivo CSV utilizando la
+librería csv de Python. Si el archivo aún no existe, se crea
+automáticamente junto con su encabezado. En ejecuciones posteriores
+únicamente se agrega una nueva fila con la información obtenida del
+API.
+
+#+begin_src python :session :results output exports both
+def write2csv(weather, csv_filename):
+    # Escritura del CSV.
+    # Fuente:
+    # https://docs.python.org/3/library/csv.html
+    # Verifica si el archivo ya existe
+    existe = os.path.isfile(csv_filename)
+    # Abre el archivo en modo agregar
+    with open(csv_filename, "a", newline="", encoding="utf-8") as archivo:
+        # Crea el escritor utilizando las claves del diccionario
+        writer = csv.DictWriter(
+            archivo,
+            fieldnames=weather.keys()
+        )
+        # Si el archivo es nuevo escribe el encabezado
+        if not existe:
+            writer.writeheader()
+        # Escribe una nueva fila
+        writer.writerow(weather)
+#+end_src
+
+*** Main()
+Se coordina el flujo completo de ejecución: primero se consulta el API
+de OpenWeatherMap, luego se verifica que la respuesta sea válida,
+posteriormente se procesan los datos obtenidos y finalmente se
+almacenan en el archivo CSV. Si ocurre algún error durante la
+consulta, el programa informa que la ciudad no está disponible o que
+la API KEY es inválida.
+#+begin_src python :session :results output exports both
+def main():
+    print("===== Bienvenido a Santiago-Clima =====")
+
+    santiago_weather = get_weather(
+        lat=SANTIAGO_LAT,
+        lon=SANTIAGO_LONGITUDE,
+        api=API_KEY
+    )
+
+    if santiago_weather["cod"] == 200:
+        weather = process(santiago_weather)
+        write2csv(weather, FILE_NAME)
+        print("Datos guardados correctamente.")
+    else:
+        print("Ciudad no disponible o API KEY no válida")
+
+
+if __name__ == "__main__":
+    main()
+#+end_src
 
 ** Script ejecutable sh
-Se coloca el contenido del script ejecutable. Recuerde que se debe
-utilizar el entorno de **anaconda/mamba** denominado **iccd332** para
-la ejecución de Python; independientemente de que tenga una
-instalación nativa de Python
-
-En el caso de los shell script se puede usar `which sh` para conocer
-la ubicación del ejecutable
-#+begin_src shell :results output :exports both
-which sh
-#+end_src
-
-#+RESULTS:
-: /usr/bin/sh
-
-De igual manera se requiere localizar el entorno de mamba *iccd332*
-que será utilizado
+se desarrolló un script denominado $get-weather.sh$. Este archivo activa
+el entorno de trabajo *iccd332*, accede al directorio del proyecto y
+ejecuta el programa principal en Python. Toda la salida
+generada durante la ejecución se almacena en el archivo $output.log$
+para facilitar la verificación del funcionamiento del sistema.
 
 #+begin_src shell :results output :exports both
-which mamba
-#+end_src
-
-#+RESULTS:
-: /home/leningfe/miniforge3/condabin/mamba
-
-Con esto el archivo ejecutable a de tener (adapte el código según las
-condiciones de su máquina):
-
-#+begin_src shell :results output :exports both
-#!/usr/bin/sh
-source /home/<user>/miniforge3/etc/profile.d/conda.sh
+#!/bin/bash
+# Activar Conda
+source /home/emilioalbanfs/miniforge3/etc/profile.d/conda.sh
 eval "$(conda shell.bash hook)"
 conda activate iccd332
-python main.py
+# Ir al directorio del proyecto
+cd "$(dirname "$0")"
+export OPENWEATHER_API_KEY="..."
+python3 main.py >> output.log 2>&1
 #+end_src
 
-Finalmente convierta en ejecutable como se explicó en clases y laboratorio
-#+begin_src shell :results output :exports both
-#!/usr/bin/sh
-Poner comando/s aquí
-#+end_src
 
 ** Configuración de Crontab
-Se indica la configuración realizada en crontab para la adquisición de datos
+Para automatizar la adquisición de datos climatológicos se utilizó el
+servicio Cron de Linux. Se configuró una tarea programada que ejecuta
+el script get-weather.sh cada quince minutos, permitiendo obtener
+nuevos registros de manera periódica sin intervención del usuario. De
+esta forma se construye automáticamente el historial climatológico
+almacenado en el archivo CSV.
 
 #+begin_src shell
-*/t * * * * cd <City>Weather && ./get-weather.sh >> output.log 2>&1
+*/15 * * * * $HOME/G1ProyectoArq/ProyectoFinal-G1-Santiago/get-weather.sh >> $HOME/G1ProyectoArq/ProyectoFinal-G1-Santiago/output.log 2>&1
 #+end_src
 
-- Recuerde remplazar <City> por el nombre de la ciudad que analice
-- Recuerde ajustar el tiempo para potenciar tomar datos nuevos
-- Recuerde que ~2>&1~ permite guardar en ~output.log~ tanto la salida
-  del programa como los errores en la ejecución.
 * Presentación de resultados
-Para la pressentación de resultados se utilizan las librerías de Python:
+Para la presentación de resultados se utilizan las librerías de Python:
 - matplotlib
 - pandas
 
-Alternativamente como pudo estudiar en el Jupyter Notebook
-[[https://github.com/LeninGF/EPN-Lectures/blob/main/iccd332ArqComp-2024-A/Proyectos/CityWeather/CityTemperatureAnalysis.ipynb][CityTemperatureAnalysis.ipynb]], existen librerías alternativas que se
-pueden utilizar para presentar los resultados gráficos. En ambos
-casos, para que funcione los siguientes bloques de código, es
-necesario que realice la instalación de los paquetes usando ~mamba
-install <nombre-paquete>~
-** Muestra Aleatoria de datos
+** Resultados
+En esta sección se presentan los resultados obtenidos durante la
+ejecución del sistema de adquisición de datos. A partir de la
+información almacenada en el archivo CSV se muestran ejemplos de los
+registros recopilados y diversas gráficas que permiten visualizar el
+comportamiento de las principales variables meteorológicas de la
+ciudad de Santiago.
+
+** Muestra De datos
+Se presenta una muestra de los registros almacenados en el archivo
+clima-santiago-hoy.csv. Cada fila corresponde a una consulta realizada
+al API de OpenWeatherMap e incluye información sobre la fecha y hora
+de la medición, temperatura, humedad, presión atmosférica, velocidad
+del viento y demás variables obtenidas durante la consulta.
+ó
 Presentar una muestra de 10 valores aleatorios de los datos obtenidos.
+
+# ANRRESSSS 1
+
 #+caption: Lectura de archivo csv
 #+begin_src python :session :results output exports both
-import os
 import pandas as pd
-# lectura del archivo csv obtenido
-df = pd.read_csv('/home/leningfe/PythonProjects/QuitoWeather/clima-quito-hoy-etl.csv')
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
+# Leer el archivo CSV
+df = pd.read_csv("clima-santiago-hoy.csv")
+# Convertir la columna de fecha a datetime
+df["fecha_hora"] = pd.to_datetime(df["fecha_hora"])
 # se imprime la estructura del dataframe en forma de filas x columnas
 print(df.shape)
 #+end_src
@@ -254,6 +349,9 @@ print(df.shape)
 Resultado del número de filas y columnas leídos del archivo csv
 #+RESULTS:
 : (57, 30)
+
+# ANRRESSSS 2
+
 #+caption: Despliegue de datos aleatorios
 #+begin_src python :session :exports both :results value table :return table
 table1 = df.sample(10)
@@ -275,35 +373,79 @@ table = [list(table1)]+[None]+table1.values.tolist()
 | 2024-08-03 02:13:58 |  -78.5249 |   -0.2299 |          802 | Clouds         | scattered clouds      | 03n            | stations |      7.53 |            6.77 |          7.53 |          7.53 |          1019 |            85 |           1019 |             722 |      10000 |       1.55 |      160 |      1.87 |         26 |        1 |   8555 | EC          | 2024-08-03 06:17:01 | 2024-08-03 18:23:24 |   -18000 | 3652462 | Quito | 200 |
 
 ** Gráfica Temperatura vs Tiempo
-Realizar una gráfica de la Temperatura en el tiempo.
-
+La siguiente gráfica muestra la evolución de la temperatura registrada
+en Santiago a lo largo del período de adquisición de datos. Cada punto
+representa una consulta realizada automáticamente mediante Cron.
 
 El siguiente cógido permite hacer la gráfica de la temperatura vs
-tiempo para Org 9.7+. Para saber que versión dispone puede ejecutar
-~M-x org-version~
+tiempo para Org 9.7+.
 
 #+begin_src python :results file :exports both :session
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-# Define el tamaño de la figura de salida
+# Crear la figura
 fig = plt.figure(figsize=(8,6))
-plt.plot(df['dt'], df['main_temp']) # dibuja las variables dt y temperatura
-# ajuste para presentacion de fechas en la imagen 
-plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=2))
-# plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))  
+# TEMPERATURA VS TIEMPO
+plt.plot(df["fecha_hora"], df["main_temp"])
+# Ajuste de las fechas
+plt.gca().xaxis.set_major_locator(mdates.AutoDateLocator())
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d/%m %H:%M"))
+# Cuadrícula
 plt.grid()
-# Titulo que obtiene el nombre de la ciudad del DataFrame
-plt.title(f'Main Temp vs Time in {next(iter(set(df.name)))}')
-plt.xticks(rotation=40) # rotación de las etiquetas 40°
+# Título
+plt.title(f"Temperatura vs Tiempo en {next(iter(set(df['name'])))}")
+# Rotar etiquetas
+plt.xticks(rotation=40)
+# Ajustar márgenes
 fig.tight_layout()
-fname = './images/temperature.png'
+# Guardar imagen
+fname = "./weather-site/content/images/temperatura.png"
 plt.savefig(fname)
-fname
 #+end_src
 
 #+caption: Gráfica Temperatura vs Tiempo
 #+RESULTS:
-[[file:./images/temperature.png]]
+[[file:./images/temperatura.png]]
+
+
+** Gráfica Humedad vs Tiempo
+#+begin_src python :results file :exports both :session
+# HUMEDAD VS TIEMPO
+plt.plot(df["fecha_hora"], df["main_humidity"])
+plt.title(f"Humedad vs Tiempo en {next(iter(set(df['name'])))}")
+fname = "./weather-site/content/images/humedad.png"
+#+end_src
+
+#+caption: Gráfica Humedad vs Tiempo
+#+RESULTS:
+[[file:./images/humedad.png]]
+
+
+** Gráfica Presión vs Tiempo
+#+begin_src python :results file :exports both :session
+# PRESION VS TIEMPO
+plt.plot(df["fecha_hora"], df["main_pressure"])
+plt.title(f"Presión vs Tiempo en {next(iter(set(df['name'])))}")
+fname = "./weather-site/content/images/presion.png"
+#+end_src
+
+#+caption: Gráfica Presión vs Tiempo
+#+RESULTS:
+[[file:./images/presion.png]]
+
+
+** Gráfica Velocidad del Viento vs Tiempo
+#+begin_src python :results file :exports both :session
+# VELOCIDAD DEL VIENTO VS TIEMPO
+plt.plot(df["fecha_hora"], df["wind_speed"])
+plt.title(f"Velocidad del viento vs Tiempo en {next(iter(set(df['name'])))}")
+fname = "./weather-site/content/images/viento.png"
+#+end_src
+
+#+caption: Gráfica Velocidad del viento vs Tiempo
+#+RESULTS:
+[[file:./images/viento.png]]
+
 
 Debido a que el archivo index.org se abre dentro de la carpeta
 /content/, y en cambio el servidor http de emacs se ejecuta desde la
@@ -311,15 +453,15 @@ carpeta /public/ es necesario copiar el archivo a la ubicación
 equivalente en ~/public/images~
 
 #+begin_src shell
-cp -rfv ./images/* /home/leningfe/PythonProjects/QuitoWeather/weather-site/public/images
+cp -rfv ./images/* /home/emilioalbanfs/G1ProyectoArq/ProyectoFinal-G1-Santiago/weather-site/public/images
 #+end_src
 
 #+RESULTS:
-| './images/plot.png'        | -> | '/home/leningfe/PythonProjects/QuitoWeather/weather-site/public/images/plot.png'        |
-| './images/temperature.png' | -> | '/home/leningfe/PythonProjects/QuitoWeather/weather-site/public/images/temperature.png' |
+| './images/humedad.png'     | -> | '/home/emilioalbanfs/G1ProyectoArq/ProyectoFinal-G1-Santiago/weather-site/public/images/humedad.png'     |
+| './images/presion.png'     | -> | '/home/emilioalbanfs/G1ProyectoArq/ProyectoFinal-G1-Santiago/weather-site/public/images/presion.png'     |
+| './images/temperatura.png' | -> | '/home/emilioalbanfs/G1ProyectoArq/ProyectoFinal-G1-Santiago/weather-site/public/images/temperatura.png' |
+| './images/viento.png'      | -> | '/home/emilioalbanfs/G1ProyectoArq/ProyectoFinal-G1-Santiago/weather-site/public/images/viento.png'      |
 
-**  Realice una gráfica de Humedad con respecto al tiempo
-**  *Opcional* Presente alguna gráfica de interés.
 * Instrucciones Java Script
 En la siguiente página se indica cómo integrar ~javascript~ como un
 alternativa para testear el código.
@@ -327,12 +469,23 @@ alternativa para testear el código.
 JavaScript]]
 
 * Referencias
-- [[https://emacs.stackexchange.com/questions/28715/get-pandas-data-frame-as-a-table-in-org-babel][presentar dataframe como tabla en emacs org]]
-- [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html][Python Source Code Blocks in Org Mode]]
-- [[https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/][Systems Crafters Construir tu sitio web con Modo Emacs Org]]
-- [[https://www.youtube.com/watch?v=AfkrzFodoNw][Vídeo Youtube Build Your Website with Org Mode]]
-* Footnotes
+** OpenWeatherMap
+- [[https://openweathermap.org/api][Obtención del API]]
+- [[https://openweathermap.org/current][Consulta del Clima]]
+- [[https://openweathermap.org/current#parameter][Formato de Respuesta JSON]]
+** Python
+- [[https://requests.readthedocs.io/en/latest/][Requests]]
+- [[https://docs.python.org/3/library/csv.html][Libreria CSV]]
+- [[https://docs.python.org/3/library/datetime.html][Libreria DATETIME]]
+- [[https://docs.python.org/3/library/os.html][Libreria OS]]
+** Pandas
+- [[https://pandas.pydata.org/docs/][Pandas]]
+** Matplotlib
+- [[https://matplotlib.org/stable/][Matplot lib documentation]]
+- [[https://matplotlib.org/stable/api/dates_api.html][Dates_Api]]
+** Emacs
+- [[https://orgmode.org/][Emacs Org Mode]]
+** HTTPD
+- [[https://github.com/skeeto/emacs-web-server][Simple-Httpd]]
+- [[https://www.youtube.com/watch?v=AfkrzFodoNw][Vídeo Youtube Build Your Website with Org Mode]
 
-[fn:1] Recuerde que su máquina ha de disponer de un entorno de
-anaconda/mamba denominado iccd332 en el cual se dispone del interprete
-de Python

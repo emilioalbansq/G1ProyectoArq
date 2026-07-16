@@ -3,10 +3,10 @@
 #+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
 #+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
 #+options: timestamp:t title:t toc:t todo:t |:t
-#+title: mult-ieee754
+#+title: Multiplicación - IEEE754
 #+date: 2026-07-14
-#+author: Karen Suarez y Samuel Churaco
-#+email: samuel.churaco@epn.edu.ec , karen.suarez@epn.edu.ec
+#+author: Emilio Albán, Ariel Montufar, Karen Suarez, Samuel Churaco
+#+email: emilio.alban@epn.edu.ec
 #+language: en
 #+select_tags: export
 #+exclude_tags: noexport
@@ -34,7 +34,7 @@
   - Número A y Número B
   - Conversión, Operación y Resultado
 - [[#5-conclusiones][5. Conclusiones]]
-- [[#6-bibliografía][6. Bibliografía]]
+- [[#6-referencias][6. Bibliografía]]
 
 -----
 * 1. INTRODUCCIÓN
@@ -66,6 +66,7 @@ un sistema equivalente a la notación científica binaria, lo que optimiza al m�
 entre el rango de los números que se pueden representar y la exactitud de sus decimales.
 
 -----
+
 
 * 2. REPRESENTACIÓN IEEE 754
 :PROPERTIES:
@@ -187,7 +188,12 @@ Finalmente, el rompecabezas se ensambla en el registro físico:
 3. Se toma la mantisa normalizada y redondeada, **se le remueve nuevamente el dígito "1." implícito** para ahorrar espacio, y se rellenan los
    23 bits restantes de la memoria de la computadora.
 
-* 4. Ejemplo desarrollado
+---
+
+* 4. EJEMPLO DESARROLLADO
+:PROPERTIES:
+:CUSTOM_ID: 4-ejemplo-desarrollado
+:END:
 
 Vamos a multiplicar *A = -5.25* por *B = 3.75*.
 
@@ -242,8 +248,11 @@ Si reconstruimos el número: Signo negativo, Exponente $131 - 127 = 4$. Mantisa 
 Valor: $-1.00111011_2 \times 2^4 = -10011.1011_2$.
 La parte entera $10011_2 = 19_{10}$. La parte fraccionaria $0.1011_2 = 0.5 + 0.125 + 0.0625 = 0.6875_{10}$. 
 Total: $-19.6875$. (Lo cual es exactamente $-5.25 \times 3.75$).
-
-* 5. Conclusiones
+---
+* 5. CONCLUSIONES
+:PROPERTIES:
+:CUSTOM_ID: 5-conclusiones
+:END:
 
 1. La separación de signo, exponente y mantisa permite que la multiplicación de números de punto flotante se resuelva
     utilizando sumadores y multiplicadores enteros en el hardware, lo que hace el proceso extremadamente rápido.
@@ -253,8 +262,10 @@ Total: $-19.6875$. (Lo cual es exactamente $-5.25 \times 3.75$).
     
 3. La normalización es un paso crítico, ya que garantiza que el estándar mantenga la máxima
     precisión posible en los 23 bits de la mantisa en cada operación.
-
-* 6. Bibliografía
-
+---
+* 6. REFERENCIAS
+:PROPERTIES:
+:CUSTOM_ID: 6-referencias
+:END:
   - Stallings, W. (2006). /Organización y Arquitectura de Computadores: Diseño para optimizar prestaciones/ (7ma ed., p. 328). Pearson Prentice Hall.
   - Numeral Systems. (s.f.). /IEEE-754 floating-point multiplication/. Recuperado de: [[https://numeral-systems.com/ieee-754-multiply/]]
