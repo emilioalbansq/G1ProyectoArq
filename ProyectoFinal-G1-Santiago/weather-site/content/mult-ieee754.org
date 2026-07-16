@@ -1,6 +1,17 @@
-#+TITLE: Multiplicación IEEE 754
-#+AUTHOR: Karen Suarez y Samuel Churaco
-#+OPTIONS: toc:2 num:nil
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: mult-ieee754
+#+date: 2026-07-14
+#+author: Karen Suarez y Samuel Churaco
+#+email: samuel.churaco@epn.edu.ec , karen.suarez@epn.edu.ec
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 29.3 (Org mode 9.6.15)
+#+cite_export:
 
 * ÍNDICE DE LA PÁGINA
 
@@ -175,4 +186,75 @@ Finalmente, el rompecabezas se ensambla en el registro físico:
 2. Se inyecta el Exponente Final corregido en el Paso 4.
 3. Se toma la mantisa normalizada y redondeada, **se le remueve nuevamente el dígito "1." implícito** para ahorrar espacio, y se rellenan los
    23 bits restantes de la memoria de la computadora.
+
+* 4. Ejemplo desarrollado
+
+Vamos a multiplicar *A = -5.25* por *B = 3.75*.
+
+** Paso 1: Conversión a IEEE 754
+- *Número A (-5.25):*
+  - Binario: La parte entera 5 es $101_2$ y la fraccionaria 0.25 es $0.01_2$. Total: $-101.01_2$.
+  - Normalización: $-1.0101_2 \times 2^2$
+  - Signo: =1= (Negativo)
+  - Exponente: El exponente real es 2. Le sumamos el sesgo (127): $2 + 127 = 129 = 10000001_2$
+  - Mantisa (quitando el "1."): =01010000000000000000000=
+
+- *Número B (3.75):*
+  - Binario: La parte entera 3 es $11_2$ y la fraccionaria 0.75 es $0.11_2$. Total: $11.11_2$.
+  - Normalización: $1.111_2 \times 2^1$
+  - Signo: =0= (Positivo)
+  - Exponente: El exponente real es 1. Le sumamos el sesgo (127): $1 + 127 = 128 = 10000000_2$
+  - Mantisa (quitando el "1."): =11100000000000000000000=
+
+** Paso 2: Operación del algoritmo
+1. *Multiplicación de signos:* $1 \oplus 0 = 1$ (El resultado será negativo).
+2. *Suma de exponentes:* $129 + 128 - 127 = 130$ (=10000010= en binario).
+3. *Multiplicación de mantisas:* Tomamos las mantisas con su "1." implícito: $1.0101_2 \times 1.111_2$. 
+   Para multiplicar, ignoramos la coma temporalmente y multiplicamos $10101 \times 1111$:
+   #+BEGIN_EXAMPLE
+        10101
+      x  1111
+      -------
+        10101
+       101010
+      1010100
+     10101000
+     --------
+    100111011
+   #+END_EXAMPLE
+   El primer número tiene 4 decimales y el segundo tiene 3. En total son 7 posiciones decimales. Colocamos la coma: $10.0111011_2$.
+4. *Normalización:* El resultado de la mantisa es $10.0111011_2$. Como hay dos dígitos antes del punto (es mayor a 2.0), no está normalizado. 
+   - Movemos la coma una posición a la izquierda: $1.00111011_2$.
+   - Como movimos la coma a la izquierda, *debemos sumar 1 al exponente* calculado en el paso 2: $130 + 1 = 131$.
+   - El nuevo exponente en binario es: =10000011=.
+
+** Paso 3: Resultado final
+Concatenamos las partes calculadas:
+- Signo: =1=
+- Exponente: =10000011=
+- Mantisa (quitando el "1." inicial y rellenando con ceros hasta 23 bits): =00111011000000000000000=
+
+*Resultado final en binario IEEE 754:*
+=1 10000011 00111011000000000000000=
+
+*Comprobación matemática:*
+Si reconstruimos el número: Signo negativo, Exponente $131 - 127 = 4$. Mantisa $1.00111011_2$.
+Valor: $-1.00111011_2 \times 2^4 = -10011.1011_2$.
+La parte entera $10011_2 = 19_{10}$. La parte fraccionaria $0.1011_2 = 0.5 + 0.125 + 0.0625 = 0.6875_{10}$. 
+Total: $-19.6875$. (Lo cual es exactamente $-5.25 \times 3.75$).
+
+* 5. Conclusiones
+
+1. La separación de signo, exponente y mantisa permite que la multiplicación de números de punto flotante se resuelva
+    utilizando sumadores y multiplicadores enteros en el hardware, lo que hace el proceso extremadamente rápido.
    
+2. El uso de un exponente sesgado (bias) simplifica la circuitería, ya que evita tener que
+   diseñar comparadores o sumadores especiales para exponentes con signo.
+    
+3. La normalización es un paso crítico, ya que garantiza que el estándar mantenga la máxima
+    precisión posible en los 23 bits de la mantisa en cada operación.
+
+* 6. Bibliografía
+
+  - Stallings, W. (2006). /Organización y Arquitectura de Computadores: Diseño para optimizar prestaciones/ (7ma ed., p. 328). Pearson Prentice Hall.
+  - Numeral Systems. (s.f.). /IEEE-754 floating-point multiplication/. Recuperado de: [[https://numeral-systems.com/ieee-754-multiply/]]
