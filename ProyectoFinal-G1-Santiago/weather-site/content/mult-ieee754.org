@@ -248,6 +248,248 @@ Si reconstruimos el número: Signo negativo, Exponente $131 - 127 = 4$. Mantisa 
 Valor: $-1.00111011_2 \times 2^4 = -10011.1011_2$.
 La parte entera $10011_2 = 19_{10}$. La parte fraccionaria $0.1011_2 = 0.5 + 0.125 + 0.0625 = 0.6875_{10}$. 
 Total: $-19.6875$. (Lo cual es exactamente $-5.25 \times 3.75$).
+
+** CALCULADORA DE MULTIPLICACIÓN IEEE 754
+
+La siguiente calculadora permite ingresar dos números representados mediante
+IEEE 754 de precisión simple, es decir, mediante cadenas de 32 bits.
+
+La aplicación convierte ambos valores IEEE 754 a números decimales, realiza
+la multiplicación y presenta el resultado en formato decimal y nuevamente
+en formato IEEE 754.
+
+#+BEGIN_EXPORT html
+
+<div class="calculadora-ieee">
+
+  <h3>Calculadora IEEE 754</h3>
+
+  <p>
+    Ingrese dos números IEEE 754 de 32 bits, sin espacios.
+  </p>
+
+<label for="numeroA">Primer número IEEE 754:</label><br>
+<input
+type="text"
+id="numeroA"
+maxlength="32"
+placeholder="11000000101010000000000000000000"
+style="width: 350px;"
+
+>
+
+<br><br>
+
+<label for="numeroB">Segundo número IEEE 754:</label><br>
+<input
+type="text"
+id="numeroB"
+maxlength="32"
+placeholder="01000000011100000000000000000000"
+style="width: 350px;"
+
+>
+
+<br><br>
+
+  <button onclick="multiplicarIEEE754()">
+    Multiplicar
+  </button>
+
+  <button onclick="limpiarCalculadora()">
+    Limpiar
+  </button>
+
+  <h4>Resultado</h4>
+
+  <p id="resultadoDecimal">
+    Resultado decimal:
+  </p>
+
+  <p id="resultadoIEEE">
+    Resultado IEEE 754:
+  </p>
+
+  <p id="mensajeError" style="font-weight: bold;"></p>
+
+</div>
+
+<script>
+
+/*
+ Convierte una cadena IEEE 754 de 32 bits
+ en un número decimal.
+*/
+function ieeeADecimal(bits) {
+
+    // Creamos un espacio de memoria de 4 bytes.
+    const memoria = new ArrayBuffer(4);
+
+    /*
+     Uint32Array permite guardar los 32 bits
+     como un número entero sin signo.
+    */
+    const entero = new Uint32Array(memoria);
+
+    /*
+     Float32Array interpreta los mismos bits
+     como un número IEEE 754.
+    */
+    const flotante = new Float32Array(memoria);
+
+    // Convertimos la cadena binaria a un entero.
+    entero[0] = parseInt(bits, 2);
+
+    // Retornamos el valor interpretado como float.
+    return flotante[0];
+}
+
+
+/*
+ Convierte un número decimal a una cadena
+ IEEE 754 de 32 bits.
+*/
+function decimalAIEEE(numero) {
+
+    // Creamos un espacio de memoria de 4 bytes.
+    const memoria = new ArrayBuffer(4);
+
+    // Interpretación decimal IEEE 754.
+    const flotante = new Float32Array(memoria);
+
+    // Interpretación entera de los mismos bits.
+    const entero = new Uint32Array(memoria);
+
+    // Guardamos el resultado como float de 32 bits.
+    flotante[0] = numero;
+
+    /*
+     Convertimos los bits a binario y rellenamos
+     con ceros hasta completar los 32 bits.
+    */
+    return entero[0].toString(2).padStart(32, "0");
+}
+
+
+/*
+ Verifica que el dato tenga exactamente
+ 32 caracteres y contenga solamente 0 y 1.
+*/
+function esIEEEValido(bits) {
+    return /^[01]{32}$/.test(bits);
+}
+
+
+/*
+ Función principal de la calculadora.
+*/
+function multiplicarIEEE754() {
+
+    // Obtenemos los valores escritos por el usuario.
+    const bitsA = document.getElementById("numeroA").value.trim();
+    const bitsB = document.getElementById("numeroB").value.trim();
+
+    const mensajeError = document.getElementById("mensajeError");
+
+    // Limpiamos mensajes anteriores.
+    mensajeError.textContent = "";
+
+    /*
+     Comprobamos que ambos números estén formados
+     por exactamente 32 bits.
+    */
+    if (!esIEEEValido(bitsA) || !esIEEEValido(bitsB)) {
+
+        mensajeError.textContent =
+            "Error: cada número debe contener exactamente 32 bits.";
+
+        document.getElementById("resultadoDecimal").textContent =
+            "Resultado decimal:";
+
+        document.getElementById("resultadoIEEE").textContent =
+            "Resultado IEEE 754:";
+
+        return;
+    }
+
+    // Convertimos los dos números IEEE 754 a decimal.
+    const numeroA = ieeeADecimal(bitsA);
+    const numeroB = ieeeADecimal(bitsB);
+
+    /*
+     Math.fround obliga a almacenar el resultado
+     con precisión simple de 32 bits.
+    */
+    const resultado = Math.fround(numeroA * numeroB);
+
+    // Convertimos el resultado decimal nuevamente a IEEE 754.
+    const resultadoBits = decimalAIEEE(resultado);
+
+    // Separamos signo, exponente y mantisa.
+    const signo = resultadoBits.substring(0, 1);
+    const exponente = resultadoBits.substring(1, 9);
+    const mantisa = resultadoBits.substring(9);
+
+    // Mostramos la operación decimal.
+    document.getElementById("resultadoDecimal").textContent =
+        "Resultado decimal: " +
+        numeroA + " × " + numeroB + " = " + resultado;
+
+    // Mostramos el resultado IEEE 754 separado por campos.
+    document.getElementById("resultadoIEEE").textContent =
+        "Resultado IEEE 754: " +
+        signo + " " + exponente + " " + mantisa;
+}
+
+
+/*
+ Borra los campos y los resultados.
+*/
+function limpiarCalculadora() {
+
+    document.getElementById("numeroA").value = "";
+    document.getElementById("numeroB").value = "";
+
+    document.getElementById("resultadoDecimal").textContent =
+        "Resultado decimal:";
+
+    document.getElementById("resultadoIEEE").textContent =
+        "Resultado IEEE 754:";
+
+    document.getElementById("mensajeError").textContent = "";
+}
+
+</script>
+
+#+END_EXPORT
+
+** Ejemplo de uso
+
+Para comprobar el funcionamiento de la calculadora se pueden utilizar los
+números del ejemplo desarrollado anteriormente.
+
+* Número A, correspondiente a -5.25:
+
+  =11000000101010000000000000000000=
+
+* Número B, correspondiente a 3.75:
+
+  =01000000011100000000000000000000=
+
+Después de presionar el botón *Multiplicar*, la calculadora presenta:
+
+* Resultado decimal:
+
+  =-5.25 × 3.75 = -19.6875=
+
+* Resultado IEEE 754:
+
+  =1 10000011 00111011000000000000000=
+
+La calculadora utiliza números de precisión simple de 32 bits, por lo que
+el resultado obtenido sigue la misma distribución estudiada: un bit de
+signo, ocho bits de exponente y veintitrés bits de mantisa.
+
 ---
 * 5. CONCLUSIONES
 :PROPERTIES:
